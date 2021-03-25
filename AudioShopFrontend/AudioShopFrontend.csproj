@@ -418,7 +418,10 @@
     <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\CategoryLiteDTO.cs" />
+    <Compile Include="DTO\Category_BrandDTO.cs" />
+    <Compile Include="DTO\Category_TypeDTO.cs" />
     <Compile Include="DTO\DataMapper.cs" />
     <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="Global.asax.cs">
@@ -568,6 +571,7 @@
     <Content Include="Views\Home\MyProfile.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Home\Blog.cshtml" />
+    <Content Include="Views\Home\_CategoryProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

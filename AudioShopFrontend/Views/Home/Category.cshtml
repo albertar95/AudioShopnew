@@ -38,7 +38,7 @@
                         @foreach (var catType in Model.CategoryTypes)
                         {
                             <li class="sidebar__menu-filter-list">
-                                <label for="men"><span>@catType.TypeName</span><input type="checkbox" style="margin-left:5px;margin-right:5px;" name="catType" value="'@catType.NidType'" id="'@catType.NidType'"></label>
+                                <label for="men"><span>@catType.TypeName</span><input type="checkbox" onchange="CheckboxTrigger('@catType.NidType',0)" style="margin-left:5px;margin-right:5px;" name="catType" value="'@catType.NidType'" id="'@catType.NidType'"></label>
                             </li>
                         }
                     </ul>
@@ -50,7 +50,7 @@
                         @foreach (var catBrand in Model.CategoryBrands)
                         {
                             <li class="sidebar__menu-filter-list">
-                                <label for="graphic-corner"><span>@catBrand.BrandName</span><input type="checkbox" style="margin-left:5px;margin-right:5px;" name="catBrand" value="'@catBrand.NidBrand'" id="graphic-corner"></label>
+                                <label for="graphic-corner"><span>@catBrand.BrandName</span><input type="checkbox" onchange="CheckboxTrigger('@catBrand.NidBrand',1)" style="margin-left:5px;margin-right:5px;" name="catBrand" value="'@catBrand.NidBrand'" id="graphic-corner"></label>
                             </li>
                         }
                     </ul>
@@ -62,8 +62,8 @@
                     <div class="sidebar__price-filter ">
                         <div id="slider-range" class="price-filter-range"></div>
                         <div class="slider__price-filter-input d-flex justify-content-between">
-                            <input type="number" min=@Model.MinPrice max="@Model.MaxPrice" oninput="validity.valid||(value='0');" id="min_price" class="price-range-field" />
-                            <input type="number" min=@Model.MinPrice max="@Model.MaxPrice" oninput="validity.valid||(value='1000');" id="max_price" class="price-range-field" />
+                            <input type="number" min=@Model.MinPrice max="@Model.MaxPrice" id="min_price" class="price-range-field" value="0" />
+                            <input type="number" min=@Model.MinPrice max="@Model.MaxPrice" id="max_price" class="price-range-field" value="@Model.MaxPrice" />
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,6 @@
                             <select name="select-sort" class="select-sort">
                                 <option value="1">مرتبط ترین</option>
                                 <option value="2">حروف الفبا</option>
-                                @*<option value="3"> Name, Z to A </option>*@
                                 <option value="4"> ارزان ترین</option>
                                 <option value="5">گران ترین</option>
                             </select>
@@ -122,89 +121,257 @@
                     </div>
                 </div>
             </div> <!-- ::::::  Start Sort Box Section  ::::::  -->
-
-            <div class="product-tab-area">
-                <div class="tab-content ">
-                    <div class="tab-pane clearfix" id="sort-grid">
-                        @foreach (var prod2 in Model.Products)
+            <div id="contents">
+                <div class="product-tab-area">
+                    <div class="tab-content ">
+                        <div class="tab-pane clearfix" id="sort-grid">
+                            @foreach (var prod2 in Model.Products)
                         {
-                            <div class="product__box product__box--default product__box--border-hover text-center float-left float-3">
-                                <div class="product__img-box">
-                                    <a href="single-1.html" class="product__img--link">
-                                        <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
-                                    </a>
-
-                                    <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
-                                    <span class="product__tag product__tag--discount">-12%</span>
-                                    <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                </div>
-                                <div class="product__price m-t-10">
-                                    @*<span class="product__price-del">$11.90</span>*@
-                                    <span class="product__price-reg">@prod2.Price</span>
-                                </div>
-                                <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                    @prod2.ProductName
-                                </a>
-                            </div> <!-- End Single Default Product -->
-                        }
-                    </div>
-                    <div class="tab-pane show active shop-list" id="sort-list">
-                        @foreach (var prod1 in Model.Products)
-                        {
-                            <div class="product__box product__box--list">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
-                                            </a>
-                                            @*<span class="product__tag product__tag--discount">-12%</span>*@
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5 pos-relative">
-                                        <div class="border-right pos-absolute"></div>
-                                        <div class="product__price">
-                                            @*<span class="product__price-del">$11.90</span>*@
-                                            <span class="product__price-reg">@prod1.Price</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            @prod1.ProductName
+                                <div class="product__box product__box--default product__box--border-hover text-center float-left float-3">
+                                    <div class="product__img-box">
+                                        <a href="single-1.html" class="product__img--link">
+                                            <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
                                         </a>
-                                        <div class="product__desc m-t-25 m-b-30">
-                                            <p>@Html.Raw(prod1.Description)</p>
-                                        </div>
+
+                                        <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
+                                        <span class="product__tag product__tag--discount">-12%</span>
+                                        <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                     </div>
-                                    <div class="col-md-3">
-                                        <div>
-                                            <ul class="shop__list-link">
-                                                <li><a href="#modalAddCart" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به سبد</a></li>
-                                                <li><a href="wishlist.html" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i> علاقه مندی</a></li>
-                                                <li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>
-                                            </ul>
-                                        </div>
+                                    <div class="product__price m-t-10">
+                                        @*<span class="product__price-del">$11.90</span>*@
+                                        <span class="product__price-reg">@prod2.Price</span>
                                     </div>
-                                </div>
-                            </div> <!-- Start Single List Product -->
+                                    <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                        @prod2.ProductName
+                                    </a>
+                                </div> <!-- End Single Default Product -->
                         }
+                        </div>
+                        <div class="tab-pane show active shop-list" id="sort-list">
+                            @foreach (var prod1 in Model.Products)
+                        {
+                                <div class="product__box product__box--list">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="product__img-box">
+                                                <a href="single-1.html" class="product__img--link">
+                                                    <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                                </a>
+                                                @*<span class="product__tag product__tag--discount">-12%</span>*@
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5 pos-relative">
+                                            <div class="border-right pos-absolute"></div>
+                                            <div class="product__price">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span class="product__price-reg">@prod1.Price</span>
+                                            </div>
+                                            <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                                @prod1.ProductName
+                                            </a>
+                                            <div class="product__desc m-t-25 m-b-30">
+                                                @*<p>@Html.Raw(prod1.Description)</p>*@
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div>
+                                                <ul class="shop__list-link">
+                                                    <li><a href="#modalAddCart" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به سبد</a></li>
+                                                    <li><a href="wishlist.html" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i> علاقه مندی</a></li>
+                                                    <li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- Start Single List Product -->
+                        }
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="page-pagination">
-                <span></span>
-                <ul class="page-pagination__list">
-                    <li class="page-pagination__item">
-                        <a class="page-pagination__link btn btn--gray" href="#"><i class="icon-chevron-left"></i> قبلی</a>
-                    </li>
-                    <li class="page-pagination__item"><a class="page-pagination__link active btn btn--gray" href="#">1</a></li>
-                    <li class="page-pagination__item"><a class="page-pagination__link btn btn--gray" href="#">2</a></li>
-                    <li class="page-pagination__item">
-                        <a class="page-pagination__link btn btn--gray" href="#">بعدی<i class="icon-chevron-right"></i></a>
-                    </li>
-                </ul>
-            </div>
+                <div class="page-pagination">
+                    <span></span>
+                    <ul class="page-pagination__list">
+                        <li class="page-pagination__item"><a class="page-pagination__link active btn btn--gray" href="#">1</a></li>
+                        @if (Model.Products.Count >= 10)
+                        {
+                            <li class="page-pagination__item">
+                                <a class="page-pagination__link btn btn--gray" id="nav_next" onclick="Paginations(0)">بعدی<i class="icon-chevron-right"></i></a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+           </div>
         </div>  <!-- Start Rightside - Content -->
     </div>
 </div>
 
+@section scripts
+    {
+    <script type="text/javascript">
+        var pagenumber = 1
+        var FilterType = []
+        var MinPrice = 0
+        var MaxPrice = 0
+        var Brands = []
+        var Types = []
+        $(function ()
+        {
+            $('#price-range-submit').hide();
+
+            $("#min_price,#max_price").on('change', function () {
+                $('#price-range-submit').show();
+
+                var min_price_range = parseInt($("#min_price").val());
+
+                var max_price_range = parseInt($("#max_price").val());
+
+                if (min_price_range > max_price_range) {
+                    $('#max_price').val(min_price_range);
+                }
+
+                $("#slider-range").slider({
+                    values: [min_price_range, max_price_range]
+                });
+            });
+
+
+            $("#min_price,#max_price").on("paste keyup", function () {
+                $('#price-range-submit').show();
+
+                var min_price_range = parseInt($("#min_price").val());
+
+                var max_price_range = parseInt($("#max_price").val());
+
+                if (min_price_range == max_price_range) {
+
+                    max_price_range = min_price_range + 100;
+
+                    $("#min_price").val(min_price_range);
+                    $("#max_price").val(max_price_range);
+                }
+
+                $("#slider-range").slider({
+                    values: [min_price_range, max_price_range]
+                });
+            });
+
+            $("#slider-range,#price-range-submit").click(function () {
+
+                var min_price = $('#min_price').val();
+                var max_price = $('#max_price').val();
+                $("#searchResults").text("Here List of products will be shown which are cost between " + min_price + " " + "and" + " " + max_price + ".");
+            });
+
+            $("#slider-range").slider({
+                range: true,
+                orientation: "horizontal",
+                min: 0,
+                max: @Model.MaxPrice,
+                values: [0, @Model.MaxPrice],
+                step: 100000,
+
+                slide: function (event, ui) {
+                    if (ui.values[0] == ui.values[1]) {
+                        return false;
+                    }
+
+                    $("#min_price").val(ui.values[0]);
+                    $("#max_price").val(ui.values[1]);
+                    FilterPrice(ui.values[0],ui.values[1]);
+                }
+            });
+
+            $("#min_price").val($("#slider-range").slider("values", 0));
+            $("#max_price").val($("#slider-range").slider("values", 1));
+        });
+        function FilterPrice(minVal,maxVal)
+        {
+            if(!FilterType.indexOf("1") >= 0)
+            {
+                FilterType.push("1")
+            }
+            MinPrice = minVal
+            MaxPrice = maxVal
+            pagenumber = 0
+            Paginations(0)
+        }
+        function Paginations(typo)
+        {
+            $.ajax(
+                {
+                    url : '@Url.Action("Pagination","Home")',
+                    type:'post',
+                    datatype:'json',
+                    data:{id:1,currentpage:pagenumber,target:typo,Nidcategory:@Model.Category.NidCategory,FilterType:FilterType.join(','),MinPrice:MinPrice,MaxPrice:MaxPrice,NidBrands:Brands.join(','),NidTypes:Types.join(',')},
+                    success:function(result)
+                    {
+                        if(result.HasValue)
+                        {
+                            $("#contents").html(result.Html);
+                            if(typo == 0)
+                                pagenumber++;
+                            else
+                                pagenumber--;
+                        }
+                    },
+                    error:function(){}
+                });
+        }
+        function CheckboxTrigger(currentId,typo)
+        {
+            if(typo == 0) //type
+            {
+                if(Types.indexOf(currentId) >= 0)
+                {
+                    const inx = Types.indexOf(currentId)
+                    Types.splice(inx,1)
+                }else
+                {
+                    Types.push(currentId)
+                }
+                if (Types.length == 0) {
+                    if(FilterType.indexOf("3") >= 0)
+                    {
+                        const tmptypeinx = FilterType.indexOf("3")
+                        FilterType.splice(tmptypeinx,1)
+                    }
+                }else
+                {
+                    if(!FilterType.indexOf("3") >= 0)
+                    {
+                        FilterType.push("3")
+                    }
+                }
+            }
+            if(typo == 1) //brand
+            {
+                if(Brands.indexOf(currentId) >= 0)
+                {
+                    const inx2 = Brands.indexOf(currentId)
+                    Brands.splice(inx2,1)
+                }else
+                {
+                    Brands.push(currentId)
+                }
+                if (Brands.length == 0) {
+                    if(FilterType.indexOf("2") >= 0)
+                    {
+                        const tmpbrandinx = FilterType.indexOf("2")
+                        FilterType.splice(tmpbrandinx,1)
+                    }
+                }else
+                {
+                    if(!FilterType.indexOf("2") >= 0)
+                    {
+                        FilterType.push("2")
+                    }
+                }
+            }
+            pagenumber = 0
+            Paginations(0)
+        }
+    </script>
+    <script type="text/javascript">
+    </script>
+    }

@@ -26,6 +26,42 @@ namespace AudioShopFrontend.DTO
                 return null;
             }
         }
+
+        public CategoryDTO MapToCategoryDto(Category category)
+        {
+            try
+            {
+                return mapper.Map<CategoryDTO>(category);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public Category_BrandDTO MapToCategory_BrandDTO(Category_Brands category_brand)
+        {
+            try
+            {
+                return mapper.Map<Category_BrandDTO>(category_brand);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public Category_TypeDTO MapToCategory_TypeDTO(Category_Types category_type)
+        {
+            try
+            {
+                return mapper.Map<Category_TypeDTO>(category_type);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+
         public ProductDTO MapToProductDto(Product product)
         {
             try

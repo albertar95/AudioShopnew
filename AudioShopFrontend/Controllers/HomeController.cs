@@ -33,11 +33,13 @@ namespace AudioShopFrontend.Controllers
             dataTransfer = new DataTransfer();
             ViewModels.CategoryViewModel cvm = new ViewModels.CategoryViewModel();
             var tmpCategory = dataTransfer.GetCategoryByNidCategory(Nidcategory);
-            cvm.CategoryBrands = tmpCategory.Category_Brands.ToList();
-            cvm.CategoryTypes = tmpCategory.Category_Types.ToList();
-            cvm.Products = tmpCategory.Products.ToList();
-            cvm.MinPrice = tmpCategory.Products.Min(p => p.Price);
-            cvm.MaxPrice = tmpCategory.Products.Max(p => p.Price);
+            cvm.CategoryBrands = dataTransfer.GetCategory_BrandByNidcategory(tmpCategory.NidCategory);
+            cvm.CategoryTypes = dataTransfer.GetCategory_TypeByNidcategory(tmpCategory.NidCategory);
+            cvm.Products = dataTransfer.GetProductsByNidcategory(tmpCategory.NidCategory);
+            var minmax = dataTransfer.GetMinMaxCategoryPrice(tmpCategory.NidCategory);
+            cvm.MinPrice = minmax.Item1;
+            cvm.MaxPrice = minmax.Item2;
+            cvm.Category = tmpCategory;
             return View(cvm);
         }
         public ActionResult Generals(int Typo)
@@ -334,6 +336,93 @@ namespace AudioShopFrontend.Controllers
         public ActionResult Blog()
         {
             return View();
+        }
+        public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")
+        {
+            dataTransfer = new DataTransfer();
+            switch (id)
+            {
+                case 1:
+                    CategoryViewModel cvm = new CategoryViewModel();
+                    if (FilterType == "")//no filter
+                    {
+                        cvm.Products = CategoryProductFilter("", Nidcategory, currentpage, target);
+                    }
+                    else
+                    {
+                        cvm.Products = CategoryProductFilter(FilterType, Nidcategory, currentpage, target, MinPrice, MaxPrice, NidBrands, NidTypes);
+                    }
+                    if (target == 0)
+                        cvm.MinPrice = currentpage + 1;
+                    else
+                        cvm.MinPrice = currentpage - 1;
+                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CategoryProducts", cvm) });
+                default:
+                    return Json(new JsonResults() { HasValue = false });
+            }
+        }
+        public List<ProductDTO> CategoryProductFilter(string FilterType,int Nidcategory, int currentpage, int target, decimal MinPrice = 0, decimal MaxPrice = 0, string NidBrands = "", string NidTypes = "")
+        {
+            if (FilterType == "")
+            {
+                return dataTransfer.GetProductsByNidcategory(Nidcategory, 10, (currentpage + target) * 10);
+            }
+            else
+            {
+                string[] filters = FilterType.Split(',');
+                int FilterTypo = 0;
+                if (filters.Contains("1"))
+                {
+                    if (filters.Contains("2"))
+                    {
+                        if (filters.Contains("3"))//all filters
+                        {
+                            FilterTypo = 1;
+                        }
+                        else //just 1,2
+                        {
+                            FilterTypo = 2;
+                        }
+                    }
+                    else
+                    {
+                        if (filters.Contains("3"))//just 1,3
+                        {
+                            FilterTypo = 3;
+                        }
+                        else //just 1
+                        {
+                            FilterTypo = 4;
+                        }
+                    }
+                }
+                else
+                {
+                    if (filters.Contains("2"))
+                    {
+                        if (filters.Contains("3"))//just 2,3
+                        {
+                            FilterTypo = 5;
+                        }
+                        else //just 2
+                        {
+                            FilterTypo = 6;
+                        }
+                    }
+                    else
+                    {
+                        if (filters.Contains("3"))//just 3
+                        {
+                            FilterTypo = 7;
+                        }
+                        else //none
+                        {
+                            FilterTypo = 0;
+                        }
+                    }
+                }
+                return dataTransfer.GetProductsByNidcategory(Nidcategory, 10, (currentpage + target) * 10, MinPrice, MaxPrice, NidBrands, NidTypes, FilterTypo);
+            }
         }
         public ActionResult SearchThis(string Text,int Nidcategory)
         {

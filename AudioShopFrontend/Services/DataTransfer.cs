@@ -16,14 +16,14 @@ namespace AudioShopFrontend.Services
         DataMapper mapper = new DataMapper();
         static string hashkey { get; set; } = "A!9HHhi%XjjYY4YP2@Nob009X";
 
-        public Category GetCategoryByCategoryName(string CategoryName)
+        public CategoryDTO GetCategoryByCategoryName(string CategoryName)
         {
-            return db.Categories.Where(p => p.CategoryName == CategoryName).FirstOrDefault();
+            return mapper.MapToCategoryDto(db.Categories.Where(p => p.CategoryName == CategoryName).FirstOrDefault());
         }
 
-        public Category GetCategoryByNidCategory(int Nidcategory)
+        public CategoryDTO GetCategoryByNidCategory(int Nidcategory)
         {
-            return db.Categories.Where(p => p.NidCategory == Nidcategory).FirstOrDefault();
+            return mapper.MapToCategoryDto(db.Categories.Where(p => p.NidCategory == Nidcategory).FirstOrDefault());
         }
 
         public List<CategoryLiteDTO> GetcategoryList()
@@ -244,6 +244,112 @@ namespace AudioShopFrontend.Services
             int tmpCart = db.Carts.Where(p => p.NidUser == NidUser).Count();
             int tmpfav = db.Favorites.Where(p => p.NidUser == NidUser).Count();
             return new Tuple<int, int>(tmpCart,tmpfav);
+        }
+
+        public List<Category_BrandDTO> GetCategory_BrandByNidcategory(int Nidcategory)
+        {
+            List<Category_BrandDTO> result = new List<Category_BrandDTO>();
+            foreach (var brd in db.Category_Brands.Where(p => p.NidCategory == Nidcategory))
+            {
+                result.Add(mapper.MapToCategory_BrandDTO(brd));
+            }
+            return result;
+        }
+
+        public List<Category_TypeDTO> GetCategory_TypeByNidcategory(int Nidcategory)
+        {
+            List<Category_TypeDTO> result = new List<Category_TypeDTO>();
+            foreach (var typ in db.Category_Types.Where(p => p.NidCategory == Nidcategory))
+            {
+                result.Add(mapper.MapToCategory_TypeDTO(typ));
+            }
+            return result;
+        }
+
+        public List<ProductDTO> GetProductsByNidcategory(int Nidcategory, int pagesize = 10, int toSkip = 0, decimal MinPrice = 0, decimal MaxPrice = 0, string NidBrands = "", string NidTypes = "", int FilterType = 0)
+        {
+            List<ProductDTO> result = new List<ProductDTO>();
+            List<Guid> tmpBrands = new List<Guid>();
+            List<Guid> tmptypes = new List<Guid>();
+            if (FilterType != 0)
+            {
+                if(NidBrands != "")
+                {
+                    foreach (var brd in NidBrands.Split(','))
+                    {
+                        tmpBrands.Add(Guid.Parse(brd));
+                    }
+                }
+                if(NidTypes != "")
+                {
+                    foreach (var typ in NidTypes.Split(','))
+                    {
+                        tmptypes.Add(Guid.Parse(typ));
+                    }
+                }
+            }
+            //1 price,2 brand,3 type
+            //1:123,2:12,3:13,4:1,5:23,6:2,7:3
+            switch (FilterType)
+            {
+                case 0:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                case 1:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory && p.Price >= MinPrice && p.Price <= MaxPrice && tmpBrands.Contains(p.NidBrand) && tmptypes.Contains(p.NidType)).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                case 2:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory && p.Price >= MinPrice && p.Price <= MaxPrice && tmpBrands.Contains(p.NidBrand)).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                case 3:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory && p.Price >= MinPrice && p.Price <= MaxPrice && tmptypes.Contains(p.NidType)).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                case 4:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory && p.Price >= MinPrice && p.Price <= MaxPrice).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                case 5:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory && tmpBrands.Contains(p.NidBrand) && tmptypes.Contains(p.NidType)).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                case 6:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory && tmpBrands.Contains(p.NidBrand)).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                case 7:
+                    foreach (var prod in db.Products.Where(p => p.NidCategory == Nidcategory && tmptypes.Contains(p.NidType)).OrderByDescending(q => q.CreateDate).Skip(toSkip).Take(pagesize))
+                    {
+                        result.Add(mapper.MapToProductDto(prod));
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return result;
+        }
+
+        public Tuple<decimal, decimal> GetMinMaxCategoryPrice(int Nidcategory)
+        {
+            var result = db.Products.Where(p => p.NidCategory == Nidcategory).GroupBy(q => q.Price).Select(w => w.Key);
+            return new Tuple<decimal, decimal>(result.Min(),result.Max());
         }
     }
 }

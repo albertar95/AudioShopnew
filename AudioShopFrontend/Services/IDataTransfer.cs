@@ -13,8 +13,8 @@ namespace AudioShopFrontend.Services
         //index
         List<CategoryLiteDTO> GetcategoryList();
         //category
-        Category GetCategoryByNidCategory(int Nidcategory);
-        Category GetCategoryByCategoryName(string CategoryName);
+        CategoryDTO GetCategoryByNidCategory(int Nidcategory);
+        CategoryDTO GetCategoryByCategoryName(string CategoryName);
         List<ProductDTO> GetLatestProducts(int pagesize = 10);
         List<ProductDTO> GetPopularProducts(int pagesize = 10);
         List<ProductDTO> GetSpecialProducts(int pagesize = 10);
@@ -39,5 +39,10 @@ namespace AudioShopFrontend.Services
         List<ProductDTO> SearchProduct(string input,int Nidcategory = 0);
         //orders
         List<Order> GetUsersOrder(Guid NidUser);
+
+        List<Category_BrandDTO> GetCategory_BrandByNidcategory(int Nidcategory);
+        List<Category_TypeDTO> GetCategory_TypeByNidcategory(int Nidcategory);
+        List<ProductDTO> GetProductsByNidcategory(int Nidcategory,int pagesize = 10,int toSkip = 0,decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "",int FilterType = 0);
+        Tuple<decimal, decimal> GetMinMaxCategoryPrice(int Nidcategory);
     }
 }
