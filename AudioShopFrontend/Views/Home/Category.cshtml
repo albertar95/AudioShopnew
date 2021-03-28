@@ -97,32 +97,31 @@
             <!-- ::::::  Start Sort Box Section  ::::::  -->
             <div class="sort-box m-tb-30">
                 <!-- Start Sort Left Side -->
-                <div class="sort-box__left">
+                <div class="sort-box__left" style="direction:rtl;">
+                    <span>مرتب سازی بر اساس :</span>
+                    <div class="sort-box__option">
+                        <label>
+                            <select name="select-sort" class="select-sort" id="sortselect">
+                                <option value="1">حروف الفبا</option>
+                                <option value="2"> ارزان ترین</option>
+                                <option value="3">گران ترین</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="sort-box__right" style="direction:rtl;">
                     <div class="sort-box__tab">
                         <ul class="sort-box__tab-list nav">
                             <li><a class="sort-nav-link" data-toggle="tab" href="#sort-grid"><i class="icon-grid"></i>  </a></li>
                             <li><a class="sort-nav-link active" data-toggle="tab" href="#sort-list"><i class="icon-list"></i></a></li>
                         </ul>
                     </div>
-                    <span>محصول در این دسته بندی وجود دارد @Model.Products.Count</span>
+                    @*<span>محصول در این دسته بندی وجود دارد @Model.Products.Count</span>*@
                 </div> <!-- Start Sort Left Side -->
 
-                <div class="sort-box__right">
-                    <span>مرتب سازی بر اساس :</span>
-                    <div class="sort-box__option">
-                        <label class="select-sort__arrow">
-                            <select name="select-sort" class="select-sort">
-                                <option value="1">مرتبط ترین</option>
-                                <option value="2">حروف الفبا</option>
-                                <option value="4"> ارزان ترین</option>
-                                <option value="5">گران ترین</option>
-                            </select>
-                        </label>
-                    </div>
-                </div>
             </div> <!-- ::::::  Start Sort Box Section  ::::::  -->
             <div id="contents">
-                <div class="product-tab-area">
+                <div class="product-tab-area" id="ProductTabs">
                     <div class="tab-content ">
                         <div class="tab-pane clearfix" id="sort-grid">
                             @foreach (var prod2 in Model.Products)
@@ -133,9 +132,9 @@
                                             <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
                                         </a>
 
-                                        <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
+                                        <a onclick="AddToCart('@prod2.ProductName','@prod2.Price','@prod2.Pictures','@prod2.NidProduct')" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
                                         <span class="product__tag product__tag--discount">-12%</span>
-                                        <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
+                                        <button onclick="AddToFav('@prod2.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></button>
                                     </div>
                                     <div class="product__price m-t-10">
                                         @*<span class="product__price-del">$11.90</span>*@
@@ -177,8 +176,8 @@
                                         <div class="col-md-3">
                                             <div>
                                                 <ul class="shop__list-link">
-                                                    <li><a href="#modalAddCart" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به سبد</a></li>
-                                                    <li><a href="wishlist.html" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i> علاقه مندی</a></li>
+                                                    <li><a onclick="AddToCart('@prod1.ProductName','@prod1.Price','@prod1.Pictures','@prod1.NidProduct')" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به سبد</a></li>
+                                                    <li><button  onclick="AddToFav('@prod1.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i> علاقه مندی</button></li>
                                                     <li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>
                                                 </ul>
                                             </div>
@@ -284,6 +283,30 @@
 
             $("#min_price").val($("#slider-range").slider("values", 0));
             $("#max_price").val($("#slider-range").slider("values", 1));
+            $('#sortselect').on('change', function() {
+                @{ 
+                    List<string> tmpNidProduct = new List<string>();
+                    foreach (var prod in Model.Products)
+                    {
+                        tmpNidProduct.Add(prod.NidProduct.ToString());
+                    }
+                }
+                $.ajax(
+                    {
+                        url : '@Url.Action("SortChange","Home")',
+                        type:'post',
+                        datatype:'json',
+                        data:{id:1,NidProducts:'@string.Join(",", tmpNidProduct)',sortId:this.value},
+                        success:function(result)
+                        {
+                            if(result.HasValue)
+                            {
+                                $("#ProductTabs").html(result.Html);
+                            }
+                        },
+                        error:function(){}
+                    });
+            });
         });
         function FilterPrice(minVal,maxVal)
         {
@@ -371,7 +394,6 @@
             pagenumber = 0
             Paginations(0)
         }
-    </script>
-    <script type="text/javascript">
+
     </script>
     }

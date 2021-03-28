@@ -1,6 +1,6 @@
 ﻿@model AudioShopFrontend.ViewModels.CategoryViewModel
 
-<div class="product-tab-area">
+<div class="product-tab-area" id="ProductTabs">
     <div class="tab-content ">
         <div class="tab-pane clearfix" id="sort-grid">
             @foreach (var prod2 in Model.Products)
@@ -67,26 +67,3 @@
         </div>
     </div>
 </div>
-
-<div class="page-pagination">
-    <span></span>
-    <ul class="page-pagination__list">
-        @if (Model.MinPrice > 1)
-        {
-            <li class="page-pagination__item">
-                <a class="page-pagination__link btn btn--gray" onclick="Paginations(-2)"><i class="icon-chevron-left"></i> قبلی</a>
-            </li>
-        }
-        <li class="page-pagination__item"><a class="page-pagination__link active btn btn--gray" href="#">@Model.MinPrice</a></li>
-        @if (Model.Products.Count >= 10)
-        {
-            <li class="page-pagination__item">
-                <a class="page-pagination__link btn btn--gray" id="nav_next" onclick="Paginations(0)">بعدی<i class="icon-chevron-right"></i></a>
-            </li>
-        }
-    </ul>
-</div>
-
-
-
-

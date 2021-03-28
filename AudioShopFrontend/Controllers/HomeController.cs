@@ -28,7 +28,7 @@ namespace AudioShopFrontend.Controllers
             //blogs
             return View(ivm);
         }
-        public ActionResult Category(int Nidcategory)
+        public ActionResult Category(int Nidcategory)//done
         {
             dataTransfer = new DataTransfer();
             ViewModels.CategoryViewModel cvm = new ViewModels.CategoryViewModel();
@@ -337,7 +337,7 @@ namespace AudioShopFrontend.Controllers
         {
             return View();
         }
-        public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")
+        public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")//done
         {
             dataTransfer = new DataTransfer();
             switch (id)
@@ -361,7 +361,7 @@ namespace AudioShopFrontend.Controllers
                     return Json(new JsonResults() { HasValue = false });
             }
         }
-        public List<ProductDTO> CategoryProductFilter(string FilterType,int Nidcategory, int currentpage, int target, decimal MinPrice = 0, decimal MaxPrice = 0, string NidBrands = "", string NidTypes = "")
+        public List<ProductDTO> CategoryProductFilter(string FilterType,int Nidcategory, int currentpage, int target, decimal MinPrice = 0, decimal MaxPrice = 0, string NidBrands = "", string NidTypes = "")//done
         {
             if (FilterType == "")
             {
@@ -423,6 +423,35 @@ namespace AudioShopFrontend.Controllers
                 }
                 return dataTransfer.GetProductsByNidcategory(Nidcategory, 10, (currentpage + target) * 10, MinPrice, MaxPrice, NidBrands, NidTypes, FilterTypo);
             }
+        }
+        public ActionResult SortChange(int id,string NidProducts,int sortId)//done
+        {
+            switch (id)
+            {
+                case 1:
+                    dataTransfer = new DataTransfer();
+                    CategoryViewModel cvm = new CategoryViewModel();
+                    List<ProductDTO> products = new List<ProductDTO>();
+                    foreach (var nids in NidProducts.Split(','))
+                    {
+                        products.Add(dataTransfer.GetProductDtoByID(Guid.Parse(nids)));
+                    }
+                    switch (sortId)
+                    {
+                        case 1:
+                            products = products.OrderBy(p => p.ProductName).ToList();
+                            break;
+                        case 2:
+                            products = products.OrderBy(p => p.Price).ToList();
+                            break;
+                        case 3:
+                            products = products.OrderByDescending(p => p.Price).ToList();
+                            break;
+                    }
+                    cvm.Products = products;
+                    return Json(new JsonResults() {  HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CategoryProductSort", cvm)});
+            }
+            return Json(new JsonResults() { });
         }
         public ActionResult SearchThis(string Text,int Nidcategory)
         {

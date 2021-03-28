@@ -200,6 +200,7 @@
     <Content Include="Content\assets\fonts\fontAwesome5Pro\fa-light-300.svg" />
     <Content Include="Content\assets\fonts\fontAwesome5Pro\fa-regular-400.svg" />
     <Content Include="Content\assets\fonts\fontAwesome5Pro\fa-solid-900.svg" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\assets\fonts\plaza-icon\plaza-icon.svg" />
     <Content Include="Content\assets\fonts\themify\themify.svg" />
     <Content Include="Content\assets\fonts\Yekan\Yekan.svg" />
@@ -407,6 +408,9 @@
     <Content Include="Models\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.eot" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -572,6 +576,7 @@
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Home\_CategoryProducts.cshtml" />
+    <Content Include="Views\Home\_CategoryProductSort.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
