@@ -337,6 +337,7 @@ namespace AudioShopFrontend.Controllers
         {
             return View();
         }
+        //categories() demo for categories
         public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")//done
         {
             dataTransfer = new DataTransfer();
