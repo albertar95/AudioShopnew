@@ -481,6 +481,7 @@
     <Compile Include="Services\IDataTransfer.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\SharedLayotViewModel.cs" />
   </ItemGroup>
@@ -577,6 +578,8 @@
     <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Home\_CategoryProducts.cshtml" />
     <Content Include="Views\Home\_CategoryProductSort.cshtml" />
+    <Content Include="Views\Home\_GeneralProductSort.cshtml" />
+    <Content Include="Views\Home\_GeneralProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

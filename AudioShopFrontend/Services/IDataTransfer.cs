@@ -15,9 +15,9 @@ namespace AudioShopFrontend.Services
         //category
         CategoryDTO GetCategoryByNidCategory(int Nidcategory);
         CategoryDTO GetCategoryByCategoryName(string CategoryName);
-        List<ProductDTO> GetLatestProducts(int pagesize = 10);
-        List<ProductDTO> GetPopularProducts(int pagesize = 10);
-        List<ProductDTO> GetSpecialProducts(int pagesize = 10);
+        List<ProductDTO> GetLatestProducts(int pagesize = 10,int toskip = 0);
+        List<ProductDTO> GetPopularProducts(int pagesize = 10, int toskip = 0);
+        List<ProductDTO> GetSpecialProducts(int pagesize = 10, int toskip = 0);
         //product
         Product GetProductByID(Guid NidProduct);
         ProductDTO GetProductDtoByID(Guid NidProduct);

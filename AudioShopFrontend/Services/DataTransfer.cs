@@ -36,21 +36,21 @@ namespace AudioShopFrontend.Services
             return result;
         }
 
-        public List<ProductDTO> GetLatestProducts(int pagesize = 10)
+        public List<ProductDTO> GetLatestProducts(int pagesize = 10, int toskip = 0)
         {
             List<ProductDTO> result = new List<ProductDTO>();
-            foreach (var pro in db.Products.Where(p => p.State == 0).OrderByDescending(q => q.CreateDate).Take(pagesize))
+            foreach (var pro in db.Products.Where(p => p.State == 0).OrderByDescending(q => q.CreateDate).Skip(toskip).Take(pagesize))
             {
                 result.Add(mapper.MapToProductDto(pro));
             }
             return result;
         }
 
-        public List<ProductDTO> GetPopularProducts(int pagesize = 10)
+        public List<ProductDTO> GetPopularProducts(int pagesize = 10, int toskip = 0)
         {
             List<ProductDTO> result = new List<ProductDTO>();
             var MostWanted = db.Orders.GroupBy(p => p.NidProduct).Select(q =>  new { nidprod = q.Key,cnt = q.Count()});
-            foreach (var pro in MostWanted.OrderByDescending(q => q.cnt).Take(pagesize))
+            foreach (var pro in MostWanted.OrderByDescending(q => q.cnt).Skip(toskip).Take(pagesize))
             {
                 result.Add(GetProductDtoByID(pro.nidprod));
             }
@@ -62,10 +62,10 @@ namespace AudioShopFrontend.Services
             return db.Products.Where(p => p.NidProduct == NidProduct).FirstOrDefault();
         }
 
-        public List<ProductDTO> GetSpecialProducts(int pagesize = 10)
+        public List<ProductDTO> GetSpecialProducts(int pagesize = 10, int toskip = 0)
         {
             List<ProductDTO> result = new List<ProductDTO>();
-            foreach (var pro in db.Products.Where(p => p.State == 0).OrderByDescending(q => q.Priority).OrderByDescending(w => w.CreateDate).Take(pagesize))
+            foreach (var pro in db.Products.Where(p => p.State == 0).OrderByDescending(q => q.Priority).OrderByDescending(w => w.CreateDate).Skip(toskip).Take(pagesize))
             {
                 result.Add(mapper.MapToProductDto(pro));
             }

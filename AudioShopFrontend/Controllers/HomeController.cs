@@ -46,6 +46,7 @@ namespace AudioShopFrontend.Controllers
         {
             List<ProductDTO> Products = new List<ProductDTO>();
             dataTransfer = new DataTransfer();
+            TempData["GeneralPageName"] = Typo.ToString();
             switch (Typo)
             {
                 case 1:
@@ -55,7 +56,7 @@ namespace AudioShopFrontend.Controllers
                     Products = dataTransfer.GetSpecialProducts();
                     break;
                 case 3:
-                    Products = dataTransfer.GetSpecialProducts();
+                    Products = dataTransfer.GetPopularProducts();
                     break;
                 default:
                     break;
@@ -358,6 +359,26 @@ namespace AudioShopFrontend.Controllers
                     else
                         cvm.MinPrice = currentpage - 1;
                     return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CategoryProducts", cvm) });
+                case 2:
+                    ProductViewModel pvm = new ProductViewModel();
+                    switch (Nidcategory)
+                    {
+                        case 1:
+                            pvm.Products = dataTransfer.GetLatestProducts(10,(currentpage + target)*10);
+                            break;
+                        case 2:
+                            pvm.Products = dataTransfer.GetSpecialProducts(10,(currentpage + target) * 10);
+                            break;
+                        case 3:
+                            pvm.Products = dataTransfer.GetPopularProducts(10, (currentpage + target) * 10);
+                            break;
+                    }
+
+                    if (target == 0)
+                        pvm.PageNumber = currentpage + 1;
+                    else
+                        pvm.PageNumber = currentpage - 1;
+                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_GeneralProducts", pvm) });
                 default:
                     return Json(new JsonResults() { HasValue = false });
             }
@@ -427,12 +448,12 @@ namespace AudioShopFrontend.Controllers
         }
         public ActionResult SortChange(int id,string NidProducts,int sortId)//done
         {
+            dataTransfer = new DataTransfer();
+            List<ProductDTO> products = new List<ProductDTO>();
             switch (id)
             {
                 case 1:
-                    dataTransfer = new DataTransfer();
                     CategoryViewModel cvm = new CategoryViewModel();
-                    List<ProductDTO> products = new List<ProductDTO>();
                     foreach (var nids in NidProducts.Split(','))
                     {
                         products.Add(dataTransfer.GetProductDtoByID(Guid.Parse(nids)));
@@ -451,6 +472,24 @@ namespace AudioShopFrontend.Controllers
                     }
                     cvm.Products = products;
                     return Json(new JsonResults() {  HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CategoryProductSort", cvm)});
+                case 2:
+                    foreach (var nids in NidProducts.Split(','))
+                    {
+                        products.Add(dataTransfer.GetProductDtoByID(Guid.Parse(nids)));
+                    }
+                    switch (sortId)
+                    {
+                        case 1:
+                            products = products.OrderBy(p => p.ProductName).ToList();
+                            break;
+                        case 2:
+                            products = products.OrderBy(p => p.Price).ToList();
+                            break;
+                        case 3:
+                            products = products.OrderByDescending(p => p.Price).ToList();
+                            break;
+                    }
+                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_GeneralProductSort", products) });
             }
             return Json(new JsonResults() { });
         }
