@@ -351,5 +351,14 @@ namespace AudioShopFrontend.Services
             var result = db.Products.Where(p => p.NidCategory == Nidcategory).GroupBy(q => q.Price).Select(w => w.Key);
             return new Tuple<decimal, decimal>(result.Min(),result.Max());
         }
+
+        public bool AddComment(Comment comment)
+        {
+            db.Comments.Add(comment);
+            if (db.SaveChanges() == 1)
+                return true;
+            else
+                return false;
+        }
     }
 }

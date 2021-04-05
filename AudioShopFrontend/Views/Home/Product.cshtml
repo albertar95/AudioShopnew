@@ -83,15 +83,8 @@
                             <h5 class="section-content__title">@Model.ProductName</h5>
                             <span class="text-reference"></span>
                             <div class="review-box">
-                                <ul class="product__review m-t-10 m-b-15">
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--blank"><i class="icon-star"></i></li>
-                                </ul>
                                 <a href="#product-review" class="link--gray link--icon-left  m-b-5"><i class="fal fa-comment-dots"></i>خواندن نظرات </a>
-                                <a href="#modalReview" data-toggle="modal" class="link--gray link--icon-left m-b-5"><i class="fal fa-edit"></i> نوشتن نظر</a>
+                                <button onclick="AddReview('@Model.ProductName','','')" data-toggle="modal" class="link--gray link--icon-left m-b-5"><i class="fal fa-edit"></i> نوشتن نظر</button>
                             </div>
                             <div class="product__price">
                                 <span class="product__price-del">@Model.Price</span>
@@ -102,12 +95,12 @@
                             </div>
                             <div class="product-var p-t-30">
                                 <div class="product-quantity product-var__item">
-                                    <span class="product-var__text">تعداد</span>
+                                    <span class="product-var__text" style="padding-left:20px;text-align:left !important;">تعداد</span>
                                     <div class="product-quantity-box">
                                         <div class="quantity">
-                                            <input type="number" min="1" max="9" step="1" value="1">
+                                            <input style="border:1px solid #d6cece;" type="number" min="1" max="9" step="1" value="1">
                                         </div>
-                                        <a href="#modalAddCart" data-toggle="modal" data-dismiss="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-l-20">اضافه کردن به لیست</a>
+                                        <a onclick="AddToCart('@Model.ProductName','@Model.Price','@Model.Pictures','@Model.NidProduct')" data-toggle="modal" data-dismiss="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-l-20">اضافه کردن به لیست خرید</a>
                                     </div>
 
                                 </div>
@@ -116,13 +109,13 @@
                                 <div class="product-social m-tb-30">
                                     <span>اشتراک گذاری</span>
                                     <ul class="product-social-link">
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-whatsapp"></i></a></li>
                                         <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-telegram"></i></a></li>
                                     </ul>
                                 </div>
-                                <a href="wishlist.html" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i>اضافه کردن به لیست علاقه مندی ها</a>
+                                <button onclick="AddToFav('@Model.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i>علاقه مندی ها</button>
                             </div>
                         </div>
                     </div>
@@ -135,8 +128,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-content--border">
-                            <ul class="tablist tablist--style-black tablist--style-title tablist--style-gap-70 nav">
-                                <li><a class="nav-link active" data-toggle="tab" href="#product-desc">توضیحات محضول</a></li>
+                            <ul class="tablist tablist--style-black tablist--style-title tablist--style-gap-70 nav ForceRTL">
+                                <li><a class="nav-link active" data-toggle="tab" href="#product-desc">توضیحات محصول</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#product-dis">جزییات</a></li>
                                 <li><a class="nav-link" data-toggle="tab" href="#product-review">نظرات</a></li>
                             </ul>
@@ -148,9 +141,9 @@
                                 <!-- Start Tab - Product Description -->
                                 <div class="tab-pane show active" id="product-desc">
                                     <div class="para__content">
-                                        <p class="para__text">@Model.Description</p>
+                                        <p class="para__text">@Html.Raw(Model.DetailDescription)</p>
 
-                                        <p class="para__text">@Model.Description</p>
+                                        @*<p class="para__text">@Model.Description</p>*@
 
                                         <h6 class="para__title">Product Highlights:</h6>
                                         <ul class="para__list">
@@ -184,6 +177,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
+                                        @Model.Details
                                     </div>
                                 </div>  <!-- End Tab - Product Details -->
                                 <!-- Start Tab - Product Review -->
@@ -274,7 +268,7 @@
                                         </li> <!-- End - Review Comment list-->
                                     </ul>  <!-- End - Review Comment -->
 
-                                    <a href="#modalReview" data-toggle="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-t-30">Write a review</a>
+                                    <button onclick="AddReview('@Model.ProductName','','')" data-toggle="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-t-30">نوشتن نظر</button>
                                 </div>  <!-- Start Tab - Product Review -->
                             </div>
                         </div>
@@ -288,8 +282,8 @@
             <div class="product product--1 swiper-outside-arrow-hover">
                 <div class="row">
                     <div class="col-12">
-                        <div class="section-content section-content--border d-flex align-items-center justify-content-between">
-                            <h5 class="section-content__title">12 Other Products In The Same Category: </h5>
+                        <div class="section-content section-content--border d-flex align-items-center justify-content-between ForceRTL">
+                            <h5 class="section-content__title">محصولات مشابه </h5>
                         </div>
                     </div>
                 </div>
@@ -650,7 +644,7 @@
     <div class="modal-dialog  modal-dialog-centered modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center">WRITE YOUR REVIEW</h5>
+                <h5 class="modal-title text-center">نظر خود را ثبت کنید</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -662,44 +656,27 @@
                             <div class="modal-review-img">
                                 <img class="img-fluid  border-around" src="@Url.Content("~/Content/assets/img/product/size-large/product-home-1-lg-img-1.jpg")" alt="">
                             </div>
-                            <span class="modal__product-title m-t-25">SonicFuel Wireless Over-Ear Headphones</span>
+                            <span class="modal__product-title m-t-25" id="ReviewTitle"></span>
                             <div class="product__desc m-t-15">
-                                <p>The ATH-S700BT offers clear, full-bodied audio reproduction with Bluetooth® wireless operation. The headphones are equipped with a mic, and music and volume controls, allowing you to ...</p>
+                                <p id="ReviewDesc"></p>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <h6>Write Your Review</h6>
-                            <div class="review-box">
-                                <span>Quality</span>
-                                <ul class="product__review">
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--fill"><i class="icon-star"></i></li>
-                                    <li class="product__review--blank"><i class="icon-star"></i></li>
-                                </ul>
-                            </div>
                             <form action="#" method="post" class="form-box">
                                 <div class="form-box__single-group">
-                                    <label for="form-message">Title for your review*</label>
+                                    <label for="form-message">عنوان</label>
                                     <input type="text" id="form-message">
                                 </div>
                                 <div class="form-box__single-group">
-                                    <label for="form-review">Your review*</label>
-                                    <textarea id="form-review" rows="5"></textarea>
-                                </div>
-                                <div class="form-box__single-group">
-                                    <label for="form-name">Your name*</label>
-                                    <input type="text" id="form-name">
+                                    <label for="form-review">نظر شما</label>
+                                    <textarea id="commentText" rows="5"></textarea>
                                 </div>
                                 <div class="from-box__buttons d-flex justify-content-between d-flex-warp m-t-25 align-items-center">
                                     <div class="from-box__left">
-                                        <span>* Required fields</span>
                                     </div>
                                     <div class="form-box-right">
-                                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">Send</button>
-                                        or
-                                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="button" data-dismiss="modal" aria-label="Close">Cancel</button>
+                                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnReviewSubmit" type="submit">ارسال</button>
+                                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="button" data-dismiss="modal" aria-label="Close">انصراف</button>
                                     </div>
                                 </div>
                             </form>
@@ -711,3 +688,41 @@
     </div>
 </div> <!-- End Modal Quickview cart -->
 
+
+@section scripts
+    {
+    <script type="text/javascript">
+        $(function ()
+        {
+            $("#btnReviewSubmit").click(function (e)
+            {
+                e.preventDefault();
+                $.ajax(
+                    {
+                        url: '@Url.Action("SubmitAddReview","Home")',
+                        type: 'post',
+                        datatype: 'json',
+                        data: {
+                            CommentText: $("#commentText").val(),NidUser:'@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetUserId()'},
+                        success: function (result)
+                        {
+                            if(result.HasValue)
+                            {
+                                $("#modalReview").modal('toggle')
+                                myNotify('bottom', 'center', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                            } else {
+                                myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                            }
+                        },
+                        error: function () { }
+                    });
+            });
+        });
+        function AddReview(productname, description, picture)
+        {
+            $("#ReviewTitle").text(productname)
+            $("#ReviewDesc").text(description)
+            $("#modalReview").modal('show')
+        }
+    </script>
+}

@@ -39,6 +39,8 @@ namespace AudioShopFrontend.Services
         List<ProductDTO> SearchProduct(string input,int Nidcategory = 0);
         //orders
         List<Order> GetUsersOrder(Guid NidUser);
+        //comment
+        bool AddComment(Comment comment);
 
         List<Category_BrandDTO> GetCategory_BrandByNidcategory(int Nidcategory);
         List<Category_TypeDTO> GetCategory_TypeByNidcategory(int Nidcategory);

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/plugin/in-number.css")">
     <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/plugin/venobox.min.css")">
     <link rel="stylesheet" href="@Url.Content("~/Content/assets/css/main.css")">
+    <link href="@Url.Content("~/Content/assets/css/notification/notification.css")" rel="stylesheet" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - AudioShop</title>
@@ -451,6 +452,8 @@
     <script src="@Url.Content("~/Content/assets/js/plugin/jquery.elevateZoom-3.0.8.min.js")"></script>
     <script src="@Url.Content("~/Content/assets/js/plugin/venobox.min.js")"></script>
     <script src="@Url.Content("~/Content/assets/js/main.js")"></script>
+    <script src="@Url.Content("~/Content/assets/js/notification/bootstrap-growl.min.js")"></script>
+    <script src="@Url.Content("~/Content/assets/js/notification/notification-active.js")"></script>
     @RenderSection("scripts", false)
     <script type="text/javascript">
         $(function () {
@@ -552,6 +555,47 @@
                     error: function () { }
                 });
         }
+        function myNotify(from, align, icon, type, animIn, animOut, myMessage) {
+            $.growl({
+                icon: icon,
+                title: '',
+                message: myMessage,
+                url: ''
+            }, {
+                element: 'body',
+                type: type,
+                allow_dismiss: true,
+                placement: {
+                    from: from,
+                    align: align
+                },
+                offset: {
+                    x: 20,
+                    y: 85
+                },
+                spacing: 10,
+                z_index: 1031,
+                delay: 2500,
+                timer: 1000,
+                url_target: '_blank',
+                mouse_over: false,
+                animate: {
+                    enter: animIn,
+                    exit: animOut
+                },
+                icon_type: 'class',
+                template: '<div data-growl="container" class="alert" role="alert">' +
+								'<button type="button" class="close" data-growl="dismiss">' +
+									'<span aria-hidden="true">&times;</span>' +
+									'<span class="sr-only">Close</span>' +
+								'</button>' +
+								'<span data-growl="icon"></span>' +
+								'<span data-growl="title"></span>' +
+								'<span data-growl="message"></span>' +
+								'<a href="#" data-growl="url"></a>' +
+							'</div>'
+            });
+        };
     </script>
 </body>
 </html>

@@ -118,7 +118,7 @@ dl, ol, ul {
 }
 
 .border-around {
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   border-radius: 3px;
 }
 
@@ -1068,24 +1068,24 @@ button.btn--block {
 09 - Component - Product
 *****************************/
 .product--1 {
-  margin-top: 10px;
+  margin-top: 57px;
 }
 @media (min-width: 768px) {
   .product--1 {
-    margin-top: 10px;
+    margin-top: 76px;
   }
 }
 @media (min-width: 992px) {
   .product--1 {
-    margin-top: 10px;
+    margin-top: 96px;
   }
 }
 .product .swiper-outside-arrow-fix .m-t-50 {
-  margin-top: 10px;
+  margin-top: 40px;
 }
 @media (min-width: 992px) {
   .product .swiper-outside-arrow-fix .m-t-50 {
-    margin-top: 10px;
+    margin-top: 50px;
   }
 }
 .product__box {
@@ -1354,7 +1354,7 @@ button.btn--block {
 11 - Component - Company Logo
 *****************************/
 .company-logo--2 {
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid #d6cece;
   margin-top: 20px;
 }
 @media (min-width: 768px) {
@@ -1537,7 +1537,7 @@ button.btn--block {
 14 - Component - Shop Sorting
 *****************************/
 .sort-box {
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   padding: 20px;
   border-radius: 3px;
   display: flex;
@@ -1600,7 +1600,7 @@ button.btn--block {
 }
 .select-sort option {
   text-align: right;
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   padding: 5px 15px;
 }
 .select-sort__arrow {
@@ -1649,7 +1649,7 @@ button.btn--block {
   align-items: flex-start;
   justify-content: space-between;
   padding: 20px;
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   border-radius: 3px;
   font-size: 14px;
   flex-direction: column;
@@ -1708,7 +1708,7 @@ button.btn--block {
 }
 .sidebar__widget {
   padding: 20px;
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   border-radius: 3px;
   margin-bottom: 40px;
 }
@@ -1723,7 +1723,7 @@ button.btn--block {
   content: "";
   width: 100%;
   height: 1px;
-  background-color: #dee2e6;
+  background-color: #d6cece;
   bottom: -20px;
   left: 0;
 }
@@ -1803,7 +1803,7 @@ button.btn--block {
 
 /*set a border on the images to prevent shifting*/
 #gallery-zoom img {
-  border: 2px solid #dee2e6;
+  border: 2px solid #d6cece;
 }
 
 /*Change the colour*/
@@ -1814,7 +1814,7 @@ button.btn--block {
 .modal-product-image--thumb img,
 .product-image--thumb img {
   cursor: pointer;
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
 }
 .modal-product-image--thumb .swiper-slide-thumb-active img,
 .product-image--thumb .swiper-slide-thumb-active img {
@@ -1841,8 +1841,8 @@ button.btn--block {
 }
 
 .product-var {
-  border-top: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #d6cece;
+  border-bottom: 1px solid #d6cece;
 }
 .product-var__item {
   margin-bottom: 30px;
@@ -1930,7 +1930,7 @@ button.btn--block {
   content: "";
   width: 1px;
   height: 15px;
-  background: #dee2e6;
+  background: #d6cece;
   top: 50%;
   transform: translateY(-50%);
   left: calc(100% - 35px);
@@ -1988,7 +1988,7 @@ button.btn--block {
   }
 }
 .comment__list {
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #d6cece;
   padding-top: 20px;
   padding-bottom: 15px;
 }
@@ -2007,7 +2007,7 @@ button.btn--block {
   }
 }
 .comment__reply li {
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid #d6cece;
   padding-top: 20px;
   margin-top: 15px;
 }
@@ -2026,7 +2026,7 @@ button.btn--block {
 }
 .comment__img img {
   border-radius: 50%;
-  border: 3px solid #dee2e6;
+  border: 3px solid #d6cece;
   width: 78px;
   height: 78px;
 }
@@ -2056,10 +2056,9 @@ button.btn--block {
 .form-box__single-group label {
   font-size: 14px;
   font-weight: 400;
-  text-align: left;
 }
 .form-box__single-group input, .form-box__single-group textarea, .form-box__single-group select {
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   border-radius: 3px;
   padding: 7.5px 10px;
   width: 100%;
@@ -2071,7 +2070,7 @@ button.btn--block {
 
 select {
   outline: none;
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   padding: 5px 15px;
 }
 
@@ -2211,7 +2210,7 @@ input[type=radio].shipping-select:checked::after {
   display: block;
 }
 .shop-list > .product__box--list {
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #d6cece;
   padding: 30px 0;
 }
 
@@ -2220,7 +2219,7 @@ input[type=radio].shipping-select:checked::after {
 }
 @media (min-width: 768px) {
   .border-right.pos-absolute {
-    border-right: 1px solid #dee2e6 !important;
+    border-right: 1px solid #d6cece !important;
     height: 100%;
     right: 0;
   }
@@ -2252,7 +2251,7 @@ input[type=radio].shipping-select:checked::after {
 
 .product-dis__img {
   display: inline-block;
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
 }
 .product-dis__title {
   font-weight: 500;
@@ -2491,8 +2490,8 @@ input[type=radio].shipping-select:checked::after {
 
 .total-shipping {
   padding: 15px 0;
-  border-top: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #d6cece;
+  border-bottom: 1px solid #d6cece;
   margin-top: 20px;
 }
 
@@ -2540,15 +2539,15 @@ input[type=radio].shipping-select:checked::after {
 .your-order-middle {
   color: #333;
   padding: 20px 0;
-  border-top: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #d6cece;
+  border-bottom: 1px solid #d6cece;
   margin: 20px 0;
 }
 
 .your-order-total {
   padding: 20px 0;
-  border-top: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #d6cece;
+  border-bottom: 1px solid #d6cece;
   margin: 20px 0;
 }
 
@@ -3639,12 +3638,12 @@ input[type=radio].shipping-select:checked::after {
 35 - Layout - Table
 *****************************/
 table {
-  border: 1px solid #dee2e6;
+  border: 1px solid #d6cece;
   width: 100%;
 }
 table thead > tr {
-  background-color: #dee2e6;
-  border: 1px solid #dee2e6;
+  background-color: #d6cece;
+  border: 1px solid #d6cece;
 }
 table thead > tr > th {
   color: #1d1d1d;
@@ -3657,7 +3656,7 @@ table thead > tr > th {
   white-space: nowrap;
 }
 table tbody > tr {
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid #d6cece;
 }
 table tbody > tr td {
   color: #666;
@@ -3708,8 +3707,8 @@ table tbody > tr td a:hover {
   border: none;
   padding: 25px 30px;
   vertical-align: middle;
-  border-bottom: 1px solid #dee2e6;
-  border-left: 1px solid #dee2e6;
+  border-bottom: 1px solid #d6cece;
+  border-left: 1px solid #d6cece;
 }
 
 .first-column {

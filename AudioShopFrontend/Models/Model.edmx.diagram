@@ -21,14 +21,14 @@
         <EntityTypeShape EntityType="ASDbModel.Favorite" Width="1.5" PointX="10.5" PointY="10.75" />
         <AssociationConnector Association="ASDbModel.FK_Carts_Users" />
         <AssociationConnector Association="ASDbModel.FK_Favorites_Users" />
-        <EntityTypeShape EntityType="ASDbModel.Product" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="ASDbModel.Product" Width="1.5" PointX="5.25" PointY="2.25" />
         <AssociationConnector Association="ASDbModel.FK_Carts_Products" />
         <AssociationConnector Association="ASDbModel.FK_Categories_Products" />
         <AssociationConnector Association="ASDbModel.FK_Products_Category_Brands" />
         <AssociationConnector Association="ASDbModel.FK_Products_Category_Types" />
         <AssociationConnector Association="ASDbModel.FK_Favorites_Products" />
         <AssociationConnector Association="ASDbModel.FK_Orders_Products" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

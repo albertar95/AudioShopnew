@@ -42,7 +42,7 @@ namespace AudioShopFrontend.Controllers
             cvm.Category = tmpCategory;
             return View(cvm);
         }
-        public ActionResult Generals(int Typo)
+        public ActionResult Generals(int Typo)//done
         {
             List<ProductDTO> Products = new List<ProductDTO>();
             dataTransfer = new DataTransfer();
@@ -337,6 +337,24 @@ namespace AudioShopFrontend.Controllers
         public ActionResult Blog()
         {
             return View();
+        }
+        public ActionResult SubmitAddReview(string CommentText,string NidUser)
+        {
+            Comment tmpcomment = new Comment() {  CreateDate = DateTime.Now, NidComment = Guid.NewGuid(), State = 2};
+            if(NidUser != "")
+            {
+                tmpcomment.NidUser = Guid.Parse(NidUser);
+                tmpcomment.CommentText = CommentText;
+                dataTransfer = new DataTransfer();
+                if (dataTransfer.AddComment(tmpcomment))
+                    return Json(new JsonResults() { HasValue = true, Message = "نظر شما با موفقیت ثبت شد" });
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "مشکل در سرور.لطفا مجدد امتحان کنید" });
+            }
+            else
+            {
+                return Json(new JsonResults() { HasValue = false, Message = "برای ثبت نظر می بایست ابتدا وارد شوید" });
+            }
         }
         //categories() demo for categories
         public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")//done

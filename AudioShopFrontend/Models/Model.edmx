@@ -93,6 +93,8 @@
           <Property Name="Price" Type="decimal" Precision="15" Scale="0" Nullable="false" />
           <Property Name="State" Type="tinyint" Nullable="false" />
           <Property Name="Priority" Type="tinyint" />
+          <Property Name="Details" Type="nvarchar(max)" />
+          <Property Name="DetailDescription" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Ships">
           <Key>
@@ -412,7 +414,7 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="NidCategory" />
@@ -636,6 +638,8 @@
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="15" Scale="0" />
           <Property Name="State" Type="Byte" Nullable="false" />
           <Property Name="Priority" Type="Byte" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Carts" Relationship="ASDbModel.FK_Carts_Products" FromRole="Product" ToRole="Cart" />
           <NavigationProperty Name="Category" Relationship="ASDbModel.FK_Categories_Products" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Category_Brands" Relationship="ASDbModel.FK_Products_Category_Brands" FromRole="Product" ToRole="Category_Brands" />
@@ -835,6 +839,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ASDbModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Priority" ColumnName="Priority" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Price" ColumnName="Price" />

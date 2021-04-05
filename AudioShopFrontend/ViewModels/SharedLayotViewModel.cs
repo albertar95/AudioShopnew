@@ -53,6 +53,17 @@ namespace AudioShopFrontend.ViewModels
             }
             return result;
         }
+        public static string GetUserId()
+        {
+            List<ProductDTO> result = new List<ProductDTO>();
+            if (HttpContext.Current.Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                Services.DataTransfer dataTransfer = new Services.DataTransfer();
+                var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies["AudioShopLogin"].Value);
+                return ticket.UserData.Split(',').First();
+            }
+            return "";
+        }
         public static List<CategoryLiteDTO> GetCategories()
         {
             try
