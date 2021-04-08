@@ -518,14 +518,14 @@
                 }
             });
         });
-        function AddToCart(productName,Price,ImageUrl,NidProd)
+        function AddToCart(productName,Price,ImageUrl,NidProd,quantity)
         {
             $.ajax(
                 {
                     url: '@Url.Action("AddProductToCart","Home")',
                     type: 'post',
                     datatype: 'json',
-                    data: { NidProduct: NidProd, Quantity: 1 },
+                    data: { NidProduct: NidProd, Quantity: quantity },
                     success: function (result) {
                         if (result.HasValue) {
                             $("#CartCount").html(result.Html);

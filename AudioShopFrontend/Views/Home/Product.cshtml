@@ -1,4 +1,4 @@
-﻿@model AudioShopFrontend.Models.Product
+﻿@model AudioShopFrontend.ViewModels.ProductPageViewModel
 @{
     ViewBag.Title = "Product";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,9 +24,9 @@
                     <div class="col-md-6">
                         <div class="product-gallery-box product-gallery-box__vertical product-gallery-box__tab-left">
                             <div class="product-image--large gallery--right overflow-hidde m-l-20">
-                                @if (Model.Pictures != null)
+                                @if (Model.Product.Pictures != null)
                                 {
-                                <img class="img-fluid" id="img-zoom" src="@Model.Pictures.Split(',').FirstOrDefault()" data-zoom-image="@Model.Pictures.Split(',').FirstOrDefault()" alt="">
+                                <img class="img-fluid" id="img-zoom" src="@Model.Product.Pictures.Split(',').FirstOrDefault()" data-zoom-image="@Model.Product.Pictures.Split(',').FirstOrDefault()" alt="">
                                 }
                                 else
                                 {
@@ -35,9 +35,9 @@
                             </div>
                             <div id="gallery-zoom" class="product-image--thumb product-image--thumb-vertical overflow-hidden gallery--left">
                                 <div class="swiper-wrapper">
-                                    @if (Model.Pictures != null)
+                                    @if (Model.Product.Pictures != null)
                                     {
-                                        foreach (var pics in Model.Pictures.Split(','))
+                                        foreach (var pics in Model.Product.Pictures.Split(','))
                                         {
                                             <div class="swiper-slide">
                                                 <a href="#" class="zoom-active" data-image="@pics" data-zoom-image="@pics">
@@ -80,27 +80,27 @@
                     </div>
                     <div class="col-md-6">
                         <div class="product-details-box">
-                            <h5 class="section-content__title">@Model.ProductName</h5>
+                            <h5 class="section-content__title">@Model.Product.ProductName</h5>
                             <span class="text-reference"></span>
                             <div class="review-box">
                                 <a href="#product-review" class="link--gray link--icon-left  m-b-5"><i class="fal fa-comment-dots"></i>خواندن نظرات </a>
-                                <button onclick="AddReview('@Model.ProductName','','')" data-toggle="modal" class="link--gray link--icon-left m-b-5"><i class="fal fa-edit"></i> نوشتن نظر</button>
+                                <button onclick="AddReview('@Model.Product.ProductName','','')" data-toggle="modal" class="link--gray link--icon-left m-b-5"><i class="fal fa-edit"></i> نوشتن نظر</button>
                             </div>
                             <div class="product__price">
-                                <span class="product__price-del">@Model.Price</span>
-                                <span class="product__price-reg">@Model.Price</span>
+                                <span class="product__price-del">@Model.Product.Price</span>
+                                <span class="product__price-reg">@Model.Product.Price</span>
                             </div>
                             <div class="product__desc m-t-25 m-b-30">
-                                <p>@Model.Description</p>
+                                <p>@Model.Product.Description</p>
                             </div>
                             <div class="product-var p-t-30">
                                 <div class="product-quantity product-var__item">
                                     <span class="product-var__text" style="padding-left:20px;text-align:left !important;">تعداد</span>
                                     <div class="product-quantity-box">
                                         <div class="quantity">
-                                            <input style="border:1px solid #d6cece;" type="number" min="1" max="9" step="1" value="1">
+                                            <input onchange="ProductCountChanged()" id="quantitySelect" style="border:1px solid #d6cece;" type="number" min="1" max="9" step="1" value="1">
                                         </div>
-                                        <a onclick="AddToCart('@Model.ProductName','@Model.Price','@Model.Pictures','@Model.NidProduct')" data-toggle="modal" data-dismiss="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-l-20">اضافه کردن به لیست خرید</a>
+                                        <button onclick="AddThisToCart('@Model.Product.ProductName','@Model.Product.Price','@Model.Product.Pictures','@Model.Product.NidProduct')" data-toggle="modal" data-dismiss="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-l-20">اضافه کردن به لیست خرید</button>
                                     </div>
 
                                 </div>
@@ -115,7 +115,7 @@
                                         <li><a href="#"><i class="fab fa-telegram"></i></a></li>
                                     </ul>
                                 </div>
-                                <button onclick="AddToFav('@Model.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i>علاقه مندی ها</button>
+                                <button onclick="AddToFav('@Model.Product.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i>علاقه مندی ها</button>
                             </div>
                         </div>
                     </div>
@@ -141,13 +141,13 @@
                                 <!-- Start Tab - Product Description -->
                                 <div class="tab-pane show active" id="product-desc">
                                     <div class="para__content">
-                                        <p class="para__text">@Html.Raw(Model.DetailDescription)</p>
+                                        <p class="para__text">@Html.Raw(Model.Product.DetailDescription)</p>
 
                                         @*<p class="para__text">@Model.Description</p>*@
 
                                         <h6 class="para__title">Product Highlights:</h6>
                                         <ul class="para__list">
-                                            <li>@Model.Keywords</li>
+                                            <li>@Model.Product.Keywords</li>
                                         </ul>
                                     </div>
                                 </div>  <!-- End Tab - Product Description -->
@@ -177,7 +177,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        @Model.Details
+                                        @Model.Product.Details
                                     </div>
                                 </div>  <!-- End Tab - Product Details -->
                                 <!-- Start Tab - Product Review -->
@@ -268,7 +268,7 @@
                                         </li> <!-- End - Review Comment list-->
                                     </ul>  <!-- End - Review Comment -->
 
-                                    <button onclick="AddReview('@Model.ProductName','','')" data-toggle="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-t-30">نوشتن نظر</button>
+                                    <button onclick="AddReview('@Model.Product.ProductName','','')" data-toggle="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-t-30">نوشتن نظر</button>
                                 </div>  <!-- Start Tab - Product Review -->
                             </div>
                         </div>
@@ -292,173 +292,35 @@
                         <div class="swiper-outside-arrow-fix pos-relative">
                             <div class="product-default-slider-5grid overflow-hidden  m-t-50">
                                 <div class="swiper-wrapper">
+                                    @foreach (var sim in Model.Similars)
+                                    {
                                     <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
-                                            </a>
+                                        <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
+                                            <div class="product__img-box">
+                                                <a href="single-1.html" class="product__img--link">
+                                                    @if (Model.Product.Pictures != null)
+                                                    {
+                                                        <img class="product__img" src="@Model.Product.Pictures.Split(',').FirstOrDefault()" alt="">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                                    }
+                                                </a>
 
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--discount">-12%</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-del">$11.90</span>
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-2.jpg")" alt="">
+                                                <button onclick="AddToCart('@Model.Product.ProductName','@Model.Product.Price','@Model.Product.Pictures','@Model.Product.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست خرید</button>
+                                                @*<span class="product__tag product__tag--discount"></span>*@
+                                                <a onclick="AddToFav('@Model.Product.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
+                                            </div>
+                                            <div class="product__price m-t-10">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span class="product__price-reg">@sim.Price</span>
+                                            </div>
+                                            <a href="@Url.Action("Product",new { NidProduct = sim.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                                @sim.ProductName
                                             </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--new">New</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-3.jpg")" alt="">
-                                            </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--discount">-12%</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-del">$11.90</span>
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-4.jpg")" alt="">
-                                            </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--new">New</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-5.jpg")" alt="">
-                                            </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--discount">-12%</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-del">$11.90</span>
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-6.jpg")" alt="">
-                                            </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--new">New</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-7.jpg")" alt="">
-                                            </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--discount">-12%</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-del">$11.90</span>
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-8.jpg")" alt="">
-                                            </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--new">New</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
-                                    <!-- Start Single Default Product -->
-                                    <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
-                                        <div class="product__img-box">
-                                            <a href="single-1.html" class="product__img--link">
-                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-9.jpg")" alt="">
-                                            </a>
-
-                                            <a href="#modalAddCart" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">Add to cart</a>
-                                            <span class="product__tag product__tag--discount">-12%</span>
-                                            <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                        </div>
-                                        <div class="product__price m-t-10">
-                                            <span class="product__price-del">$11.90</span>
-                                            <span class="product__price-reg">$10.71</span>
-                                        </div>
-                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                            SonicFuel Wireless Over-Ear Headphones
-                                        </a>
-                                    </div> <!-- End Single Default Product -->
+                                        </div> <!-- End Single Default Product -->
+                                    }
                                 </div>
                                 <div class="swiper-buttons">
                                     <!-- Add Arrows -->
@@ -692,6 +554,7 @@
 @section scripts
     {
     <script type="text/javascript">
+        var currentProductNumber = 1
         $(function ()
         {
             $("#btnReviewSubmit").click(function (e)
@@ -723,6 +586,30 @@
             $("#ReviewTitle").text(productname)
             $("#ReviewDesc").text(description)
             $("#modalReview").modal('show')
+        }
+        function ProductCountChanged()
+        {
+            currentProductNumber = $("#quantitySelect").val()
+        }
+        function AddThisToCart(productName, Price, ImageUrl, NidProd) {
+            $.ajax(
+                {
+                    url: '@Url.Action("AddProductToCart","Home")',
+                    type: 'post',
+                    datatype: 'json',
+                    data: { NidProduct: NidProd, Quantity: currentProductNumber },
+                    success: function (result) {
+                        if (result.HasValue) {
+                            $("#CartCount").html(result.Html);
+                            $("#modal_img").attr("src", ImageUrl)
+                            $("#modal_name").text(productName)
+                            $("#modal_price").text(Price)
+                            $("#modal_prodcount").text(result.Html)
+                            $("#modalAddCart").modal('show')
+                        }
+                    },
+                    error: function () { }
+                });
         }
     </script>
 }

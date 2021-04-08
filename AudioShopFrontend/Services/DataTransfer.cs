@@ -360,5 +360,24 @@ namespace AudioShopFrontend.Services
             else
                 return false;
         }
+
+        public List<ProductDTO> GetSimilarProducts(Guid NidProduct)
+        {
+            var tmpProduct = GetProductDtoByID(NidProduct);
+            List<ProductDTO> similars = new List<ProductDTO>();
+            foreach (var cats in db.Products.Where(p => p.NidCategory == tmpProduct.NidCategory).Take(3))
+            {
+                similars.Add(mapper.MapToProductDto(cats));
+            }
+            var tmpName = tmpProduct.ProductName.Split(' ');
+            foreach (var nm in tmpName)
+            {
+                foreach (var name in db.Products.Where(p => p.ProductName.Contains(nm)).Take(3))
+                {
+                    similars.Add(mapper.MapToProductDto(name));
+                }
+            }
+            return similars;
+        }
     }
 }

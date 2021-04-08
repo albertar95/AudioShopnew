@@ -63,11 +63,13 @@ namespace AudioShopFrontend.Controllers
             }
             return View(Products);
         }
-        public ActionResult Product(Guid NidProduct)
+        public ActionResult Product(Guid NidProduct)//done
         {
             dataTransfer = new DataTransfer();
-            var product = dataTransfer.GetProductByID(NidProduct);
-            return View(product);
+            ProductPageViewModel ppvm = new ProductPageViewModel();
+            ppvm.Product = dataTransfer.GetProductByID(NidProduct);
+            ppvm.Similars = dataTransfer.GetSimilarProducts(NidProduct);
+            return View(ppvm);
         }
         public ActionResult Register()//done
         {

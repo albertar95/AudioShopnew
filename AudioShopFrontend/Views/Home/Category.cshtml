@@ -132,7 +132,7 @@
                                             <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
                                         </a>
 
-                                        <a onclick="AddToCart('@prod2.ProductName','@prod2.Price','@prod2.Pictures','@prod2.NidProduct')" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
+                                        <a onclick="AddToCart('@prod2.ProductName','@prod2.Price','@prod2.Pictures','@prod2.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
                                         <span class="product__tag product__tag--discount">-12%</span>
                                         <button onclick="AddToFav('@prod2.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></button>
                                     </div>
@@ -176,7 +176,7 @@
                                         <div class="col-md-3">
                                             <div>
                                                 <ul class="shop__list-link">
-                                                    <li><a onclick="AddToCart('@prod1.ProductName','@prod1.Price','@prod1.Pictures','@prod1.NidProduct')" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به سبد</a></li>
+                                                    <li><a onclick="AddToCart('@prod1.ProductName','@prod1.Price','@prod1.Pictures','@prod1.NidProduct',1)" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به سبد</a></li>
                                                     <li><button  onclick="AddToFav('@prod1.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i> علاقه مندی</button></li>
                                                     <li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>
                                                 </ul>
