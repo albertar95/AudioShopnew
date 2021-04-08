@@ -581,6 +581,7 @@
     <Content Include="Views\Home\_CategoryProductSort.cshtml" />
     <Content Include="Views\Home\_GeneralProductSort.cshtml" />
     <Content Include="Views\Home\_GeneralProducts.cshtml" />
+    <Content Include="Views\Home\_CartPopup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

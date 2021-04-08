@@ -3888,7 +3888,7 @@ table tbody > tr td a:hover {
   display: block;
 }
 .offcanvas-add-cart__item-dismiss {
-  right: 0;
+  left: 0;
   top: 0;
   border: none;
   width: 15px;

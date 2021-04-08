@@ -226,7 +226,7 @@ namespace AudioShopFrontend.Controllers
                 }
                 else
                 {
-                    HttpCookie newCookie = new HttpCookie("AudioShopFavorites", "1");
+                    HttpCookie newCookie = new HttpCookie("AudioShopFavorites", favs.ToString());
                     Response.Cookies.Add(newCookie);
                 }
                 return Json(new JsonResults() { HasValue = true, Html = favs.ToString() });
@@ -248,10 +248,35 @@ namespace AudioShopFrontend.Controllers
                 }
                 else
                 {
-                    HttpCookie newCookie = new HttpCookie("AudioShopCart", "1");
+                    HttpCookie newCookie = new HttpCookie("AudioShopCart", carts.ToString());
                     Response.Cookies.Add(newCookie);
                 }
-                return Json(new JsonResults() { HasValue = true, Html = carts.ToString() });
+                return Json(new JsonResults() { HasValue = true, tmpNidCategory = carts, Html = RenderViewToString(this.ControllerContext, "_CartPopup", null) });
+            }
+            return Json(new JsonResults() { HasValue = false });
+        }
+        public ActionResult RemoveProductFromCart(Guid NidProduct)
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                dataTransfer = new DataTransfer();
+                var tmpcart = dataTransfer.GetCartByNidUserAndProduct(Guid.Parse(niduser),NidProduct);
+                if(tmpcart != null)
+                {
+                    int carts = dataTransfer.RemoveCart(tmpcart);
+                    if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
+                    {
+                        Response.Cookies["AudioShopCart"].Value = carts.ToString();
+                    }
+                    else
+                    {
+                        HttpCookie newCookie = new HttpCookie("AudioShopCart", carts.ToString());
+                        Response.Cookies.Add(newCookie);
+                    }
+                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CartPopup",null), tmpNidCategory = carts });
+                }
             }
             return Json(new JsonResults() { HasValue = false });
         }

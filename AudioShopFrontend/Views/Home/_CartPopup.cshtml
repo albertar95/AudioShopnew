@@ -1,0 +1,62 @@
+﻿
+    <!-- Start Add Cart Item Box-->
+    <ul class="offcanvas-add-cart__menu">
+        <!-- Start Single Add Cart Item-->
+        @{
+            decimal tmpTotal = 0;
+        }
+        @foreach (var cartItem in AudioShopFrontend.ViewModels.SharedLayotViewModel.GetCurrentCartItems())
+            {
+    <li class="offcanvas-add-cart__list pos-relative ForceRTL">
+        <div class="offcanvas-add-cart__img-box pos-relative">
+            <a href="single-1.html" class="offcanvas-add-cart__img-link img-responsive">
+                @if (cartItem.Pictures != null)
+                        {
+                        <img src="@cartItem.Pictures.Split(',').First()" alt="" class="add-cart__img">
+                        }
+                        else
+                        {
+                        <img src="@Url.Content("~/Content/assets/img/product/size-small/product-home-1-img-1.jpg")" alt="" class="add-cart__img">
+                        }
+            </a>
+            @*<span class="offcanvas-add-cart__item-count pos-absolute">2x</span>*@
+        </div>
+        <div class="offcanvas-add-cart__detail" style="margin-right:15px;">
+            <a href="single-1.html" class="offcanvas-add-cart__link">@cartItem.ProductName</a>
+            <span class="offcanvas-add-cart__price">@cartItem.Price</span>
+        </div>
+        <button class="offcanvas-add-cart__item-dismiss pos-absolute" onclick="ClearProductFromCart('@cartItem.NidProduct')">&times;</button>
+    </li> <!-- Start Single Add Cart Item-->
+            tmpTotal += cartItem.Price;
+        }
+    </ul> <!-- Start Add Cart Item Box-->
+    <!-- Start Add Cart Checkout Box-->
+    <div class="offcanvas-add-cart__checkout-box-bottom">
+        <!-- Start offcanvas Add Cart Checkout Info-->
+        <ul class="offcanvas-add-cart__checkout-info">
+            <!-- Start Single Add Cart Checkout Info-->
+            <li class="offcanvas-add-cart__checkout-list">
+                @*<span class="offcanvas-add-cart__checkout-left-info">Subtotal</span>
+                    <span class="offcanvas-add-cart__checkout-right-info">$60.59</span>*@
+            </li> <!-- End Single Add Cart Checkout Info-->
+            <!-- Start Single Add Cart Checkout Info-->
+            <li class="offcanvas-add-cart__checkout-list">
+                @*<span class="offcanvas-add-cart__checkout-left-info">Shipping</span>
+                    <span class="offcanvas-add-cart__checkout-right-info">$7.00</span>*@
+            </li> <!-- End Single Add Cart Checkout Info-->
+            <!-- Start Single Add Cart Checkout Info-->
+            <li class="offcanvas-add-cart__checkout-list">
+                @*<span class="offcanvas-add-cart__checkout-left-info">Taxes</span>
+                    <span class="offcanvas-add-cart__checkout-right-info">$0.00</span>*@
+            </li> <!-- End Single Add Cart Checkout Info-->
+            <!-- Start Single Add Cart Checkout Info-->
+            <li class="offcanvas-add-cart__checkout-list">
+                <span class="offcanvas-add-cart__checkout-left-info">مجموع</span>
+                <span class="offcanvas-add-cart__checkout-right-info" id="CartPopupPrice">@tmpTotal</span>
+            </li> <!-- End Single Add Cart Checkout Info-->
+        </ul> <!-- End offcanvas Add Cart Checkout Info-->
+
+        <div class="offcanvas-add-cart__btn-checkout">
+            <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--gray btn--large btn--uppercase btn--weight">تسویه حساب</a>
+        </div>
+    </div> <!-- End Add Cart Checkout Box-->

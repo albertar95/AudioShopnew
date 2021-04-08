@@ -24,7 +24,7 @@ namespace AudioShopFrontend.ViewModels
             }
             return 0;
         }
-        public static int GetUserCartCount()
+        public int GetUserCartCount()
         {
             try
             {

@@ -36,6 +36,10 @@ namespace AudioShopFrontend.Services
         //cart
         List<Cart> GetAllCartByNidUser(Guid NidUser,int pagesize = 10);
         int AddCart(Cart cart);
+        int RemoveCart(Cart cart);
+        decimal CartPriceAggregateByNidUser(Guid NidUser);
+        Cart GetCartByNidCart(Guid NidCart);
+        Cart GetCartByNidUserAndProduct(Guid NidUser,Guid NidProduct);
         //search
         List<ProductDTO> SearchProduct(string input,int Nidcategory = 0);
         //orders

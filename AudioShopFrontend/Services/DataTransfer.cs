@@ -379,5 +379,27 @@ namespace AudioShopFrontend.Services
             }
             return similars;
         }
+
+        public int RemoveCart(Cart cart)
+        {
+            db.Entry(cart).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return db.Carts.Where(p => p.NidUser == cart.NidUser).Count();
+        }
+
+        public Cart GetCartByNidCart(Guid NidCart)
+        {
+            return db.Carts.Where(p => p.NidCart == NidCart).FirstOrDefault();
+        }
+
+        public decimal CartPriceAggregateByNidUser(Guid NidUser)
+        {
+            return db.Carts.Where(p => p.NidUser == NidUser).Select(q => q.Product.Price).Sum();
+        }
+
+        public Cart GetCartByNidUserAndProduct(Guid NidUser, Guid NidProduct)
+        {
+            return db.Carts.Where(p => p.NidUser == NidUser && p.NidProduct == NidProduct).FirstOrDefault();
+        }
     }
 }
