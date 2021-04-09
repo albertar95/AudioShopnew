@@ -5,6 +5,7 @@ using System.Web;
 using AudioShopFrontend.DTO;
 using AudioShopFrontend.Services;
 using System.Web.Security;
+using AudioShopFrontend.Models;
 
 namespace AudioShopFrontend.ViewModels
 {
@@ -38,18 +39,15 @@ namespace AudioShopFrontend.ViewModels
             }
             return 0;
         }
-        public static List<ProductDTO> GetCurrentCartItems()
+        public static List<Cart> GetCurrentCartItems()
         {
-            List<ProductDTO> result = new List<ProductDTO>();
-            if(HttpContext.Current.Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            List<Cart> result = new List<Cart>();
+            if (HttpContext.Current.Request.Cookies.AllKeys.Contains("AudioShopLogin"))
             {
                 Services.DataTransfer dataTransfer = new Services.DataTransfer();
                 var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies["AudioShopLogin"].Value);
                 string niduser = ticket.UserData.Split(',').First();
-                foreach (var cart in dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser)))
-                {
-                    result.Add(dataTransfer.GetProductDtoByID(cart.NidProduct));
-                }
+                result = dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser));
             }
             return result;
         }

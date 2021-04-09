@@ -198,6 +198,7 @@
     <Content Include="Content\img\widgets\6.png" />
     <Content Include="Content\pages\buttons.html" />
     <Content Include="Content\pages\data-table.html" />
+    <Content Include="Content\pages\dialog.html" />
     <Content Include="Content\pages\index.html" />
     <Content Include="Content\js\animation\animation-active.js" />
     <Content Include="Content\js\autosize.min.js" />

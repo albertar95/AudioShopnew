@@ -166,28 +166,33 @@ namespace AudioShopFrontend.Controllers
             Response.Cookies["AudioShopFavorites"].Expires = DateTime.Now.AddYears(-1);
             return RedirectToAction("Index");
         }
-        public ActionResult MyCart()
+        public ActionResult MyCart()//done
         {
-            List<ProductDTO> prods = new List<ProductDTO>();
+            List<Cart> carts = new List<Cart>();
             dataTransfer = new DataTransfer();
             if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
             {
                 var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
                 string niduser = ticket.UserData.Split(',').First();
-                //if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
-                //{
-                //    string[] cart = Request.Cookies["AudioShopCart"].Value.Split(',');
-                //    foreach (var f in cart)
-                //    {
-                //        prods.Add(dataTransfer.GetProductDtoByID(Guid.Parse(f)));
-                //    }
-                //}
-                foreach (var cart in dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser)))
-                {
-                    prods.Add(dataTransfer.GetProductDtoByID(cart.NidProduct));
-                }
+                carts = dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser));
             }
-            return View(prods);
+            return View(carts);
+        }
+        public ActionResult CartQuantityChanged(Guid NidCart,int Quantity)//done
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+            
+                dataTransfer = new DataTransfer();
+            int tmpresult = dataTransfer.UpdateCartQuantity(NidCart,Quantity);
+            if (tmpresult != 0)
+            return Json(new JsonResults() { HasValue = true, tmpNidCategory = tmpresult, Message = dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser)).ToString() });
+            else
+                return Json(new JsonResults() { HasValue = false });
+            }else
+                return Json(new JsonResults() { HasValue = false });
         }
         public ActionResult MyFavorites()
         {
@@ -255,7 +260,7 @@ namespace AudioShopFrontend.Controllers
             }
             return Json(new JsonResults() { HasValue = false });
         }
-        public ActionResult RemoveProductFromCart(Guid NidProduct)
+        public ActionResult RemoveProductFromCart(Guid NidProduct)//done
         {
             if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
             {
@@ -275,7 +280,7 @@ namespace AudioShopFrontend.Controllers
                         HttpCookie newCookie = new HttpCookie("AudioShopCart", carts.ToString());
                         Response.Cookies.Add(newCookie);
                     }
-                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CartPopup",null), tmpNidCategory = carts });
+                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CartPopup",null), tmpNidCategory = carts, Message = dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser)).ToString() });
                 }
             }
             return Json(new JsonResults() { HasValue = false });
@@ -365,7 +370,7 @@ namespace AudioShopFrontend.Controllers
         {
             return View();
         }
-        public ActionResult SubmitAddReview(string CommentText,string NidUser)
+        public ActionResult SubmitAddReview(string CommentText,string NidUser)//done
         {
             Comment tmpcomment = new Comment() {  CreateDate = DateTime.Now, NidComment = Guid.NewGuid(), State = 2};
             if(NidUser != "")
@@ -384,6 +389,7 @@ namespace AudioShopFrontend.Controllers
             }
         }
         //categories() demo for categories
+        //checkout() go to dargah
         public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")//done
         {
             dataTransfer = new DataTransfer();

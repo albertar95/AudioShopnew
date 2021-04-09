@@ -1,4 +1,4 @@
-﻿@model List<AudioShopFrontend.DTO.ProductDTO>
+﻿@model List<AudioShopFrontend.Models.Cart>
 @{
     ViewBag.Title = "MyCart";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <ul class="page-breadcrumb__menu">
+                <ul class="page-breadcrumb__menu ForceRTL">
                     <li class="page-breadcrumb__nav"><a href="@Url.Action("Index")">خانه</a></li>
                     <li class="page-breadcrumb__nav active">لیست خرید</li>
                 </ul>
@@ -20,45 +20,45 @@
     <div class="row">
         <div class="col-12">
             <div class="section-content">
-                <h5 class="section-content__title">Your cart items</h5>
+                <h5 class="section-content__title">سبد خرید شما</h5>
             </div>
             <!-- Start Cart Table -->
-            <div class="table-content table-responsive cart-table-content m-t-30">
+            <div class="table-content table-responsive cart-table-content m-t-30 ForceRTL">
                 <table>
                     <thead class="gray-bg">
                         <tr>
-                            <th>Image</th>
-                            <th>Product Name</th>
-                            <th>Until Price</th>
-                            <th>Qty</th>
-                            <th>Subtotal</th>
-                            <th>Action</th>
+                            <th>تصویر</th>
+                            <th>نام حصول</th>
+                            <th>قیمت</th>
+                            <th>تعداد</th>
+                            <th>مجموع</th>
+                            <th>عملیات</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @{ decimal tmpAggregate = 0;}
                         @foreach (var prods in Model)
                         {
-                            <tr>
+                            <tr id="@prods.NidProduct">
                                 <td class="product-thumbnail">
-                                    @if (prods.Pictures != null)
+                                    @if (prods.Product.Pictures != null)
                                     {
-                                        <a href="#"><img class="img-fluid" src="@prods.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                        <a href="#"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
                                     }
                                 </td>
-                                <td class="product-name"><a href="#">@prods.ProductName</a></td>
-                                <td class="product-price-cart"><span class="amount">@prods.Price</span></td>
+                                <td class="product-name"><a href="#">@prods.Product.ProductName</a></td>
+                                <td class="product-price-cart"><span class="amount">@prods.Product.Price</span></td>
                                 <td class="product-quantities">
                                     <div class="quantity d-inline-block">
-                                        <input type="number" min="1" step="1" value="1">
+                                        <input type="number" min="1" step="1" value="@prods.Quantity" id="QuantitySlt" onchange="QuantityChanged('@prods.NidCart','@prods.Product.Price')">
                                     </div>
                                 </td>
-                                <td class="product-subtotal"></td>
+                                <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@tmpTotal</td>
                                 <td class="product-remove">
-                                    <a href="#"><i class="fa fa-pencil-alt"></i></a>
-                                    <a href="#"><i class="fa fa-times"></i></a>
+                                    <button onclick="ClearProductFromCart('@prods.NidProduct')"><i class="fa fa-times"></i></button>
                                 </td>
                             </tr>
-
+                             tmpAggregate = tmpAggregate + tmpTotal;
                         }
                     </tbody>
                 </table>
@@ -66,11 +66,9 @@
             <!-- Start Cart Table Button -->
             <div class="cart-table-button m-t-10">
                 <div class="cart-table-button--left">
-                    <a href="#" class="btn btn--box btn--large btn--gray btn--uppercase btn--weight m-t-20">CONTINUE SHOPPING</a>
                 </div>
                 <div class="cart-table-button--right">
-                    <a href="#" class="btn btn--box btn--large btn--gray btn--uppercase btn--weight m-t-20 m-r-20">UPDATE SHOPPING CART</a>
-                    <a href="#" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">Clear Shopping Cart</a>
+                    <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">افزودن کالا های بیشتر به سبد خرید</a>
                 </div>
             </div>  <!-- End Cart Table Button -->
         </div>
@@ -80,16 +78,16 @@
         <div class="col-lg-6 col-md-6">
             <div class="sidebar__widget gray-bg m-t-40">
                 <div class="sidebar__box">
-                    <h5 class="sidebar__title">Use Coupon Code</h5>
+                    <h5 class="sidebar__title">اعمال کد تخفیف</h5>
                 </div>
-                <span>Enter your coupon code if you have one.</span>
+                <span>در صورتی که کد تخفیف دارید آن را وارد نمایید</span>
                 <form action="#" method="post" class="form-box">
                     <div class="form-box__single-group">
-                        <label for="form-coupon">*Enter Coupon Code</label>
+                        <label for="form-coupon">کد تخفیف</label>
                         <input type="text" id="form-coupon">
                     </div>
                     <div class="from-box__buttons m-t-25">
-                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">Apply Coupon</button>
+                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">اعمال تخفیف</button>
                     </div>
                 </form>
             </div>
@@ -97,31 +95,57 @@
         <div class="col-lg-6 col-md-6">
             <div class="sidebar__widget gray-bg m-t-40">
                 <div class="sidebar__box">
-                    <h5 class="sidebar__title">Cart Total</h5>
+                    <h5 class="sidebar__title">صورتحساب</h5>
                 </div>
-                <h6 class="total-cost">Total products Price<span>$260.00</span></h6>
+                <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@tmpAggregate</span></h6>
                 <div class="total-shipping">
-                    <span>Total shipping</span>
+                    <span>هزینه ارسال</span>
                     <ul class="shipping-cost m-t-10">
                         <li>
                             <label for="ship-standard">
-                                <input type="radio" class="shipping-select" name="shipping-cost" value="Standard" id="ship-standard" checked><span>Standard</span>
+                                <input type="radio" class="shipping-select" name="shipping-cost" value="Standard" id="ship-standard" checked><span>عادی</span>
                             </label>
                             <span class="ship-price">$20.00</span>
                         </li>
                         <li>
                             <label for="ship-express">
-                                <input type="radio" class="shipping-select" name="shipping-cost" value="Express" id="ship-express"><span>Express</span>
+                                <input type="radio" class="shipping-select" name="shipping-cost" value="Express" id="ship-express"><span>پست ویژه</span>
                             </label>
                             <span class="ship-price">$30.00</span>
                         </li>
                     </ul>
                 </div>
-                <h4 class="grand-total m-tb-25">Grand Total <span>$260.00</span></h4>
-                <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">PROCEED TO CHECKOUT</button>
+                <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@tmpAggregate</span></h4>
+                <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">پرداخت هزینه</button>
             </div>
         </div>
     </div>
 </div>
 
-
+@section scripts
+    {
+    <script type="text/javascript">
+        function QuantityChanged(nidcart,price)
+        {
+            $.ajax(
+                {
+                    url: '@Url.Action("CartQuantityChanged","Home")',
+                    type: 'post',
+                    datatype: 'json',
+                    data: { NidCart: nidcart, Quantity: $("#QuantitySlt").val() },
+                    success: function (result)
+                    {
+                        if(result.HasValue)
+                        {
+                            var currentCart = document.getElementById(nidcart);
+                            currentCart.innerHTML = (price * result.tmpNidCategory)
+                            $("#cartAggregate").text(result.Message)
+                            $("#CartPopupPrice").text(result.Message)
+                            $("#cartSumAggregate").text(result.Message)
+                        }
+                    },
+                    error: function () { }
+                });
+        }
+    </script>
+    }
