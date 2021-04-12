@@ -194,28 +194,17 @@ namespace AudioShopFrontend.Controllers
             }else
                 return Json(new JsonResults() { HasValue = false });
         }
-        public ActionResult MyFavorites()
+        public ActionResult MyFavorites()//done
         {
-            List<ProductDTO> prods = new List<ProductDTO>();
+            List<Favorite> favs = new List<Favorite>();
             dataTransfer = new DataTransfer();
             if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
             {
                 var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
                 string niduser = ticket.UserData.Split(',').First();
-                //if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
-                //{
-                //    string[] fav = Request.Cookies["AudioShopFavorites"].Value.Split(',');
-                //    foreach (var f in fav)
-                //    {
-                //        prods.Add(dataTransfer.GetProductDtoByID(Guid.Parse(f)));
-                //    }
-                //}
-                foreach (var fav in dataTransfer.GetAllFavoritesByNidUser(Guid.Parse(niduser)))
-                {
-                    prods.Add(dataTransfer.GetProductDtoByID(fav.NidProduct));
-                }
+                favs = dataTransfer.GetAllFavoritesByNidUser(Guid.Parse(niduser));
             }
-            return View(prods);
+            return View(favs);
         }
         public ActionResult AddProductToFavorites(Guid NidProduct)//done
         {
@@ -285,11 +274,37 @@ namespace AudioShopFrontend.Controllers
             }
             return Json(new JsonResults() { HasValue = false });
         }
-        public ActionResult MyProfile()
+        public ActionResult RemoveProductFromFav(Guid NidFav)//done
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                dataTransfer = new DataTransfer();
+                var tmpfav = dataTransfer.GetFavoriteById(NidFav);
+                if (tmpfav != null)
+                {
+                    int favs = dataTransfer.RemoveFavorite(tmpfav);
+                    if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
+                    {
+                        Response.Cookies["AudioShopFavorites"].Value = favs.ToString();
+                    }
+                    else
+                    {
+                        HttpCookie newCookie = new HttpCookie("AudioShopFavorites", favs.ToString());
+                        Response.Cookies.Add(newCookie);
+                    }
+                    return Json(new JsonResults() { HasValue = true, tmpNidCategory = favs });
+                }
+            }
+            return Json(new JsonResults() { HasValue = false });
+        }
+        public ActionResult MyProfile()//done
         {
             ProfileViewModel pvm = new ProfileViewModel();
             List<Order> Orders = new List<Order>();
             Models.User User = new User();
+            List<Favorite> favs = new List<Favorite>();
             if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
             {
                 dataTransfer = new DataTransfer();
@@ -297,12 +312,14 @@ namespace AudioShopFrontend.Controllers
                 string NidUser = ticket.UserData.Split(',').First();
                 User = dataTransfer.GetUserByNidUser(Guid.Parse(NidUser));
                 Orders = dataTransfer.GetUsersOrder(Guid.Parse(NidUser));
+                favs = dataTransfer.GetAllFavoritesByNidUser(Guid.Parse(NidUser));
             }
             pvm.Orders = Orders;
             pvm.UserInfo = User;
+            pvm.Favorites = favs;
             return View(pvm);
         }
-        public ActionResult ChangePassword(string CurrentPassword,string NewPassword)
+        public ActionResult ChangePassword(string CurrentPassword,string NewPassword)//done
         {
             string message = "";
             bool IsUpdated = false;
@@ -319,24 +336,24 @@ namespace AudioShopFrontend.Controllers
                         CurrentUser.Password = DataTransfer.Encrypt(NewPassword);
                         if (dataTransfer.UpdateUser(CurrentUser))
                         {
-                            message = "password updated successfully";
+                            message = "رمز عبور شما با موفقیت تغییر کرد";
                             IsUpdated = true;
                         }
                         else
-                            message = "error in database";
+                            message = "مشکل در سرور.لطفا مجددا امتحان نمایید";
                     }
                     else
-                        message = "current password doesnt meet!";
+                        message = "لطفا رمز عبور فعلی خود را صحیح وارد نمایید";
                 }
                 else
-                    message = "user not found";
+                    message = "نام کاربری یافت نشد";
             }
             else
-                message = "user not logined";
+                message = "کاربر وارد نشده است";
 
             return Json(new JsonResults() { HasValue = IsUpdated, Message = message });
         }
-        public ActionResult ChangeAddress(string NewAddress)
+        public ActionResult ChangeAddress(string NewAddress)//done
         {
             string message = "";
             bool IsUpdated = false;
@@ -351,18 +368,18 @@ namespace AudioShopFrontend.Controllers
                     CurrentUser.Address = NewAddress;
                     if (dataTransfer.UpdateUser(CurrentUser))
                     {
-                        message = "done";
+                        message = "آدرس شما با موفقیت ویرایش گردید";
                         IsUpdated = true;
                     }
                 }
                 else
-                    message = "user not found";
+                    message = "نام کاربری یافت نشد";
             }
             else
-                message = "user not logined";
+                message = "کاربر وارد نشده است";
             return Json(new JsonResults() { HasValue = IsUpdated, Message = message });
         }
-        public ActionResult AboutUs()
+        public ActionResult AboutUs()//done
         {
             return View();
         }
@@ -388,7 +405,19 @@ namespace AudioShopFrontend.Controllers
                 return Json(new JsonResults() { HasValue = false, Message = "برای ثبت نظر می بایست ابتدا وارد شوید" });
             }
         }
-        //categories() demo for categories
+        public ActionResult Categories()//done
+        {
+            dataTransfer = new DataTransfer();
+            var result = dataTransfer.GetAllCategory();
+            return View(result);
+        }
+
+        public ActionResult MoreCategories(int PageNumber)//done
+        {
+            dataTransfer = new DataTransfer();
+            var result = dataTransfer.GetAllCategory(10,PageNumber*10);
+            return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_MoreCategories", result), tmpNidCategory = PageNumber + 1 });
+        }
         //checkout() go to dargah
         public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")//done
         {
@@ -544,7 +573,7 @@ namespace AudioShopFrontend.Controllers
             }
             return Json(new JsonResults() { });
         }
-        public ActionResult SearchThis(string Text,int Nidcategory)
+        public ActionResult SearchThis(string Text,int Nidcategory)//done
         {
             dataTransfer = new DataTransfer();
             var res = dataTransfer.SearchProduct(Text, Nidcategory);
@@ -557,7 +586,7 @@ namespace AudioShopFrontend.Controllers
                 return Json(new JsonResults() { HasValue = false});
             }
         }
-        public static string RenderViewToString(ControllerContext context, string viewName, object model)
+        public static string RenderViewToString(ControllerContext context, string viewName, object model)//done
         {
             if (string.IsNullOrEmpty(viewName))
                 viewName = context.RouteData.GetRequiredString("action");

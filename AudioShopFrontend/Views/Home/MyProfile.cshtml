@@ -8,7 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <ul class="page-breadcrumb__menu">
+                <ul class="page-breadcrumb__menu ForceRTL">
                     <li class="page-breadcrumb__nav"><a href="@Url.Action("Index")">خانه</a></li>
                     <li class="page-breadcrumb__nav active">پروفایل</li>
                 </ul>
@@ -58,7 +58,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="link--icon-left" href="login.html"><i class="fas fa-sign-out-alt"></i> خروج</a>
+                                    <a class="link--icon-left" href="@Url.Action("Logout","Home")"><i class="fas fa-sign-out-alt"></i> خروج</a>
                                 </li>
                             </ul>
                         </div>
@@ -68,16 +68,16 @@
                             <div class="tab-pane fade show active" id="pills-dashboard" role="tabpanel"
                                  aria-labelledby="pills-dashboard-tab">
                                 <div class="my-account-dashboard account-wrapper">
-                                    <h4 class="account-title">Dashboard</h4>
+                                    <h4 class="account-title">پروفایل کاربری</h4>
                                     <div class="welcome-dashboard m-t-30">
                                         <p>
-                                            Hello, <strong>Alex Tuntuni</strong> (If Not <strong>Tuntuni !</strong> <a href="#">Logout</a> )
+                                            به سایت carbass خوش آمدید!
                                         </p>
                                     </div>
                                     <p class="m-t-25">
-                                        From your account dashboard. you can easily check &amp; view your
+                                        @*From your account dashboard. you can easily check &amp; view your
                                         recent orders, manage your shipping and billing addresses and edit your password and
-                                        account details.
+                                        account details.*@
                                     </p>
                                 </div>
                             </div>
@@ -125,43 +125,21 @@
                                                     <th class="date">نام محصول</th>
                                                     <th class="status">دسته یندی</th>
                                                     <th class="status">قیمت</th>
-                                                    <th class="action">وضعیت</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @{
-                                                    List<AudioShopFrontend.DTO.ProductDTO> prods = new List<AudioShopFrontend.DTO.ProductDTO>();
-                                                    if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-                                                    {
-                                                        if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
-                                                        {
-                                                            string[] fav = Request.Cookies["AudioShopFavorites"].Value.Split(',');
-                                                            AudioShopFrontend.Services.DataTransfer dataTransfer = new AudioShopFrontend.Services.DataTransfer();
-                                                            foreach (var f in fav)
-                                                            {
-                                                                prods.Add(dataTransfer.GetProductDtoByID(Guid.Parse(f)));
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                @if (prods.Any())
+                                                @foreach (var fav in Model.Favorites)
                                                 {
                                                     <tr>
-                                                        @foreach (var p in prods)
-                                                        {
-                                                            if (p.Pictures != null)
+                                                        <td>
+                                                            @if (fav.Product.Pictures != null)
                                                             {
-                                                                <td><img height="50" width="50" src="@p.Pictures.Split(',').FirstOrDefault()" /></td>
+                                                                <a href="#"><img class="img-fluid" src="@fav.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
                                                             }
-                                                            else
-                                                            {
-                                                                <td></td>
-                                                            }
-                                                            <td>@p.ProductName</td>
-                                                            <td>@p.NidType</td>
-                                                            <td>@p.Price</td>
-                                                            <td>@p.State</td>
-                                                        }
+                                                        </td>
+                                                        <td>@fav.Product.ProductName</td>
+                                                        <td>@fav.Product.Category_Types.TypeName</td>
+                                                        <td>@fav.Product.Price</td>
                                                     </tr>
                                                 }
                                             </tbody>
@@ -174,9 +152,9 @@
                                 <div class="my-account-address account-wrapper">
                                     <h4 class="account-title">آدرس</h4>
                                     <div class="account-address m-t-30">
-                                        <h6 class="name">@Model.UserInfo.FirstName @Model.UserInfo.LastName</h6>
-                                        <p>@Model.UserInfo.Address</p>
-                                        <p>شماره تماس : </p>
+                                        <h6 class="name">نام و نام خانوادگی : @Model.UserInfo.FirstName @Model.UserInfo.LastName</h6>
+                                        <p>کد پستی : @Model.UserInfo.ZipCode</p>
+                                        <p>آدرس : @Model.UserInfo.Address</p>
                                         <a class="box-btn m-t-25 " href="#modalEditAddress" data-toggle="modal"><i class="far fa-edit"></i> ویرایش آدرس</a>
                                     </div>
                                 </div>
@@ -190,17 +168,17 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-box__single-group">
-                                                    <input type="text" placeholder="نام" value="@Model.UserInfo.FirstName">
+                                                    <input type="text" placeholder="نام" value="@Model.UserInfo.FirstName" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-box__single-group">
-                                                    <input type="text" placeholder="نام خانوادگی" value="@Model.UserInfo.LastName">
+                                                    <input type="text" placeholder="نام خانوادگی" value="@Model.UserInfo.LastName" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="form-box__single-group">
-                                                    <input type="text" placeholder="ایمیل" value="@Model.UserInfo.Username">
+                                                    <input type="text" placeholder="ایمیل" value="@Model.UserInfo.Username" disabled>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -215,12 +193,12 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-box__single-group">
-                                                    <input id="NewPassword" type="password" placeholder="کلمه عبور جدید">
+                                                    <input id="NewPassword" type="password" placeholder="کلمه عبور جدید" value="">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-box__single-group">
-                                                    <input id="RepeatPassword" type="password" placeholder="تکرار کلمه عبور">
+                                                    <input id="RepeatPassword" type="password" placeholder="تکرار کلمه عبور" value="">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -256,7 +234,7 @@
                         </div>
                         <div class="col-md-10">
                             <span class="modal__product-cart-item">لطفا آدرس خود را وارد نمایید</span>
-                            <textarea rows="5" style="margin-top:15px;" id="txtAddress" class="form-control">@Model.UserInfo.Address</textarea>
+                            <textarea rows="5" style="margin-top:15px;text-align:right;direction:rtl;" id="txtAddress" class="form-control">@Model.UserInfo.Address</textarea>
                         </div>
                     </div>
                     <div class="row" style="margin-top:15px;">
@@ -286,39 +264,43 @@
             $("#SavePasswordChange").click(function (e)
             {
                 e.preventDefault();
-                if($("#CurrentPassword").val().trim() != "" || $("#NewPassword").val().trim() != "" || $("#RepeatPassword").val().trim() != "")
+                if (($("#CurrentPassword").val().trim() != "") && ($("#NewPassword").val().trim() != "") && ($("#RepeatPassword").val().trim() != ""))
                 {
                     if($("#NewPassword").val().trim() == $("#RepeatPassword").val().trim())
                     {
-                        $.ajax(
-                            {
-                                url: '@Url.Action("ChangePassword","Home")',
-                                type: 'post',
-                                datatype: 'json',
-                                data: { CurrentPassword: $("#CurrentPassword").val().trim(), NewPassword: $("#NewPassword").val().trim() },
-                                success: function (result)
+                        if ($("#NewPassword").val().trim() != $("#CurrentPassword").val().trim())
+                        {
+                            $.ajax(
                                 {
-                                    if(result.HasValue)
-                                    {
-                                        myNotify('bottom', 'center', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
-                                        $("#CurrentPassword").val("");
-                                        $("#NewPassword").val("");
-                                        $("#RepeatPassword").val("");
-                                    } else
-                                    {
-                                        myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                                    url: '@Url.Action("ChangePassword","Home")',
+                                    type: 'post',
+                                    datatype: 'json',
+                                    data: { CurrentPassword: $("#CurrentPassword").val().trim(), NewPassword: $("#NewPassword").val().trim() },
+                                    success: function (result) {
+                                        if (result.HasValue) {
+                                            myNotify('bottom', 'center', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                                            $("#CurrentPassword").val("");
+                                            $("#NewPassword").val("");
+                                            $("#RepeatPassword").val("");
+                                        } else {
+                                            myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                                        }
+                                    },
+                                    error: function () {
+                                        myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'خطا در سرور لطفا مجددا امتحان کنید');
                                     }
-                                },
-                                error: function ()
-                                {
-                                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'error');
-                                }
-                            });
-                    } else {
-                        myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'passwords doesnt meet!');
+                                });
+                        } else
+                        {
+                            myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'رمز عبور جدید وارد شده با رمز عبور فعلی شما برابر می باشد');
+                        }
+                    } else
+                    {
+                        myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'رمز عبور جدید وارد شده با تکرار آن برابر نمی باشد');
                     }
-                } else {
-                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'enter all fields');
+                } else
+                {
+                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'لطفا تمامی فیلد های مورد نیاز را وارد نمایید');
                 }
             });
             $("#SaveAddress").click(function (e)

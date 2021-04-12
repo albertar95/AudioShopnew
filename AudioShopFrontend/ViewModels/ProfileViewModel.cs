@@ -11,5 +11,6 @@ namespace AudioShopFrontend.ViewModels
     {
         public List<Order> Orders { get; set; }
         public User UserInfo { get; set; }
+        public List<Favorite> Favorites { get; set; }
     }
 }

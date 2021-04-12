@@ -18,6 +18,7 @@ namespace AudioShopFrontend.Services
         List<ProductDTO> GetLatestProducts(int pagesize = 10,int toskip = 0);
         List<ProductDTO> GetPopularProducts(int pagesize = 10, int toskip = 0);
         List<ProductDTO> GetSpecialProducts(int pagesize = 10, int toskip = 0);
+        List<Category> GetAllCategory(int pagesize = 10, int toskip = 0);
         //product
         Product GetProductByID(Guid NidProduct);
         ProductDTO GetProductDtoByID(Guid NidProduct);
@@ -33,6 +34,8 @@ namespace AudioShopFrontend.Services
         List<ProductDTO> GetUserFavorites(Guid UserId);
         List<Favorite> GetAllFavoritesByNidUser(Guid NidUser,int pagesize = 10);
         int AddFavorite(Favorite favorite);
+        Favorite GetFavoriteById(Guid NidFav);
+        int RemoveFavorite(Favorite favorite);
         //cart
         List<Cart> GetAllCartByNidUser(Guid NidUser,int pagesize = 10);
         int AddCart(Cart cart);

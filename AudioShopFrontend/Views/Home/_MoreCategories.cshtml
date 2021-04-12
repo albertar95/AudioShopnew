@@ -1,0 +1,88 @@
+﻿@model List<AudioShopFrontend.Models.Category>
+
+<div class="row flex-column-reverse flex-lg-row">
+    <div class="col-lg-12 col-xl-12">
+        @foreach (var cat in Model)
+            {
+            <div class="banner banner--1">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="banner__box">
+                            <a href="single-1.html" class="banner__link">
+                                @if (cat.Pictures == null)
+                                {
+                                    <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-1.jpg")" alt="" class="banner__img">
+                                }
+                                else
+                                {
+                                    <img src="@cat.Pictures" alt="" class="banner__img">
+                                }
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--special product section-->
+                <div class="product product--1 swiper-outside-arrow-hover">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="section-content section-content--border d-flex ForceRTL align-items-center justify-content-between">
+                                <h5 class="section-content__title">@cat.CategoryName</h5>
+                                <a href="@Url.Action("Category",new { Nidcategory = cat.NidCategory})">نمایش محصولات این دسته بندی<i class="icon-chevron-left"></i></a>
+                            </div>
+                            <div class="swiper-outside-arrow-fix pos-relative">
+                                <div class="product-default-slider-4grid overflow-hidden  m-t-50">
+                                    <div class="swiper-wrapper">
+                                        @foreach (var prods in cat.Products.OrderByDescending(p => p.CreateDate).Take(4).Select(q => new { q.Pictures, q.NidProduct, q.ProductName, q.Price }))
+                                        {
+                                            <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
+                                                <div class="product__img-box">
+                                                    <a href="@Url.Action("Product",new { NidProduct = prods.NidProduct})" class="product__img--link">
+                                                        @if (prods.Pictures != null)
+                                                        {
+                                                            <img class="product__img" src="@prods.Pictures.Split(',').FirstOrDefault()" alt="">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                                        }
+                                                    </a>
+
+                                                    <a onclick="AddToCart('@prods.ProductName', '@prods.Price', '@prods.Pictures', '@prods.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
+                                                    <span class="product__tag product__tag--discount">-12%</span>
+                                                    <a onclick="AddToFav('@prods.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
+                                                </div>
+                                                <div class="product__price m-t-10">
+                                                    <span class="product__price-del">@prods.Price</span>
+                                                    <span class="product__price-reg">$10.71</span>
+                                                </div>
+                                                <a href="@Url.Action("Product",new { NidProduct = prods.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                                    @prods.ProductName
+                                                </a>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="swiper-buttons">
+                                        <!-- Add Arrows -->
+                                        <div class="swiper-button-next default__nav default__nav--next"><i class="fal fa-chevron-right"></i></div>
+                                        <div class="swiper-button-prev default__nav default__nav--prev"><i class="fal fa-chevron-left"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        }
+    </div>
+</div>
+<div class="row flex-column-reverse flex-lg-row">
+    @if (Model.Count >= 10)
+    {
+        <div class="col col-lg-12" style="display:flex;margin-top:50px;">
+            <div class="col col-lg-4"></div>
+            <div class="col col-lg-4"><button id="MoreCats" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight">نمایش دسته بندی های بیشتر</button></div>
+            <div class="col col-lg-4"></div>
+        </div>
+    }
+</div>
+

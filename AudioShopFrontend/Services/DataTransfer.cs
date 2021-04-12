@@ -349,7 +349,10 @@ namespace AudioShopFrontend.Services
         public Tuple<decimal, decimal> GetMinMaxCategoryPrice(int Nidcategory)
         {
             var result = db.Products.Where(p => p.NidCategory == Nidcategory).GroupBy(q => q.Price).Select(w => w.Key);
+            if(result.Any())
             return new Tuple<decimal, decimal>(result.Min(),result.Max());
+            else
+                return new Tuple<decimal, decimal>(0, 100000);
         }
 
         public bool AddComment(Comment comment)
@@ -411,6 +414,23 @@ namespace AudioShopFrontend.Services
                 return Quantity;
             else
                 return 0;
+        }
+
+        public Favorite GetFavoriteById(Guid NidFav)
+        {
+            return db.Favorites.Where(p => p.NidFav == NidFav).FirstOrDefault();
+        }
+
+        public int RemoveFavorite(Favorite favorite)
+        {
+            db.Entry(favorite).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return db.Favorites.Where(p => p.NidUser == favorite.NidUser).Count();
+        }
+
+        public List<Category> GetAllCategory(int pagesize = 10, int toskip = 0)
+        {
+            return db.Categories.Where(p => p.IsSubmmited == true && p.Products.Any()).OrderBy(w => w.NidCategory).Skip(toskip).Take(pagesize).ToList();
         }
     }
 }
