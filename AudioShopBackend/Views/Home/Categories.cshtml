@@ -468,7 +468,9 @@
                     processData: false,
                     success: function (result) {
                         if (result.HasValue) {
-                            $("#txtPictures").val(result.Message);
+                            var tmpPics = $("#txtPictures").val().split(',');
+                            tmpPics.push(result.Message);
+                            $("#txtPictures").val(tmpPics.join(','));
                             $("#UploadPics").html(result.Html);
                         } else {
                             alert("no file recieved");

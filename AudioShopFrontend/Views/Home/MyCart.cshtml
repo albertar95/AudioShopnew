@@ -41,12 +41,12 @@
                         {
                             <tr id="@prods.NidProduct">
                                 <td class="product-thumbnail">
-                                    @if (prods.Product.Pictures != null)
+                                    @if (!string.IsNullOrEmpty(prods.Product.Pictures))
                                     {
-                                        <a href="#"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                        <a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
                                     }
                                 </td>
-                                <td class="product-name"><a href="#">@prods.Product.ProductName</a></td>
+                                <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})">@prods.Product.ProductName</a></td>
                                 <td class="product-price-cart"><span class="amount">@prods.Product.Price</span></td>
                                 <td class="product-quantities">
                                     <div class="quantity d-inline-block">

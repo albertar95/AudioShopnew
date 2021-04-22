@@ -14,13 +14,13 @@
                         <div class="col-12">
                             <div class="banner__box">
                                 <a href="single-1.html" class="banner__link">
-                                    @if (cat.Pictures == null)
+                                    @if (string.IsNullOrEmpty(cat.Pictures))
                                     {
                                         <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-1.jpg")" alt="" class="banner__img">
                                     }
                                     else
                                     {
-                                        <img src="@cat.Pictures" alt="" class="banner__img">
+                                        <img src="@cat.Pictures.Split(',').FirstOrDefault()" width="870" height="175" alt="" class="banner__img">
                                     }
                                 </a>
                             </div>
@@ -43,9 +43,9 @@
                                                 <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                                     <div class="product__img-box">
                                                         <a href="@Url.Action("Product",new { NidProduct = prods.NidProduct})" class="product__img--link">
-                                                            @if (prods.Pictures != null)
+                                                            @if (string.IsNullOrEmpty(prods.Pictures))
                                                             {
-                                                                <img class="product__img" src="@prods.Pictures.Split(',').FirstOrDefault()" alt="">
+                                                                <img class="product__img" src="@prods.Pictures.Split(',').FirstOrDefault()" width="540" height="540" alt="">
                                                             }
                                                             else
                                                             {

@@ -38,12 +38,12 @@
                         {
                             <tr id="@fav.NidFav">
                                 <td class="product-thumbnail">
-                                    @if (fav.Product.Pictures != null)
+                                    @if (!string.IsNullOrEmpty(fav.Product.Pictures))
                                     {
-                                        <a href="#"><img class="img-fluid" src="@fav.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                        <a href="@Url.Action("Product","Home",new { NidProduct = fav.NidProduct})"><img class="img-fluid" src="@fav.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
                                     }
                                 </td>
-                                <td class="product-name"><a href="#">@fav.Product.ProductName</a></td>
+                                <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = fav.NidProduct})">@fav.Product.ProductName</a></td>
                                 <td class="product-price-cart"><span class="amount">@fav.Product.Price</span></td>
                                 <td class="product-add-cart">
                                     <button onclick="AddToCart('@fav.Product.ProductName', '@fav.Product.Price', '@fav.Product.Pictures', '@fav.NidProduct',1)" style="min-width:200px;margin:5px;" data-toggle="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight">افزودن سبد خرید</button>

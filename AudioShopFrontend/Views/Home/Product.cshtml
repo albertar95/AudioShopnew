@@ -297,10 +297,10 @@
                                     <!-- Start Single Default Product -->
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
-                                                <a href="single-1.html" class="product__img--link">
-                                                    @if (Model.Product.Pictures != null)
+                                                <a href="@Url.Action("Product","Home",new { NidProduct = sim.NidProduct})" class="product__img--link">
+                                                    @if (!string.IsNullOrEmpty(sim.Pictures))
                                                     {
-                                                        <img class="product__img" src="@Model.Product.Pictures.Split(',').FirstOrDefault()" alt="">
+                                                        <img class="product__img" src="@sim.Pictures.Split(',').FirstOrDefault()" alt="">
                                                     }
                                                     else
                                                     {

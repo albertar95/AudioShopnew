@@ -72,7 +72,14 @@
                         <div class="col-12">
                             <div class="banner__box">
                                 <a href="single-1.html" class="banner__link">
-                                    <img src="@Url.Content("~/Content/assets/img/banner/banner-shop-1-img-2.jpg")" alt="" class="banner__img">
+                                    @if (string.IsNullOrEmpty(Model.Category.Pictures))
+                                    {
+                                        <img src="@Url.Content("~/Content/assets/img/banner/banner-shop-1-img-2.jpg")" alt="" class="banner__img">
+                                    }
+                                    else
+                                    {
+                                        <img src="@Url.Content(Model.Category.Pictures.Split(',').LastOrDefault())" width="270" height="345" alt="" class="banner__img">
+                                    }
                                 </a>
                             </div>
                         </div>
@@ -87,8 +94,15 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="banner__box">
-                            <a href="single-1.html" class="banner__link">
-                                <img src="@Url.Content("~/Content/assets/img/banner/banner-shop-1-img-1.jpg")" alt="" class="banner__img">
+                            <a class="banner__link">
+                                @if (string.IsNullOrEmpty(Model.Category.Pictures))
+                                {
+                                    <img src="@Url.Content("~/Content/assets/img/banner/banner-shop-1-img-1.jpg")" alt="" class="banner__img">
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content(Model.Category.Pictures.Split(',').FirstOrDefault())" width="720" height="200" alt="" class="banner__img">
+                                }
                             </a>
                         </div>
                     </div>
@@ -122,16 +136,22 @@
             </div> <!-- ::::::  Start Sort Box Section  ::::::  -->
             <div id="contents">
                 <div class="product-tab-area" id="ProductTabs">
-                    <div class="tab-content ">
+                    <div class="tab-content">
                         <div class="tab-pane clearfix" id="sort-grid">
                             @foreach (var prod2 in Model.Products)
                         {
                                 <div class="product__box product__box--default product__box--border-hover text-center float-left float-3">
                                     <div class="product__img-box">
-                                        <a href="single-1.html" class="product__img--link">
-                                            <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                        <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__img--link">
+                                            @if (string.IsNullOrEmpty(prod2.Pictures))
+                                            {
+                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                            }
+                                            else
+                                            {
+                                                <img src="@Url.Content(prod2.Pictures.Split(',').FirstOrDefault())" width="540" height="540" alt="" class="product__img">
+                                            }
                                         </a>
-
                                         <a onclick="AddToCart('@prod2.ProductName','@prod2.Price','@prod2.Pictures','@prod2.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
                                         <span class="product__tag product__tag--discount">-12%</span>
                                         <button onclick="AddToFav('@prod2.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></button>
@@ -140,7 +160,7 @@
                                         @*<span class="product__price-del">$11.90</span>*@
                                         <span class="product__price-reg">@prod2.Price</span>
                                     </div>
-                                    <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                    <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
                                         @prod2.ProductName
                                     </a>
                                 </div> <!-- End Single Default Product -->
@@ -153,8 +173,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="product__img-box">
-                                                <a href="single-1.html" class="product__img--link">
-                                                    <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                                <a href="@Url.Action("Product","Home",new { NidProduct = prod1.NidProduct})" class="product__img--link">
+                                                    @if (string.IsNullOrEmpty(prod1.Pictures))
+                                                    {
+                                                        <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="@Url.Content(prod1.Pictures.Split(',').FirstOrDefault())" width="540" height="540" alt="" class="product__img">
+                                                    }
                                                 </a>
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
 
@@ -166,7 +193,7 @@
                                                 @*<span class="product__price-del">$11.90</span>*@
                                                 <span class="product__price-reg">@prod1.Price</span>
                                             </div>
-                                            <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                            <a href="@Url.Action("Product","Home",new { NidProduct = prod1.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
                                                 @prod1.ProductName
                                             </a>
                                             <div class="product__desc m-t-25 m-b-30">

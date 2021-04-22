@@ -140,7 +140,7 @@
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
                                                 <a href="@Url.Action("Product",new { NidProduct = lates.NidProduct})" class="product__img--link">
-                                                    @if (lates.Pictures != null)
+                                                    @if (!string.IsNullOrEmpty(lates.Pictures))
                                                     {
                                                         <img class="product__img" src="@lates.Pictures.Split(',').FirstOrDefault()" alt="">
                                                     }
@@ -202,7 +202,7 @@
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
                                                 <a href="@Url.Action("Product",new { NidProduct = specials.NidProduct})" class="product__img--link">
-                                                    @if (specials.Pictures != null)
+                                                    @if (!string.IsNullOrEmpty(specials.Pictures))
                                                     {
                                                         <img class="product__img" src="@specials.Pictures.Split(',').FirstOrDefault()" alt="">
                                                     }
@@ -264,7 +264,7 @@
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
                                                 <a href="@Url.Action("Product",new { NidProduct = popular.NidProduct})" class="product__img--link">
-                                                    @if (popular.Pictures != null)
+                                                    @if (!string.IsNullOrEmpty(popular.Pictures))
                                                     {
                                                         <img class="product__img" src="@popular.Pictures.Split(',').FirstOrDefault()" alt="">
                                                     }

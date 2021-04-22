@@ -1051,7 +1051,7 @@ button.btn--block {
 }
 .banner__img {
   width: 100%;
-  object-fit: cover;
+  object-fit: fill;
   transform: scale(1);
   transition: all 1s ease;
 }
@@ -1146,6 +1146,7 @@ button.btn--block {
 }
 .product__img {
   max-width: 100%;
+  height:auto;
 }
 .product__tag {
   position: absolute;
