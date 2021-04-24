@@ -351,6 +351,9 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Setting.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Ship.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -429,6 +432,7 @@
     <Content Include="Content\fonts\B-Titr\Fontyab.ir.url" />
     <Content Include="Content\fonts\B Nazanin\B Nazanin Bold.TTF" />
     <Content Include="Content\fonts\B Nazanin\B Nazanin.ttf" />
+    <None Include="Properties\PublishProfiles\alireza.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -179,9 +179,18 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="banner__box">
-                            <a href="single-1.html" class="banner__link">
-                                <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-1.jpg")" alt="" class="banner__img">
-                            </a>
+                            @if (!Model.Settings.Where(p => p.SettingAttribute == "specialBanner").Any())
+                            {
+                                <a href="@Url.Action("Generals",new { Typo = 2})" class="banner__link">
+                                    <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-1.jpg")" alt="" class="banner__img">
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Generals",new { Typo = 2})" class="banner__link">
+                                    <img src="@Model.Settings.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue" alt="" class="banner__img">
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -242,7 +251,18 @@
                     <div class="col-12">
                         <div class="banner__box">
                             <a href="single-1.html" class="banner__link">
-                                <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-2.jpg")" alt="" class="banner__img">
+                                @if (!Model.Settings.Where(p => p.SettingAttribute == "popularBanner").Any())
+                                {
+                                    <a href="@Url.Action("Generals",new { Typo = 3})" class="banner__link">
+                                        <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-2.jpg")" alt="" class="banner__img">
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Generals",new { Typo = 3})" class="banner__link">
+                                        <img src="@Model.Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue" alt="" class="banner__img">
+                                    </a>
+                                }
                             </a>
                         </div>
                     </div>

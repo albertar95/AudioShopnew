@@ -43,6 +43,8 @@ namespace AudioShopBackend.Services
         List<Comment> GetAllComments(int Pagesize = 10, bool Accepted = false);
         //login
         Tuple<byte,User> Authenticate(string Username,string Password);
+        //settings
+        List<Setting> GetAllSettings(int pagesize = 100);
         //generals
         bool CheckForBrandByNidcategory(int NidCategory);
         bool CheckForTypeByNidcategory(int NidCategory);

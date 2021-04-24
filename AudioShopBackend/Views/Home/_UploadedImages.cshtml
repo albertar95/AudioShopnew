@@ -2,5 +2,8 @@
 
 @foreach (var img in Model)
 {
-    <img src="@img" height="200" width="200" />
+    if (!string.IsNullOrEmpty(img))
+    {
+        <img src="@img" height="200" width="200" />
+    }
 }

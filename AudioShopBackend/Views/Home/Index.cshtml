@@ -1,4 +1,4 @@
-﻿
+﻿@model List<AudioShopBackend.Models.Setting>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,9 +8,30 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align:right;direction:rtl;">
                 <div class="form-element-list" style="min-height:100vh;">
-                    <h1>welcome</h1>
-                    <h3>audio shop</h3>
-                    <p>note that this website is still in developing stage,so be patient</p>
+                    <div class="col-lg-6">
+                        <input type="file" class="form-control" onchange="UploadThis(1)" id="UploadHeaderPic" style="margin:10px;" />
+                        <input type="text" id="txtSpecialPicture" hidden="hidden" />
+                        <button class="btn btn-amber notika-btn-amber waves-effect" style="margin:10px;" id="btnSpecial">بنر محصولات ویژه</button>
+                        <button class="btn btn-danger notika-btn-danger waves-effect" style="margin:10px;" id="btnDeleteSpecial">حذف تصویر فعلی</button>
+                        <div class="form-group ic-cmp-int" id="UploadPics" style="margin:10px;">
+                            @if (Model.Where(p => p.SettingAttribute == "specialBanner").Any())
+                            {
+                                <img src="@Model.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue" width="200" height="200" />
+                            }
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="file" class="form-control" onchange="UploadThis(2)" id="UploadHeaderPic2" style="margin:10px;" />
+                        <input type="text" id="txtPopularPicture" hidden="hidden" />
+                        <button class="btn btn-amber notika-btn-amber waves-effect" style="margin:10px;" id="btnPopular">بنر محصولات پرفروش</button>
+                        <button class="btn btn-danger notika-btn-danger waves-effect" style="margin:10px;" id="btnDeletePopular">حذف تصویر فعلی</button>
+                        <div class="form-group ic-cmp-int" id="UploadPics2" style="margin:10px;">
+                            @if (Model.Where(p => p.SettingAttribute == "popularBanner").Any())
+                            {
+                                <img src="@Model.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue" width="200" height="200" />
+                            }
+                        </div>
+                    </div>
                 </div>
                 </div>
         </div>
@@ -21,16 +42,155 @@
 @section styles
     {
     <link rel="stylesheet" href="@Url.Content("~/Content/css/jquery.dataTables.min.css")">
+<link href="@Url.Content("~/Content/css/notification/notification.css")" rel="stylesheet" />
 }
 
 @section scripts
     {
+<script src="@Url.Content("~/Content/js/notification/notification-active.js")"></script>
+<script src="@Url.Content("~/Content/js/notification/bootstrap-growl.min.js")"></script>
     <script type="text/javascript">
         $(function ()
         {
             $('.nav-tabs li.active').removeClass('active');
             $("#liHome").addClass('active');
+            $("#btnSpecial").click(function (e) {
+                e.preventDefault();
+                if ($("#txtSpecialPicture").val() == '')
+                {
+                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'فایلی انتخاب نشده است');
+                } else
+                {
+                $.ajax(
+                    {
+                    })
+                }
+            });
+            $("#btnPopular").click(function (e)
+            {
+                e.preventDefault();
+                if ($("#txtPopularPicture").val() == '')
+                {
+                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'فایلی انتخاب نشده است');
+                } else
+                {
+                $.ajax(
+                    {
+                        url: '@Url.Action("UpdateSetting","Home")',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { SettingIndex: 2, SettingValue: $("#txtPopularPicture").val() },
+                        success: function (result)
+                        {
+                            if(result.HasValue)
+                            {
+                                myNotify('bottom', 'center', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                            }
+                        },
+                        error: function () { }
+                    })
+                }
+            });
         });
+        function UploadThis(typo)
+        {
+            if (typo == 1)
+            {
+                var formData = new FormData();
+                var totalFiles = document.getElementById("UploadHeaderPic").files.length;
+                for (var i = 0; i < totalFiles; i++) {
+                    var file = document.getElementById("UploadHeaderPic").files[i];
+                    formData.append("UploadHeaderPic", file);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UploadFiles","Home")',
+                    data: formData,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.HasValue) {
+                            $("#txtSpecialPicture").val(result.Message);
+                            $("#UploadPics").html(result.Html);
+                        } else {
+                            alert("no file recieved");
+                        }
+                    },
+                    error: function (error) {
+                        alert("errror");
+                    }
+                })
+            }
+            if (typo == 2) {
+                var formData2 = new FormData();
+                var totalFiles2 = document.getElementById("UploadHeaderPic2").files.length;
+                for (var i = 0; i < totalFiles2; i++) {
+                    var file2 = document.getElementById("UploadHeaderPic2").files[i];
+                    formData2.append("UploadHeaderPic2", file2);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UploadFiles","Home")',
+                    data: formData2,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
+                    success: function (result) {
+                        if (result.HasValue) {
+                            $("#txtPopularPicture").val(result.Message);
+                            $("#UploadPics2").html(result.Html);
+                        } else {
+                            alert("no file recieved");
+                        }
+                    },
+                    error: function (error) {
+                        alert("errror");
+                    }
+                })
+            }
+        }
+        function myNotify(from, align, icon, type, animIn, animOut, myMessage) {
+            $.growl({
+                icon: icon,
+                title: '',
+                message: myMessage,
+                url: ''
+            }, {
+                element: 'body',
+                type: type,
+                allow_dismiss: true,
+                placement: {
+                    from: from,
+                    align: align
+                },
+                offset: {
+                    x: 20,
+                    y: 85
+                },
+                spacing: 10,
+                z_index: 1031,
+                delay: 2500,
+                timer: 1000,
+                url_target: '_blank',
+                mouse_over: false,
+                animate: {
+                    enter: animIn,
+                    exit: animOut
+                },
+                icon_type: 'class',
+                template: '<div data-growl="container" class="alert" role="alert">' +
+								'<button type="button" class="close" data-growl="dismiss">' +
+									'<span aria-hidden="true">&times;</span>' +
+									'<span class="sr-only">Close</span>' +
+								'</button>' +
+								'<span data-growl="icon"></span>' +
+								'<span data-growl="title"></span>' +
+								'<span data-growl="message"></span>' +
+								'<a href="#" data-growl="url"></a>' +
+							'</div>'
+            });
+        };
     </script>
     <script src="@Url.Content("~/Content/js/data-table/jquery.dataTables.min.js")"></script>
     <script src="@Url.Content("~/Content/js/data-table/data-table-act.js")"></script>

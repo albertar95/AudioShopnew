@@ -104,6 +104,7 @@
                             <div class="form-group ic-cmp-int">
                                 <div class="nk-int-st">
                                     <input type="file" class="form-control" id="UploadHeaderPic" multiple="multiple" />
+                                    <p>نکته : سایز تصویر اول می بایست 870 در 200 باشد و تصویر دوم 270 در 345</p>
                                 </div>
                             </div>
                         </div>
@@ -219,6 +220,19 @@
         $(function () {
             $('.nav-tabs li.active').removeClass('active');
             $("#liCategories").addClass('active');
+            $('#txtBrandName').keyup(function(e){
+                if(e.keyCode == 13)
+                {
+                    e.preventDefault();
+                    document.getElementById("btnAddBrand").click();
+                }
+            });
+            $('#txtTypeName').keyup(function (e) {
+                if (e.keyCode == 13) {
+                    e.preventDefault();
+                    document.getElementById("btnAddType").click();
+                }
+            });
             $("#btnAddCategory").click(function (e) {
                 e.preventDefault();
                 if ($("#txtCategoryName").val() == '') {
@@ -247,7 +261,7 @@
                                         $("#BrandWrap").html("");
                                         $("#TypeWrap").html("");
                                         $("#UploadPics").html("");
-                                        $("#successfullMessageDiv").html('category added successfully!');
+                                        $("#successfullMessageDiv").html('دسته بندی با موفقیت ویرایش گردید!');
                                         $("#successfullMessageDiv").removeAttr('hidden');
                                         setTimeout(function () {
                                             $("#successfullMessageDiv").prop('hidden', 'hidden');
@@ -288,7 +302,7 @@
                 $("#BrandWrap").html("");
                 $("#TypeWrap").html("");
                 $("#UploadPics").html("");
-                $("#successfullMessageDiv").html('category added successfully!');
+                $("#successfullMessageDiv").html('دسته بندی با موفقیت اضافه گردید!');
                 $("#successfullMessageDiv").removeAttr('hidden');
                 setTimeout(function () {
                     $("#successfullMessageDiv").prop('hidden', 'hidden');
@@ -468,9 +482,14 @@
                     processData: false,
                     success: function (result) {
                         if (result.HasValue) {
-                            var tmpPics = $("#txtPictures").val().split(',');
-                            tmpPics.push(result.Message);
-                            $("#txtPictures").val(tmpPics.join(','));
+                            if ($("#txtPictures").val() != "")
+                            {
+                                var tmpPics = $("#txtPictures").val().split(',');
+                                tmpPics.push(result.Message);
+                                $("#txtPictures").val(tmpPics.join(','));
+                            } else {
+                                $("#txtPictures").val(result.Message);
+                            }
                             $("#UploadPics").html(result.Html);
                         } else {
                             alert("no file recieved");
@@ -487,6 +506,7 @@
                 $("#txtCategoryName").val("");
                 $("#txtDescription").val("");
                 $("#txtKeywords").val("");
+                $("#txtPictures").val("");
                 NidCurrentCategory = 0;
                 IsCategoryAdded = false;
                 $("#BrandWrap").html("");
@@ -523,11 +543,11 @@
         function DeleteThis(nidcat)
         {
             swal({   
-                title: "Are you sure?",   
-                text: "You will not be able to recover this imaginary file!",   
+                title: "آیا برای حذف اطمینان دارید?",   
+                text: "در صورت حذف این اطلاعات امکان بارآوری ندارد",   
                 type: "warning",   
                 showCancelButton: true,   
-                confirmButtonText: "Yes, delete it!",
+                confirmButtonText: "حذف کن",
             }).then(function () {
                 $.ajax(
                     {
@@ -539,7 +559,7 @@
                         {
                             if (result.HasValue)
                             {
-                                swal("deleted!", result.Message, "success");
+                                swal("حذف با موفقیت انجام شد", result.Message, "success");
                                 UpdateTableContent();
                             } else {
                                 swal(result.Message);
@@ -547,7 +567,7 @@
                         },
                         error: function ()
                         {
-                            swal("error");
+                            swal("خطا در سرور");
                         }
                     })
             });
@@ -583,11 +603,11 @@
                         if (result.HasValue)
                             $("#DetailModal").html(result.Html);
                         else
-                            alert('error');
+                            alert('خطا در سرور');
                     },
                     error: function ()
                     {
-                        alert('error')
+                        alert('خطا در سرور')
                     }
                 })
             $("#DetailModal").modal('toggle')

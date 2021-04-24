@@ -230,5 +230,10 @@ namespace AudioShopBackend.Services
                 }
             }
         }
+
+        public List<Setting> GetAllSettings(int pagesize = 100)
+        {
+            return db.Settings.Take(pagesize).ToList();
+        }
     }
 }

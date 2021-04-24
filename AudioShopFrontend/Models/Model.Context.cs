@@ -35,5 +35,6 @@ namespace AudioShopFrontend.Models
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
     }
 }

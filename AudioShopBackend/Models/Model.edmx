@@ -93,6 +93,16 @@
           <Property Name="Price" Type="decimal" Precision="15" Scale="0" Nullable="false" />
           <Property Name="State" Type="tinyint" Nullable="false" />
           <Property Name="Priority" Type="tinyint" />
+          <Property Name="Details" Type="nvarchar(max)" />
+          <Property Name="DetailDescription" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="NidSetting" />
+          </Key>
+          <Property Name="NidSetting" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SettingAttribute" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SettingValue" Type="nvarchar" MaxLength="500" Nullable="false" />
         </EntityType>
         <EntityType Name="Ships">
           <Key>
@@ -290,6 +300,7 @@
           <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Carts_Products" Association="Self.FK_Carts_Products">
@@ -412,6 +423,7 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="Ship" EntitySet="Ships" />
           </AssociationSet>
+          <EntitySet Name="Settings" EntityType="ASDbModel.Setting" />
         </EntityContainer>
         <EntityType Name="Cart">
           <Key>
@@ -522,6 +534,8 @@
           <NavigationProperty Name="Category_Types" Relationship="ASDbModel.FK_Products_Category_Types" FromRole="Product" ToRole="Category_Types" />
           <NavigationProperty Name="Favorites" Relationship="ASDbModel.FK_Favorites_Products" FromRole="Product" ToRole="Favorite" />
           <NavigationProperty Name="Orders" Relationship="ASDbModel.FK_Orders_Products" FromRole="Product" ToRole="Order" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Ship">
           <Key>
@@ -715,6 +729,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="NidSetting" />
+          </Key>
+          <Property Name="NidSetting" Type="Guid" Nullable="false" />
+          <Property Name="SettingAttribute" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SettingValue" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -802,6 +824,8 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ASDbModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="DetailDescription" ColumnName="DetailDescription" />
+                <ScalarProperty Name="Details" ColumnName="Details" />
                 <ScalarProperty Name="Priority" ColumnName="Priority" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -848,6 +872,15 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="NidUser" ColumnName="NidUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="ASDbModel.Setting">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+                <ScalarProperty Name="SettingAttribute" ColumnName="SettingAttribute" />
+                <ScalarProperty Name="NidSetting" ColumnName="NidSetting" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

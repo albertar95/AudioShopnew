@@ -24,6 +24,7 @@ namespace AudioShopFrontend.Controllers
             ivm.LatestProducts = dataTransfer.GetLatestProducts();
             ivm.PopularProducts = dataTransfer.GetPopularProducts();
             ivm.SpecialProducts = dataTransfer.GetSpecialProducts();
+            ivm.Settings = dataTransfer.GetAllSettings();
             //discounts
             //blogs
             return View(ivm);

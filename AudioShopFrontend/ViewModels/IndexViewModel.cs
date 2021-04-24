@@ -13,6 +13,7 @@ namespace AudioShopFrontend.ViewModels
         public List<ProductDTO> LatestProducts { get; set; }
         public List<ProductDTO> SpecialProducts { get; set; }
         public List<ProductDTO> PopularProducts { get; set; }
+        public List<Setting> Settings { get; set; }
         //discounts
         //blogs
     }

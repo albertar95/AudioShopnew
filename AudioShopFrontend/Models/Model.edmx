@@ -96,6 +96,14 @@
           <Property Name="Details" Type="nvarchar(max)" />
           <Property Name="DetailDescription" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="NidSetting" />
+          </Key>
+          <Property Name="NidSetting" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SettingAttribute" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SettingValue" Type="nvarchar" MaxLength="500" Nullable="false" />
+        </EntityType>
         <EntityType Name="Ships">
           <Key>
             <PropertyRef Name="NidShip" />
@@ -292,6 +300,7 @@
           <EntitySet Name="Favorites" EntityType="Self.Favorites" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ships" EntityType="Self.Ships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Carts_Products" Association="Self.FK_Carts_Products">
@@ -414,6 +423,7 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
+          <EntitySet Name="Settings" EntityType="ASDbModel.Setting" />
           </EntityContainer>
         <EntityType Name="Category">
           <Key>
@@ -719,6 +729,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="NidSetting" />
+          </Key>
+          <Property Name="NidSetting" Type="Guid" Nullable="false" />
+          <Property Name="SettingAttribute" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SettingValue" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -854,6 +872,15 @@
                 <ScalarProperty Name="NidCategory" ColumnName="NidCategory" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="NidProduct" ColumnName="NidProduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="ASDbModel.Setting">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+                <ScalarProperty Name="SettingAttribute" ColumnName="SettingAttribute" />
+                <ScalarProperty Name="NidSetting" ColumnName="NidSetting" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

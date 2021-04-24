@@ -35,6 +35,8 @@ namespace AudioShopBackend.Models
         public decimal Price { get; set; }
         public byte State { get; set; }
         public Nullable<byte> Priority { get; set; }
+        public string Details { get; set; }
+        public string DetailDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }

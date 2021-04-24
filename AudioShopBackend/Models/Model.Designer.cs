@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\admin\Documents\Visual Studio 2015\Projects\AudioShop\AudioShopBackend\Models\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Alireza\Documents\Visual Studio 2015\Projects\AudioShopnew\AudioShopBackend\Models\Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

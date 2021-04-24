@@ -28,6 +28,7 @@
         <AssociationConnector Association="ASDbModel.FK_Products_Category_Types" />
         <AssociationConnector Association="ASDbModel.FK_Favorites_Products" />
         <AssociationConnector Association="ASDbModel.FK_Orders_Products" />
+        <EntityTypeShape EntityType="ASDbModel.Setting" Width="1.5" PointX="7.375" PointY="0.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

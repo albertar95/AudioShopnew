@@ -50,7 +50,8 @@ namespace AudioShopFrontend.Services
         List<Order> GetUsersOrder(Guid NidUser);
         //comment
         bool AddComment(Comment comment);
-
+        //settings
+        List<Setting> GetAllSettings(int pagesize = 100);
         List<Category_BrandDTO> GetCategory_BrandByNidcategory(int Nidcategory);
         List<Category_TypeDTO> GetCategory_TypeByNidcategory(int Nidcategory);
         List<ProductDTO> GetProductsByNidcategory(int Nidcategory,int pagesize = 10,int toSkip = 0,decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "",int FilterType = 0);

@@ -42,7 +42,9 @@ namespace AudioShopBackend.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            dbTransfer = new DbTransfer();
+            List<Setting> sets = dbTransfer.GetAllSettings();
+            return View(sets);
         }
 
         //category section
@@ -118,6 +120,8 @@ namespace AudioShopBackend.Controllers
         {
             bool categoryAdded = false;
             dbTransfer = new DbTransfer();
+            if (pictures == "")
+                pictures = null;
             if(IsNewCategory)
             {
                 Category category = new Category() { NidCategory = dbTransfer.GenerateNewNidCategory(), CategoryName = Name, IsSubmmited = true, Description = CategoryDescription, keywords = categoryKeywords, Pictures = pictures };
@@ -366,6 +370,7 @@ namespace AudioShopBackend.Controllers
             pvm.Category_Brands = dbTransfer.GetCategoryBrandsByNidCategory(product.NidCategory);
             pvm.category_Types = dbTransfer.GetCategoryTypesByNidCategory(product.NidCategory);
             pvm.Product = product;
+            //pvm.ProductDescription = product.Description.Replace("\"", "\\\"");
             return View(pvm);
         }
         [ValidateInput(false)]
@@ -545,6 +550,31 @@ namespace AudioShopBackend.Controllers
             else
                 return Json(new JsonResults() { HasValue = false, Message = "خطا در تایید" });
         }
+        //settings
+        public ActionResult UpdateSetting(int SettingIndex,string SettingValue)
+        {
+            dbTransfer = new DbTransfer();
+            Setting setting = null;
+            //1:specialBanner,2:popularBanner
+            switch (SettingIndex)
+            {
+                case 1:
+                    setting = new Setting() {  NidSetting = Guid.NewGuid(), SettingAttribute = "specialBanner", SettingValue = SettingValue };
+                    break;
+                case 2:
+                    setting = new Setting() { NidSetting = Guid.NewGuid(), SettingAttribute = "popularBanner", SettingValue = SettingValue };
+                    break;
+            }
+            if (setting != null)
+            {
+                dbTransfer.Add(setting);
+                if(dbTransfer.Save())
+                    return Json(new JsonResults() { HasValue = true, Message = "تنظیمات با موفقیت ثبت شد" });
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "خطا در دیتابیس" });
+            }else
+                return Json(new JsonResults() { HasValue = false, Message = "تنظیمات ناشناخته" });
+        }
         //generals
         public static string RenderViewToString(ControllerContext context, string viewName, object model)
         {
@@ -562,7 +592,6 @@ namespace AudioShopBackend.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
-
         public static Bitmap ResizeImage(Image image, int width, int height)
         {
             var destRect = new Rectangle(0, 0, width, height);
@@ -600,12 +629,12 @@ namespace AudioShopBackend.Controllers
                 {
                     var file = Request.Files[i];
 
-                    var fileName = "Image_" + DateTime.Now.ToShortDateString().Replace('/','_') + "_" + DateTime.Now.ToShortTimeString().Replace(':', '_') + "_" + Path.GetFileName(file.FileName);
+                    var fileName = "Image_" + DateTime.Now.ToShortDateString().Replace('/','_') + "_" + DateTime.Now.ToShortTimeString().Replace(':', '_') + "_" + Path.GetFileName(file.FileName.Replace(' ','_'));
                     var path = Path.Combine(Server.MapPath("~/Uploads/"), fileName);
                     //Image img = Image.FromStream(file.InputStream, true, true);
                     //img.Save(path);
                     file.SaveAs(path);
-                    Uploaded.Add("http://localhost:9000/Uploads/" + fileName);
+                    Uploaded.Add($"{HttpContext.Request.Url.Scheme + "://" + HttpContext.Request.Url.Host + ":" + HttpContext.Request.Url.Port}/Uploads/" + fileName);
                 }
                 return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext,"_UploadedImages",Uploaded), Message = string.Join(",",Uploaded) });
             }

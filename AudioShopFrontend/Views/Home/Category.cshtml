@@ -78,7 +78,14 @@
                                     }
                                     else
                                     {
-                                        <img src="@Url.Content(Model.Category.Pictures.Split(',').LastOrDefault())" width="270" height="345" alt="" class="banner__img">
+                                        if (Model.Category.Pictures.Split(',').Count() > 1)
+                                        {
+                                            <img src="@Url.Content(Model.Category.Pictures.Split(',').LastOrDefault())" width="270" height="345" alt="" class="banner__img">
+                                        }
+                                        else
+                                        {
+                                            <img src="@Url.Content("~/Content/assets/img/banner/banner-shop-1-img-2.jpg")" alt="" class="banner__img">
+                                        }
                                     }
                                 </a>
                             </div>

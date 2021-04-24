@@ -432,5 +432,10 @@ namespace AudioShopFrontend.Services
         {
             return db.Categories.Where(p => p.IsSubmmited == true && p.Products.Any()).OrderBy(w => w.NidCategory).Skip(toskip).Take(pagesize).ToList();
         }
+
+        public List<Setting> GetAllSettings(int pagesize = 100)
+        {
+            return db.Settings.Take(pagesize).ToList();
+        }
     }
 }
