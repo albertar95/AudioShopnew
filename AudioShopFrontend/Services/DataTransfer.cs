@@ -49,7 +49,8 @@ namespace AudioShopFrontend.Services
         public List<ProductDTO> GetPopularProducts(int pagesize = 10, int toskip = 0)
         {
             List<ProductDTO> result = new List<ProductDTO>();
-            var MostWanted = db.Orders.GroupBy(p => p.NidProduct).Select(q =>  new { nidprod = q.Key,cnt = q.Count()});
+            var MostWanted = db.Carts.Where(w => w.State == 1).GroupBy(p => p.NidProduct).Select(q => new { nidprod = q.Key, cnt = q.Count() });
+            //var MostWanted = db.Orders.GroupBy(p => p.NidProducts).Select(q =>  new { nidprod = q.Key,cnt = q.Count()});
             foreach (var pro in MostWanted.OrderByDescending(q => q.cnt).Skip(toskip).Take(pagesize))
             {
                 result.Add(GetProductDtoByID(pro.nidprod));
@@ -226,22 +227,22 @@ namespace AudioShopFrontend.Services
 
         public List<Cart> GetAllCartByNidUser(Guid NidUser, int pagesize = 10)
         {
-            return db.Carts.Where(p => p.NidUser == NidUser).OrderByDescending(q => q.CreateDate).Take(pagesize).ToList();
+            return db.Carts.Where(p => p.NidUser == NidUser && p.State == 0).OrderByDescending(q => q.CreateDate).Take(pagesize).ToList();
         }
 
         public int AddCart(Cart cart)
         {
-            if(!db.Carts.Where(p => p.NidProduct == cart.NidProduct && p.NidUser == cart.NidUser).Any())
+            if(!db.Carts.Where(p => p.NidProduct == cart.NidProduct && p.NidUser == cart.NidUser && p.State == 0).Any())
             {
                 db.Carts.Add(cart);
                 db.SaveChanges();
             }
-            return db.Carts.Where(p => p.NidUser == cart.NidUser).Count();
+            return db.Carts.Where(p => p.NidUser == cart.NidUser && p.State == 0).Count();
         }
 
         public Tuple<int, int> GetCartAndFavoriteCount(Guid NidUser)
         {
-            int tmpCart = db.Carts.Where(p => p.NidUser == NidUser).Count();
+            int tmpCart = db.Carts.Where(p => p.NidUser == NidUser && p.State == 0).Count();
             int tmpfav = db.Favorites.Where(p => p.NidUser == NidUser).Count();
             return new Tuple<int, int>(tmpCart,tmpfav);
         }
@@ -387,22 +388,22 @@ namespace AudioShopFrontend.Services
         {
             db.Entry(cart).State = System.Data.Entity.EntityState.Deleted;
             db.SaveChanges();
-            return db.Carts.Where(p => p.NidUser == cart.NidUser).Count();
+            return db.Carts.Where(p => p.NidUser == cart.NidUser && p.State == 0).Count();
         }
 
         public Cart GetCartByNidCart(Guid NidCart)
         {
-            return db.Carts.Where(p => p.NidCart == NidCart).FirstOrDefault();
+            return db.Carts.Where(p => p.NidCart == NidCart && p.State == 0).FirstOrDefault();
         }
 
         public decimal CartPriceAggregateByNidUser(Guid NidUser)
         {
-            return db.Carts.Where(p => p.NidUser == NidUser).Select(q => (q.Product.Price)*(q.Quantity ?? 1)).Sum();
+            return db.Carts.Where(p => p.NidUser == NidUser && p.State == 0).Select(q => (q.Product.Price)*(q.Quantity ?? 1)).Sum();
         }
 
         public Cart GetCartByNidUserAndProduct(Guid NidUser, Guid NidProduct)
         {
-            return db.Carts.Where(p => p.NidUser == NidUser && p.NidProduct == NidProduct).FirstOrDefault();
+            return db.Carts.Where(p => p.NidUser == NidUser && p.NidProduct == NidProduct && p.State == 0).FirstOrDefault();
         }
 
         public int UpdateCartQuantity(Guid NidCart,int Quantity)
@@ -436,6 +437,29 @@ namespace AudioShopFrontend.Services
         public List<Setting> GetAllSettings(int pagesize = 100)
         {
             return db.Settings.Take(pagesize).ToList();
+        }
+
+        public bool AddOrder(Order order)
+        {
+            db.Orders.Add(order);
+            if (db.SaveChanges() == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public Order GetOrderByNidOrder(Guid NidOrder)
+        {
+            return db.Orders.Where(p => p.NidOrder == NidOrder).FirstOrDefault();
+        }
+
+        public bool UpdateOrder(Order order)
+        {
+            db.Entry(order).State = System.Data.Entity.EntityState.Modified;
+            if (db.SaveChanges() == 1)
+                return true;
+            else
+                return false;
         }
     }
 }

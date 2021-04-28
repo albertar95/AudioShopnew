@@ -1,0 +1,344 @@
+﻿@model AudioShopFrontend.ViewModels.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <ul class="page-breadcrumb__menu ForceRTL">
+                    <li class="page-breadcrumb__nav"><a href="@Url.Action("Index")">خانه</a></li>
+                    <li class="page-breadcrumb__nav active">تسویه حساب</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> <!-- ::::::  End  Breadcrumb Section  ::::::  -->
+
+<div class="container">
+    <div class="row">
+        @if (Model.User != null)
+        {
+                    <!-- Start Client Shipping Address -->
+            <div class="col-lg-7">
+                <div class="section-content">
+                    <h5 class="section-content__title">جزییات مرسوله</h5>
+                </div>
+                <form action="#" class="form-box ForceRTL">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-first-name">نام</label>
+                                <input type="text" id="form-first-name" value="@Model.User.FirstName" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-last-name">نام خانوادگی</label>
+                                <input type="text" id="form-last-name" value="@Model.User.LastName" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <label for="form-country">* استان</label>
+                                <select id="form-country" disabled>
+                                    <option value="select-country" selected>استان مورد نظر را انتخاب نمایید</option>
+                                    <option value="BD">Bangladesh</option>
+                                    <option value="US">USA</option>
+                                    <option value="UK">UK</option>
+                                    <option value="TR">Turkey</option>
+                                    <option value="CA">Canada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <label for="form-address-1">آدرس</label>
+                                <textarea id="form-address-1" rows="5" disabled>@Model.User.Address </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <label for="form-zipcode">* کد پستی</label>
+                                <input type="text" id="form-zipcode" value="@Model.User.ZipCode" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-phone">شماره تماس</label>
+                                <input type="text" id="form-phone" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-email">آدرس ایمیل</label>
+                                <input type="email" id="form-email" value="@Model.User.Username" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <h6>توضیحات مرسوله</h6>
+                                <textarea id="form-additional-info" rows="5" placeholder="در صورت نیاز،توضیحات خود را بنویسید" disabled></textarea>
+                            </div>
+                        </div>
+                        <!-- Add Another Shipping Address -->
+                        <div class="col-md-12">
+                            <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnEdit" style="margin-top:20px;">ویرایش اطلاعات</button>
+                            <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnSave" style="margin-top:20px;" hidden>ذخیره</button>
+                        </div>  <!-- End Another Shipping Address -->
+                    </div>
+                </form>
+            </div> <!-- End Client Shipping Address -->
+        }
+        else
+        {
+            <div class="col-lg-7">
+                <div class="section-content">
+                    <h5 class="section-content__title">جزییات مرسوله</h5>
+                </div>
+                <form action="#" class="form-box ForceRTL">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-first-name">نام</label>
+                                <input type="text" id="form-first-name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-last-name">نام خانوادگی</label>
+                                <input type="text" id="form-last-name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <label for="form-country">* استان</label>
+                                <select id="form-country">
+                                    <option value="select-country" selected>استان مورد نظر را انتخاب نمایید</option>
+                                    <option value="BD">Bangladesh</option>
+                                    <option value="US">USA</option>
+                                    <option value="UK">UK</option>
+                                    <option value="TR">Turkey</option>
+                                    <option value="CA">Canada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <label for="form-address-1">آدرس</label>
+                                <textarea id="form-address-1"> </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <label for="form-zipcode">* کد پستی</label>
+                                <input type="text" id="form-zipcode">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-phone">شماره تماس</label>
+                                <input type="text" id="form-phone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box__single-group">
+                                <label for="form-email">آدرس ایمیل</label>
+                                <input type="email" id="form-email">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box__single-group">
+                                <h6>توضیحات مرسوله</h6>
+                                <textarea id="form-additional-info" rows="5" placeholder="در صورت نیاز،توضیحات خود را بنویسید"></textarea>
+                            </div>
+                        </div>
+                        <!-- Add Another Shipping Address -->
+                        <div class="col-md-12">
+                            <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnSave" style="margin-top:20px;" hidden>ذخیره</button>
+                        </div>  <!-- End Another Shipping Address -->
+                    </div>
+                </form>
+            </div> <!-- End Client Shipping Address -->
+
+        }
+        <!-- Start Order Wrapper -->
+        <div class="col-lg-5">
+            <div class="your-order-section">
+                <div class="section-content">
+                    <h5 class="section-content__title">سفارش شما</h5>
+                </div>
+                <div class="your-order-box gray-bg m-t-40 m-b-30 ForceRTL">
+                    <div class="your-order-product-info">
+                        <div class="your-order-top d-flex justify-content-between">
+                            <h6 class="your-order-top-left">محصولات</h6>
+                            <h6 class="your-order-top-right">مجموع</h6>
+                        </div>
+                        <ul class="your-order-middle">
+                            @{decimal tmpCartSum = 0;decimal tmpCart = 0;}
+                            @foreach (var cart in Model.Carts)
+                            {
+                                <li class="d-flex justify-content-between">
+                                    <span class="your-order-middle-left">@cart.Product.ProductName</span>
+                                    <span class="your-order-middle-right">@{tmpCart = (cart.Quantity ?? 1) * (cart.Product.Price);}@tmpCart</span>
+                                </li>
+                                { tmpCartSum += tmpCart;}
+                            }
+                        </ul>
+                        <div class="your-order-bottom d-flex justify-content-between">
+                            <h6 class="your-order-bottom-left">هزینه ارسال</h6>
+                            <span class="your-order-bottom-right">0</span>
+                        </div>
+                        <div class="your-order-total d-flex justify-content-between">
+                            <h5 class="your-order-total-left">مجموع</h5>
+                            <h5 class="your-order-total-right">@tmpCartSum</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnContinue" type="submit">ادامه فرایند خرید</button>
+            </div>
+        </div> <!-- End Order Wrapper -->
+    </div>
+</div>
+
+@section styles
+    {
+
+    <link href="@Url.Content("~/Content/css/notification/notification.css")" rel="stylesheet" />
+}
+@section scripts
+    {
+<script src="@Url.Content("~/Content/js/notification/bootstrap-growl.min.js")"></script>
+<script src="@Url.Content("~/Content/js/notification/notification-active.js")"></script>
+    <script type="text/javascript">
+        $(function ()
+        {
+            $("#btnEdit").click(function (e)
+            {
+                e.preventDefault();
+                $("#btnSave").removeAttr('hidden');
+                $("#btnEdit").attr('hidden', 'hidden');
+                $("#form-country").removeAttr('disabled');
+                $("#form-address-1").removeAttr('disabled');
+                $("#form-zipcode").removeAttr('disabled');
+                $("#form-phone").removeAttr('disabled');
+                $("#form-additional-info").removeAttr('disabled');
+            });
+            $("#btnSave").click(function (e)
+            {
+                e.preventDefault();
+                if($("#form-address-1").val() == '' && $("#form-zipcode").val() == '')
+                {
+                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'لطفا اطلاعات آدرس خود را به درستی وارد کنید');
+                }else
+                {
+                $.ajax(
+                    {
+                        url: '@Url.Action("UpdateUserAddress", "Home")',
+                        type: 'post',
+                        datatype: 'json',
+                        data: { NidUser: '@Model.User.NidUser', Address: $("#form-address-1").val(), ZipCode: $("#form-zipcode").val(), Tel: $("#form-phone").val() },
+                        success: function (result)
+                        {
+                            if(result.HasValue)
+                            {
+                                myNotify('bottom', 'center', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                                $("#btnEdit").removeAttr('hidden');
+                                $("#btnSave").attr('hidden', 'hidden');
+                                $("#form-first-name").attr('disabled', 'disabled');
+                                $("#form-last-name").attr('disabled', 'disabled');
+                                $("#form-country").attr('disabled', 'disabled');
+                                $("#form-address-1").attr('disabled', 'disabled');
+                                $("#form-zipcode").attr('disabled', 'disabled');
+                                $("#form-phone").attr('disabled', 'disabled');
+                                $("#form-email").attr('disabled', 'disabled');
+                                $("#form-additional-info").attr('disabled', 'disabled');
+                            }else
+                            {
+                                myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                            }
+                        },
+                        error: function () { }
+                    })
+                }
+            });
+            $("#btnContinue").click(function (e)
+            {
+                e.preventDefault();
+                if($("#form-address-1").val() == '' && $("#form-zipcode").val() == '')
+                {
+                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'لطفا اطلاعات آدرس خود را به درستی وارد کنید');
+                } else
+                {
+                    @{ 
+                        string tmpnidorder = "";
+                        if (Model.Order != null)
+                        {
+                            tmpnidorder = Model.Order.NidOrder.ToString();
+                        }
+                       }
+                    $.ajax(
+                        {
+                        url: '@Url.Action("CheckoutSubmit","Home")',
+                            type: 'post',
+                            datatype: 'json',
+                            data: { NidUser: '@Model.User.NidUser', Description: $("#form-address-1").val(),NidOrder:'@tmpnidorder' },
+                            success: function (result) {
+                                if (result.HasValue) {
+                                    window.location.href = '/CheckoutDetail?NidOrder=' + result.Message;
+                                } else {
+                                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                                }
+                            },
+                            error: function () { }
+                        })
+                }
+            });
+        });
+        function myNotify(from, align, icon, type, animIn, animOut, myMessage) {
+            $.growl({
+                icon: icon,
+                title: '',
+                message: myMessage,
+                url: ''
+            }, {
+                element: 'body',
+                type: type,
+                allow_dismiss: true,
+                placement: {
+                    from: from,
+                    align: align
+                },
+                offset: {
+                    x: 20,
+                    y: 85
+                },
+                spacing: 10,
+                z_index: 1031,
+                delay: 2500,
+                timer: 1000,
+                url_target: '_blank',
+                mouse_over: false,
+                animate: {
+                    enter: animIn,
+                    exit: animOut
+                },
+                icon_type: 'class',
+                template: '<div data-growl="container" class="alert" role="alert">' +
+								'<button type="button" class="close" data-growl="dismiss">' +
+									'<span aria-hidden="true">&times;</span>' +
+									'<span class="sr-only">Close</span>' +
+								'</button>' +
+								'<span data-growl="icon"></span>' +
+								'<span data-growl="title"></span>' +
+								'<span data-growl="message"></span>' +
+								'<a href="#" data-growl="url"></a>' +
+							'</div>'
+            });
+        };
+    </script>
+    }

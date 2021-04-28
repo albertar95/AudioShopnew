@@ -24,7 +24,7 @@ namespace AudioShopFrontend.Controllers
             ivm.LatestProducts = dataTransfer.GetLatestProducts();
             ivm.PopularProducts = dataTransfer.GetPopularProducts();
             ivm.SpecialProducts = dataTransfer.GetSpecialProducts();
-            ivm.Settings = dataTransfer.GetAllSettings();
+            ivm.Settings = dataTransfer.GetAllSettings(); 
             //discounts
             //blogs
             return View(ivm);
@@ -419,7 +419,78 @@ namespace AudioShopFrontend.Controllers
             var result = dataTransfer.GetAllCategory(10,PageNumber*10);
             return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_MoreCategories", result), tmpNidCategory = PageNumber + 1 });
         }
-        //checkout() go to dargah
+        public ActionResult Checkout()
+        {
+            CheckoutViewModel cvm = new CheckoutViewModel();
+            List<Cart> carts = new List<Cart>();
+            User user = null;
+            Order order = null;
+            dataTransfer = new DataTransfer();
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                carts = dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser));
+                user = dataTransfer.GetUserByNidUser(Guid.Parse(niduser));
+                order = dataTransfer.GetUsersOrder(Guid.Parse(niduser)).Where(p => p.state == 0).FirstOrDefault();
+            }
+            cvm.User = user;
+            cvm.Carts = carts;
+            cvm.Order = order;
+            return View(cvm);
+        }
+        public ActionResult UpdateUserAddress(Guid NidUser,string Address,string ZipCode,string Tel)
+        {
+            dataTransfer = new DataTransfer();
+            var user = dataTransfer.GetUserByNidUser(NidUser);
+            user.Address = Address;
+            user.ZipCode = decimal.Parse(ZipCode);
+            user.Tel = Tel;
+            if(dataTransfer.UpdateUser(user))
+            return Json(new JsonResults() {  HasValue = true, Message = "اطلاعات کاربری با موفقیت ثبت گردید"});
+            else
+                return Json(new JsonResults() {  HasValue = false, Message = "خطا در سرور.لطفا مجددا امتحان کنید"});
+        }
+        public ActionResult CheckoutSubmit(Guid NidUser,string Description,string NidOrder)
+        {
+            dataTransfer = new DataTransfer();
+            if(NidOrder == "")
+            {
+                List<string> carts = new List<string>();
+                decimal total = 0;
+                foreach (var cart in dataTransfer.GetAllCartByNidUser(NidUser))
+                {
+                    carts.Add(cart.NidCart.ToString());
+                    total += cart.Product.Price * cart.Quantity ?? 1;
+                }
+                Order order = new Order() { NidOrder = Guid.NewGuid(), NidUser = NidUser, CreateDate = DateTime.Now, Description = Description, NidCarts = string.Join(",", carts), state = 0, TotalPrice = total };
+                if (dataTransfer.AddOrder(order))
+                    return Json(new JsonResults() { HasValue = true, Message = order.NidOrder.ToString() });
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+            }
+            else
+            {
+                var order = dataTransfer.GetOrderByNidOrder(Guid.Parse(NidOrder));
+                order.Description = Description;
+                if(dataTransfer.UpdateOrder(order))
+                    return Json(new JsonResults() { HasValue = true, Message = order.NidOrder.ToString() });
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+            }
+        }
+        public ActionResult CheckoutDetail(Guid NidOrder)
+        {
+            dataTransfer = new DataTransfer();
+            var order = dataTransfer.GetOrderByNidOrder(NidOrder);
+            List<Cart> carts = new List<Cart>();
+            foreach (var cart in order.NidCarts.Split(','))
+            {
+                carts.Add(dataTransfer.GetCartByNidCart(Guid.Parse(cart)));
+            }
+            CheckoutViewModel cvm = new CheckoutViewModel() {  Carts = carts, Order = order, User = order.User};
+            return View(cvm);
+        }
         public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")//done
         {
             dataTransfer = new DataTransfer();

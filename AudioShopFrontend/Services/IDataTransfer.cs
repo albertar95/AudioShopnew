@@ -48,6 +48,9 @@ namespace AudioShopFrontend.Services
         List<ProductDTO> SearchProduct(string input,int Nidcategory = 0);
         //orders
         List<Order> GetUsersOrder(Guid NidUser);
+        bool AddOrder(Order order);
+        Order GetOrderByNidOrder(Guid NidOrder);
+        bool UpdateOrder(Order order);
         //comment
         bool AddComment(Comment comment);
         //settings

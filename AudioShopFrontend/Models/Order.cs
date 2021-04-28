@@ -22,14 +22,14 @@ namespace AudioShopFrontend.Models
     
         public System.Guid NidOrder { get; set; }
         public System.Guid NidUser { get; set; }
-        public System.Guid NidProduct { get; set; }
-        public int Quantity { get; set; }
+        public string NidCarts { get; set; }
+        public decimal TotalPrice { get; set; }
         public System.DateTime CreateDate { get; set; }
+        public string Description { get; set; }
         public byte state { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ship> Ships { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

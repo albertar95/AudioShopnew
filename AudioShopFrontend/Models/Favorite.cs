@@ -19,7 +19,7 @@ namespace AudioShopFrontend.Models
         public System.Guid NidProduct { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
     
-        public virtual User User { get; set; }
         public virtual Product Product { get; set; }
+        public virtual User User { get; set; }
     }
 }

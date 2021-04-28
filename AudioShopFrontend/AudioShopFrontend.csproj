@@ -490,6 +490,7 @@
     <Compile Include="Services\IDataTransfer.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\ProductPageViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
@@ -594,6 +595,8 @@
     <Content Include="Views\Home\_CartPopup.cshtml" />
     <Content Include="Views\Home\Categories.cshtml" />
     <Content Include="Views\Home\_MoreCategories.cshtml" />
+    <Content Include="Views\Home\Checkout.cshtml" />
+    <Content Include="Views\Home\CheckoutDetail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

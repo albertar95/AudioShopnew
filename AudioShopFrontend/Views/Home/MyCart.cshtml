@@ -22,104 +22,117 @@
             <div class="section-content">
                 <h5 class="section-content__title">سبد خرید شما</h5>
             </div>
+            @{ decimal tmpAggregate = 0;}
+            @if (Model.Any())
+            {
             <!-- Start Cart Table -->
-            <div class="table-content table-responsive cart-table-content m-t-30 ForceRTL">
-                <table>
-                    <thead class="gray-bg">
-                        <tr>
-                            <th>تصویر</th>
-                            <th>نام حصول</th>
-                            <th>قیمت</th>
-                            <th>تعداد</th>
-                            <th>مجموع</th>
-                            <th>عملیات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{ decimal tmpAggregate = 0;}
-                        @foreach (var prods in Model)
-                        {
-                            <tr id="@prods.NidProduct">
-                                <td class="product-thumbnail">
-                                    @if (!string.IsNullOrEmpty(prods.Product.Pictures))
-                                    {
-                                        <a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
-                                    }
-                                </td>
-                                <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})">@prods.Product.ProductName</a></td>
-                                <td class="product-price-cart"><span class="amount">@prods.Product.Price</span></td>
-                                <td class="product-quantities">
-                                    <div class="quantity d-inline-block">
-                                        <input type="number" min="1" step="1" value="@prods.Quantity" id="QuantitySlt" onchange="QuantityChanged('@prods.NidCart','@prods.Product.Price')">
-                                    </div>
-                                </td>
-                                <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@tmpTotal</td>
-                                <td class="product-remove">
-                                    <button onclick="ClearProductFromCart('@prods.NidProduct')"><i class="fa fa-times"></i></button>
-                                </td>
+                <div class="table-content table-responsive cart-table-content m-t-30 ForceRTL">
+                    <table>
+                        <thead class="gray-bg">
+                            <tr>
+                                <th>تصویر</th>
+                                <th>نام حصول</th>
+                                <th>قیمت</th>
+                                <th>تعداد</th>
+                                <th>مجموع</th>
+                                <th>عملیات</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var prods in Model)
+                        {
+                        <tr id="@prods.NidProduct">
+                            <td class="product-thumbnail">
+                                @if (!string.IsNullOrEmpty(prods.Product.Pictures))
+                                    {
+                                    <a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                    }
+                            </td>
+                            <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})">@prods.Product.ProductName</a></td>
+                            <td class="product-price-cart"><span class="amount">@prods.Product.Price</span></td>
+                            <td class="product-quantities">
+                                <div class="quantity d-inline-block">
+                                    <input type="number" min="1" step="1" value="@prods.Quantity" id="QuantitySlt" onchange="QuantityChanged('@prods.NidCart','@prods.Product.Price')">
+                                </div>
+                            </td>
+                            <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@tmpTotal</td>
+                            <td class="product-remove">
+                                <button onclick="ClearProductFromCart('@prods.NidProduct')"><i class="fa fa-times"></i></button>
+                            </td>
+                        </tr>
                              tmpAggregate = tmpAggregate + tmpTotal;
                         }
-                    </tbody>
-                </table>
-            </div>  <!-- End Cart Table -->
+                        </tbody>
+                    </table>
+                </div>  <!-- End Cart Table -->
             <!-- Start Cart Table Button -->
-            <div class="cart-table-button m-t-10">
-                <div class="cart-table-button--left">
-                </div>
-                <div class="cart-table-button--right">
-                    <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">افزودن کالا های بیشتر به سبد خرید</a>
-                </div>
-            </div>  <!-- End Cart Table Button -->
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-lg-6 col-md-6">
-            <div class="sidebar__widget gray-bg m-t-40">
-                <div class="sidebar__box">
-                    <h5 class="sidebar__title">اعمال کد تخفیف</h5>
-                </div>
-                <span>در صورتی که کد تخفیف دارید آن را وارد نمایید</span>
-                <form action="#" method="post" class="form-box">
-                    <div class="form-box__single-group">
-                        <label for="form-coupon">کد تخفیف</label>
-                        <input type="text" id="form-coupon">
-                    </div>
-                    <div class="from-box__buttons m-t-25">
-                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">اعمال تخفیف</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6">
-            <div class="sidebar__widget gray-bg m-t-40">
-                <div class="sidebar__box">
-                    <h5 class="sidebar__title">صورتحساب</h5>
-                </div>
-                <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@tmpAggregate</span></h6>
-                <div class="total-shipping">
-                    <span>هزینه ارسال</span>
-                    <ul class="shipping-cost m-t-10">
-                        <li>
-                            <label for="ship-standard">
-                                <input type="radio" class="shipping-select" name="shipping-cost" value="Standard" id="ship-standard" checked><span>عادی</span>
-                            </label>
-                            <span class="ship-price">$20.00</span>
-                        </li>
-                        <li>
-                            <label for="ship-express">
-                                <input type="radio" class="shipping-select" name="shipping-cost" value="Express" id="ship-express"><span>پست ویژه</span>
-                            </label>
-                            <span class="ship-price">$30.00</span>
-                        </li>
-                    </ul>
-                </div>
-                <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@tmpAggregate</span></h4>
-                <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">پرداخت هزینه</button>
-            </div>
+                                <div class="cart-table-button m-t-10">
+                                    <div class="cart-table-button--left">
+                                    </div>
+                                    <div class="cart-table-button--right">
+                                        <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">افزودن کالا های بیشتر به سبد خرید</a>
+                                    </div>
+                                </div>  <!-- End Cart Table Button -->
+                                }
+                                else
+                                {
+                                    <div class="empty-cart m-t-40 text-center">
+                                        <div class="empty-cart-icon title--normal "><i class="fal fa-shopping-cart"></i></div>
+                                        <h3 class="title title--normal title--thin m-tb-30">سبد خرید شما خالی می باشد</h3>
+                                        <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">ادامه خرید</a>
+                                    </div>
+                                }
         </div>
     </div>
+    @if (Model.Any())
+    {
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="sidebar__widget gray-bg m-t-40">
+                    <div class="sidebar__box">
+                        <h5 class="sidebar__title">اعمال کد تخفیف</h5>
+                    </div>
+                    <span>در صورتی که کد تخفیف دارید آن را وارد نمایید</span>
+                    <form action="#" method="post" class="form-box">
+                        <div class="form-box__single-group">
+                            <label for="form-coupon">کد تخفیف</label>
+                            <input type="text" id="form-coupon">
+                        </div>
+                        <div class="from-box__buttons m-t-25">
+                            <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">اعمال تخفیف</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="sidebar__widget gray-bg m-t-40">
+                    <div class="sidebar__box">
+                        <h5 class="sidebar__title">صورتحساب</h5>
+                    </div>
+                    <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@tmpAggregate</span></h6>
+                    <div class="total-shipping">
+                        <span>هزینه ارسال</span>
+                        <ul class="shipping-cost m-t-10">
+                            <li>
+                                <label for="ship-standard">
+                                    <input type="radio" class="shipping-select" name="shipping-cost" value="Standard" id="ship-standard" checked><span>عادی</span>
+                                </label>
+                                <span class="ship-price">$20.00</span>
+                            </li>
+                            <li>
+                                <label for="ship-express">
+                                    <input type="radio" class="shipping-select" name="shipping-cost" value="Express" id="ship-express"><span>پست ویژه</span>
+                                </label>
+                                <span class="ship-price">$30.00</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@tmpAggregate</span></h4>
+                    <a href="@Url.Action("Checkout","Home")" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">پرداخت هزینه</a>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @section scripts

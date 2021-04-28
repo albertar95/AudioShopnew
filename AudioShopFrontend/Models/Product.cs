@@ -17,9 +17,8 @@ namespace AudioShopFrontend.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.Carts = new HashSet<Cart>();
             this.Favorites = new HashSet<Favorite>();
-            this.Orders = new HashSet<Order>();
+            this.Carts = new HashSet<Cart>();
         }
     
         public System.Guid NidProduct { get; set; }
@@ -38,14 +37,12 @@ namespace AudioShopFrontend.Models
         public string Details { get; set; }
         public string DetailDescription { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts { get; set; }
         public virtual Category Category { get; set; }
         public virtual Category_Brands Category_Brands { get; set; }
         public virtual Category_Types Category_Types { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Favorite> Favorites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

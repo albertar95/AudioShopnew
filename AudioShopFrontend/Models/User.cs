@@ -18,9 +18,9 @@ namespace AudioShopFrontend.Models
         public User()
         {
             this.Comments = new HashSet<Comment>();
-            this.Orders = new HashSet<Order>();
-            this.Carts = new HashSet<Cart>();
             this.Favorites = new HashSet<Favorite>();
+            this.Carts = new HashSet<Cart>();
+            this.Orders = new HashSet<Order>();
         }
     
         public System.Guid NidUser { get; set; }
@@ -35,14 +35,15 @@ namespace AudioShopFrontend.Models
         public Nullable<System.DateTime> LastLoginDate { get; set; }
         public Nullable<decimal> ZipCode { get; set; }
         public string Address { get; set; }
+        public string Tel { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Favorite> Favorites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Favorite> Favorites { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
