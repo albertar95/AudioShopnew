@@ -37,7 +37,7 @@
                                 <div class="header__top-content--left">
                                     <div class="contact_cms" style="display:flex;">
                                         @*<a href="@Url.Action("Logout","Home")"><i class="icon-arrow-left-circle"></i></a>*@
-                                        <span class="cms1">به سایت خرید فلان خوش آمدید</span>
+                                        <span class="cms1 ForceRTL">به سایت خرید carbass خوش آمدید</span>
                                         @if(userdata != "")
                                         {
                                             <span>&nbsp; عزیز &nbsp;</span>
@@ -118,7 +118,7 @@
                         <div class="col-lg-3">
                             <div class="header__logo">
                                 <a href="@Url.Action("Index","Home")" class="header__logo-link">
-                                    <img src="@Url.Content("~/Content/assets/img/logo/logo-color.jpg")" alt="" class="header__logo-img">
+                                    <img src="@Url.Content("~/Content/assets/img/logo/mylogo.jpg")" alt="" class="header__logo-img">
                                 </a>
                             </div>
                         </div>
@@ -141,7 +141,8 @@
                                     <!--Single Dropdown Menu-->
                                 </li> 
                                 <li class="header__nav-item pos-relative">
-                                    <a href="@Url.Action("Blog","Home")" class="header__nav-link">مقالات</a>
+                                    @*<a href="@Url.Action("Blog","Home")" class="header__nav-link">مقالات</a>*@
+                                    <a href="#" class="header__nav-link">مقالات</a>
                                 </li>
                                 <li class="header__nav-item pos-relative">
                                     @*<a href="@Url.Action("AboutUs","Home")" class="header__nav-link">درباره ما</a>*@
@@ -225,7 +226,8 @@
                             <a href="@Url.Action("Categories","Home")"><span>دسته بندی ها</span></a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Blog","Home")"><span>مقالات</span></a>
+                            @*<a href="@Url.Action("Blog","Home")"><span>مقالات</span></a>*@
+                            <a href="#"><span>مقالات</span></a>
                         </li>
                         <li>
                             @*<a href="@Url.Action("AboutUs","Home")">درباره ما</a>*@
@@ -344,7 +346,7 @@
                                 </a>
                             </div>
                             <div class="footer__text">
-                                <p>ما تیم فلان هستیم و در تلاش جهت ارائه محصولات با کیفیت در زمینه صوتی و تصویری ماشین هستیم.</p>
+                                <p style="text-align:right;direction:rtl;">ما تیم carbass هستیم و در تلاش جهت ارائه محصولات با کیفیت در زمینه صوتی و تصویری ماشین هستیم.</p>
                             </div>
                             <ul class="footer__address">
                                 <li class="footer__address-item"><span>آدرس :</span> ابتدای خیابان فردوسی،پاساژ امام رضا شماره 3</li>
