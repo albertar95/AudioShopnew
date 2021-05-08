@@ -14,13 +14,18 @@ using System.Drawing.Imaging;
 
 namespace AudioShopBackend.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         DbTransfer dbTransfer = null;
+
+        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
+
+        [AllowAnonymous]
         public ActionResult SignIn(string Username,string Password,bool IsChecked)
         {
             dbTransfer = new DbTransfer();

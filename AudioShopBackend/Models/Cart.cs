@@ -19,6 +19,7 @@ namespace AudioShopBackend.Models
         public System.Guid NidProduct { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public byte State { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual User User { get; set; }

@@ -63,6 +63,16 @@
                 {
                 $.ajax(
                     {
+                        url: '@Url.Action("UpdateSetting","Home")',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { SettingIndex: 1, SettingValue: $("#txtSpecialPicture").val() },
+                        success: function (result) {
+                            if (result.HasValue) {
+                                myNotify('bottom', 'center', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
+                            }
+                        },
+                        error: function () { }
                     })
                 }
             });

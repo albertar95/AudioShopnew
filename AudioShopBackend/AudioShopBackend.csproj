@@ -413,7 +413,6 @@
     <Content Include="Views\Home\Users.cshtml" />
     <Content Include="Views\Home\_UserTable.cshtml" />
     <Content Include="Views\Home\Comments.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\_UploadedImages.cshtml" />
     <Content Include="Content\fonts\yekannumbers-regular.woff" />
     <Content Include="Content\fonts\yekannumbers-regular.ttf" />
@@ -433,6 +432,7 @@
     <Content Include="Content\fonts\B Nazanin\B Nazanin Bold.TTF" />
     <Content Include="Content\fonts\B Nazanin\B Nazanin.ttf" />
     <None Include="Properties\PublishProfiles\alireza.pubxml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

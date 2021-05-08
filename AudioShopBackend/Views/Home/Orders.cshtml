@@ -20,8 +20,8 @@
                                 <tr>
                                     <th style="text-align:center;">تاریخ</th>
                                     <th style="text-align:center;">نام مشتری</th>
-                                    <th style="text-align:center;">عنوان محصول</th>
-                                    <th style="text-align:center;">تعداد</th>
+                                    @*<th style="text-align:center;">عنوان محصول</th>
+                                    <th style="text-align:center;">تعداد</th>*@
                                     <th style="text-align:center;">عملیات</th>
                                 </tr>
                             </thead>
@@ -31,8 +31,8 @@
                                     <tr>
                                         <td style="text-align:center;">@ord.CreateDate.ToShortDateString()</td>
                                         <td style="text-align:center;">@ord.User.FirstName  @ord.User.LastName</td>
-                                        <td style="text-align:center;">@ord.Product.ProductName</td>
-                                        <td style="text-align:center;">@ord.Quantity</td>
+                                        @*<td style="text-align:center;">@ord.Product.ProductName</td>
+                                        <td style="text-align:center;">@ord.Quantity</td>*@
                                         <td style="text-align:center;">
                                             <button onclick="DetailThis('@ord.NidOrder')" class="btn btn-info notika-btn-info waves-effect" data-toggle="modal">جزییات</button>
                                         </td>

@@ -14,6 +14,7 @@
           <Property Name="NidProduct" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Quantity" Type="int" />
           <Property Name="CreateDate" Type="datetime" />
+          <Property Name="State" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -71,9 +72,10 @@
           </Key>
           <Property Name="NidOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NidUser" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="NidProduct" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="NidCarts" Type="ntext" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="state" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
@@ -134,6 +136,7 @@
           <Property Name="LastLoginDate" Type="datetime" />
           <Property Name="ZipCode" Type="decimal" Precision="12" Scale="0" />
           <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Tel" Type="nvarchar" MaxLength="20" />
         </EntityType>
         <Association Name="FK_Carts_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
@@ -231,18 +234,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Products">
-              <PropertyRef Name="NidProduct" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="NidProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Orders_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -335,10 +326,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Favorites" EntitySet="Favorites" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Products" Association="Self.FK_Orders_Products">
-            <End Role="Products" EntitySet="Products" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Orders" EntitySet="Orders" />
@@ -369,6 +356,7 @@
           <EntitySet Name="Favorites" EntityType="ASDbModel.Favorite" />
           <EntitySet Name="Orders" EntityType="ASDbModel.Order" />
           <EntitySet Name="Products" EntityType="ASDbModel.Product" />
+          <EntitySet Name="Settings" EntityType="ASDbModel.Setting" />
           <EntitySet Name="Ships" EntityType="ASDbModel.Ship" />
           <EntitySet Name="Users" EntityType="ASDbModel.User" />
           <AssociationSet Name="FK_Carts_Products" Association="ASDbModel.FK_Carts_Products">
@@ -411,10 +399,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="Favorite" EntitySet="Favorites" />
           </AssociationSet>
-          <AssociationSet Name="FK_Orders_Products" Association="ASDbModel.FK_Orders_Products">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_Orders_Users" Association="ASDbModel.FK_Orders_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Order" EntitySet="Orders" />
@@ -423,7 +407,6 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="Ship" EntitySet="Ships" />
           </AssociationSet>
-          <EntitySet Name="Settings" EntityType="ASDbModel.Setting" />
         </EntityContainer>
         <EntityType Name="Cart">
           <Key>
@@ -434,6 +417,7 @@
           <Property Name="NidProduct" Type="Guid" Nullable="false" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="ASDbModel.FK_Carts_Products" FromRole="Cart" ToRole="Product" />
           <NavigationProperty Name="User" Relationship="ASDbModel.FK_Carts_Users" FromRole="Cart" ToRole="User" />
         </EntityType>
@@ -503,11 +487,11 @@
           </Key>
           <Property Name="NidOrder" Type="Guid" Nullable="false" />
           <Property Name="NidUser" Type="Guid" Nullable="false" />
-          <Property Name="NidProduct" Type="Guid" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="NidCarts" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="state" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="ASDbModel.FK_Orders_Products" FromRole="Order" ToRole="Product" />
           <NavigationProperty Name="User" Relationship="ASDbModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="Ships" Relationship="ASDbModel.FK_Ships_Orders" FromRole="Order" ToRole="Ship" />
         </EntityType>
@@ -528,14 +512,21 @@
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="15" Scale="0" />
           <Property Name="State" Type="Byte" Nullable="false" />
           <Property Name="Priority" Type="Byte" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Carts" Relationship="ASDbModel.FK_Carts_Products" FromRole="Product" ToRole="Cart" />
           <NavigationProperty Name="Category" Relationship="ASDbModel.FK_Categories_Products" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="Category_Brands" Relationship="ASDbModel.FK_Products_Category_Brands" FromRole="Product" ToRole="Category_Brands" />
           <NavigationProperty Name="Category_Types" Relationship="ASDbModel.FK_Products_Category_Types" FromRole="Product" ToRole="Category_Types" />
           <NavigationProperty Name="Favorites" Relationship="ASDbModel.FK_Favorites_Products" FromRole="Product" ToRole="Favorite" />
-          <NavigationProperty Name="Orders" Relationship="ASDbModel.FK_Orders_Products" FromRole="Product" ToRole="Order" />
-          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DetailDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="NidSetting" />
+          </Key>
+          <Property Name="NidSetting" Type="Guid" Nullable="false" />
+          <Property Name="SettingAttribute" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SettingValue" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Ship">
           <Key>
@@ -568,6 +559,7 @@
           <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
           <Property Name="ZipCode" Type="Decimal" Precision="12" Scale="0" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Carts" Relationship="ASDbModel.FK_Carts_Users" FromRole="User" ToRole="Cart" />
           <NavigationProperty Name="Comments" Relationship="ASDbModel.FK_Comments_Users" FromRole="User" ToRole="Comment" />
           <NavigationProperty Name="Favorites" Relationship="ASDbModel.FK_Favorites_Users" FromRole="User" ToRole="Favorite" />
@@ -693,18 +685,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Orders_Products">
-          <End Type="ASDbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="ASDbModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="NidProduct" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="NidProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Orders_Users">
           <End Type="ASDbModel.User" Role="User" Multiplicity="1" />
           <End Type="ASDbModel.Order" Role="Order" Multiplicity="*" />
@@ -729,14 +709,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Setting">
-          <Key>
-            <PropertyRef Name="NidSetting" />
-          </Key>
-          <Property Name="NidSetting" Type="Guid" Nullable="false" />
-          <Property Name="SettingAttribute" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SettingValue" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -746,6 +718,7 @@
           <EntitySetMapping Name="Carts">
             <EntityTypeMapping TypeName="ASDbModel.Cart">
               <MappingFragment StoreEntitySet="Carts">
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="NidProduct" ColumnName="NidProduct" />
@@ -813,9 +786,10 @@
             <EntityTypeMapping TypeName="ASDbModel.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="NidProduct" ColumnName="NidProduct" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="NidCarts" ColumnName="NidCarts" />
                 <ScalarProperty Name="NidUser" ColumnName="NidUser" />
                 <ScalarProperty Name="NidOrder" ColumnName="NidOrder" />
               </MappingFragment>
@@ -842,6 +816,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="ASDbModel.Setting">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
+                <ScalarProperty Name="SettingAttribute" ColumnName="SettingAttribute" />
+                <ScalarProperty Name="NidSetting" ColumnName="NidSetting" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Ships">
             <EntityTypeMapping TypeName="ASDbModel.Ship">
               <MappingFragment StoreEntitySet="Ships">
@@ -860,6 +843,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ASDbModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
                 <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
@@ -872,15 +856,6 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="NidUser" ColumnName="NidUser" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Settings">
-            <EntityTypeMapping TypeName="ASDbModel.Setting">
-              <MappingFragment StoreEntitySet="Settings">
-                <ScalarProperty Name="SettingValue" ColumnName="SettingValue" />
-                <ScalarProperty Name="SettingAttribute" ColumnName="SettingAttribute" />
-                <ScalarProperty Name="NidSetting" ColumnName="NidSetting" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

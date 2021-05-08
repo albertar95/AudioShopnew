@@ -123,7 +123,7 @@ namespace AudioShopBackend.Services
 
         public bool CheckForOrderByNidProduct(Guid NidProduct)
         {
-            return db.Orders.Where(p => p.NidProduct == NidProduct).Any();
+            return db.Carts.Where(p => p.NidProduct == NidProduct && p.State == 1).Any();
         }
 
         public List<Order> GetAllOrders(int pagesize = 10)
