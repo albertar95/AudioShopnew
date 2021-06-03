@@ -89,10 +89,10 @@
                                             <thead>
                                                 <tr>
                                                     <th class="no">ردیف</th>
-                                                    <th class="name">نام محصول</th>
+                                                    @*<th class="name">نام محصول</th>*@
                                                     <th class="date">تاریخ سفارش</th>
                                                     <th class="status">وضعیت</th>
-                                                    <th class="total">تعداد</th>
+                                                    @*<th class="total">تعداد</th>*@
                                                     <th class="action">عملیات</th>
                                                 </tr>
                                             </thead>
@@ -101,10 +101,10 @@
                                                 {
                                                 <tr>
                                                     <td>1</td>
-                                                    <td>@ord.Product.ProductName</td>
+                                                    @*<td>@ord.</td>*@
                                                     <td>@ord.CreateDate.ToShortDateString()</td>
                                                     <td>@ord.state</td>
-                                                    <td>@ord.Quantity</td>
+                                                    @*<td>@ord.Quantity</td>*@
                                                     <td><a href="#">جزییات</a></td>
                                                 </tr>
                                                 }

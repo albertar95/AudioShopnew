@@ -290,7 +290,7 @@
                                 </div>
                                 <div class="offcanvas-add-cart__detail" style="margin-right:15px;">
                                     <a href="single-1.html" class="offcanvas-add-cart__link">@cartItem.Product.ProductName</a>
-                                    <span class="offcanvas-add-cart__price">@String.Format("{0:0n} ریال", cartItem.Product.Price)</span>
+                                    <span class="offcanvas-add-cart__price">@String.Format("{0:n0} ریال", cartItem.Product.Price)</span>
                                 </div>
                                 <button class="offcanvas-add-cart__item-dismiss pos-absolute" onclick="ClearProductFromCart('@cartItem.NidProduct')">&times;</button>
                             </li> <!-- Start Single Add Cart Item-->
@@ -319,12 +319,12 @@
                             <!-- Start Single Add Cart Checkout Info-->
                             <li class="offcanvas-add-cart__checkout-list ForceRTL">
                                 <span class="offcanvas-add-cart__checkout-left-info">مجموع</span>
-                                <span class="offcanvas-add-cart__checkout-right-info" id="CartPopupPrice">@String.Format("{0:0n} ریال", tmpTotal)</span>
+                                <span class="offcanvas-add-cart__checkout-right-info" id="CartPopupPrice">@String.Format("{0:n0} ریال", tmpTotal)</span>
                             </li> <!-- End Single Add Cart Checkout Info-->
                         </ul> <!-- End offcanvas Add Cart Checkout Info-->
 
                         <div class="offcanvas-add-cart__btn-checkout">
-                            <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تسویه حساب</a>
+                            <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تکمیل خرید و ثبت سفارش</a>
                         </div>
                     </div> <!-- End Add Cart Checkout Box-->
                 </div>
@@ -453,6 +453,50 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalAddCartAlert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">پیام</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 modal__border">
+                                <span class="modal__product-cart-item" style="text-align:right;direction:rtl;float:right;">برای انجام این عملیات می بایست ابتدا وارد حساب کاربری خود شوید</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDargahAlert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">پیام</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 modal__border">
+                                <span class="modal__product-cart-item" style="text-align:right;direction:rtl;float:right;">به اطلاع می رساند سایت در حال بروزرسانی می باشد و امکان اتصال به درگاه در حال حاضر وجود ندارد.لطفا بعدا امتحان کنید.از شکیبایی شما متشکریم</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <script src="@Url.Content("~/Content/assets/js/vendor/jquery-3.5.1.min.js")"></script>
     <script src="@Url.Content("~/Content/assets/js/vendor/modernizr-3.7.1.min.js")"></script>
@@ -550,6 +594,8 @@
                             $("#modal_price").text(Price)
                             $("#modal_prodcount").text(result.tmpNidCategory)
                             $("#modalAddCart").modal('show')
+                        } else {
+                            $("#modalAddCartAlert").modal('show')
                         }
                     },
                     error: function () { }

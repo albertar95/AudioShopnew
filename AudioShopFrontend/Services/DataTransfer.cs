@@ -406,13 +406,13 @@ namespace AudioShopFrontend.Services
             return db.Carts.Where(p => p.NidUser == NidUser && p.NidProduct == NidProduct && p.State == 0).FirstOrDefault();
         }
 
-        public int UpdateCartQuantity(Guid NidCart,int Quantity)
+        public decimal UpdateCartQuantity(Guid NidCart,int Quantity)
         {
             var tmpcart = db.Carts.Where(p => p.NidCart == NidCart).FirstOrDefault();
             tmpcart.Quantity = Quantity;
             db.Entry(tmpcart).State = System.Data.Entity.EntityState.Modified;
             if (db.SaveChanges() == 1)
-                return Quantity;
+                return Quantity*tmpcart.Product.Price;
             else
                 return 0;
         }

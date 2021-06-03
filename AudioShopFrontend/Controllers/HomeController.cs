@@ -187,9 +187,9 @@ namespace AudioShopFrontend.Controllers
                 string niduser = ticket.UserData.Split(',').First();
             
                 dataTransfer = new DataTransfer();
-            int tmpresult = dataTransfer.UpdateCartQuantity(NidCart,Quantity);
+            decimal tmpresult = dataTransfer.UpdateCartQuantity(NidCart,Quantity);
             if (tmpresult != 0)
-            return Json(new JsonResults() { HasValue = true, tmpNidCategory = tmpresult, Message = dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser)).ToString() });
+            return Json(new JsonResults() { HasValue = true, Html = String.Format("{0:n0}",tmpresult), Message = String.Format("{0:n0}", dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser))) });
             else
                 return Json(new JsonResults() { HasValue = false });
             }else

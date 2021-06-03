@@ -49,13 +49,13 @@
                                     }
                             </td>
                             <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})">@prods.Product.ProductName</a></td>
-                            <td class="product-price-cart"><span class="amount">@String.Format("{0:0n} ریال", prods.Product.Price)</span></td>
+                            <td class="product-price-cart"><span class="amount">@String.Format("{0:n0} ریال", prods.Product.Price)</span></td>
                             <td class="product-quantities">
                                 <div class="quantity d-inline-block">
                                     <input type="number" min="1" step="1" value="@prods.Quantity" id="QuantitySlt" onchange="QuantityChanged('@prods.NidCart','@prods.Product.Price')">
                                 </div>
                             </td>
-                            <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@String.Format("{0:0n} ریال", tmpTotal)</td>
+                            <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@String.Format("{0:n0} ریال", tmpTotal)</td>
                             <td class="product-remove">
                                 <button onclick="ClearProductFromCart('@prods.NidProduct')"><i class="fa fa-times"></i></button>
                             </td>
@@ -105,11 +105,11 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
-                <div class="sidebar__widget gray-bg m-t-40">
+                <div class="sidebar__widget gray-bg m-t-40 ForceRTL">
                     <div class="sidebar__box">
                         <h5 class="sidebar__title">صورتحساب</h5>
                     </div>
-                    <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@String.Format("{0:0n} ریال", tmpAggregate)</span></h6>
+                    <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@String.Format("{0:n0} ریال", tmpAggregate)</span></h6>
                     @*<div class="total-shipping">
                         <span>هزینه ارسال</span>
                         <ul class="shipping-cost m-t-10">
@@ -127,8 +127,8 @@
                             </li>
                         </ul>
                     </div>*@
-                    <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@tmpAggregate</span></h4>
-                    <a href="@Url.Action("Checkout","Home")" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">پرداخت هزینه</a>
+                    <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@String.Format("{0:n0} ریال", tmpAggregate)</span></h4>
+                    <a href="@Url.Action("Checkout","Home")" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">تکمیل اطلاعات و پرداخت هزینه</a>
                 </div>
             </div>
         </div>
@@ -151,7 +151,7 @@
                         if(result.HasValue)
                         {
                             var currentCart = document.getElementById(nidcart);
-                            currentCart.innerHTML = (price * result.tmpNidCategory)
+                            currentCart.innerHTML = result.Html
                             $("#cartAggregate").text(result.Message)
                             $("#CartPopupPrice").text(result.Message)
                             $("#cartSumAggregate").text(result.Message)

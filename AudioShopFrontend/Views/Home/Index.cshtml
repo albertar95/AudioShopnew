@@ -627,6 +627,8 @@
                     success: function (result) {
                         if (result.HasValue) {
                             $("#CartCount").html(result.Html);
+                        } else {
+                            $("#modalAddCartAlert").modal('show')
                         }
                     },
                     error: function () { }

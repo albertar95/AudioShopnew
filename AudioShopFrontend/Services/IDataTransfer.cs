@@ -43,7 +43,7 @@ namespace AudioShopFrontend.Services
         decimal CartPriceAggregateByNidUser(Guid NidUser);
         Cart GetCartByNidCart(Guid NidCart);
         Cart GetCartByNidUserAndProduct(Guid NidUser,Guid NidProduct);
-        int UpdateCartQuantity(Guid NidCart, int Quantity);
+        decimal UpdateCartQuantity(Guid NidCart, int Quantity);
         //search
         List<ProductDTO> SearchProduct(string input,int Nidcategory = 0);
         //orders

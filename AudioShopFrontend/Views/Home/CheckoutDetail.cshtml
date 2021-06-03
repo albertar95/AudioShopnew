@@ -35,7 +35,7 @@
                     <h6 class="your-order-bottom-left">توضیحات مرسوله</h6>
                     <span class="your-order-bottom-right">@Model.Order.Description</span>
                 </div>
-                <div class="your-order-top d-flex justify-content-between">
+                <div class="your-order-top d-flex justify-content-between" style="font:bolder;">
                     <h6 class="your-order-top-left">محصولات</h6>
                     <h6 class="your-order-top-right">قیمت</h6>
                 </div>
@@ -45,7 +45,7 @@
                     {
                         <li class="d-flex justify-content-between">
                             <span class="your-order-middle-left">@cart.Product.ProductName</span>
-                            <span class="your-order-middle-right">@{tmpCart = (cart.Quantity ?? 1) * (cart.Product.Price);}@tmpCart</span>
+                            <span class="your-order-middle-right">@{tmpCart = (cart.Quantity ?? 1) * (cart.Product.Price);}@String.Format("{0:n0} ریال",tmpCart)</span>
                         </li>
                                     { tmpCartSum += tmpCart; }
                     }
@@ -56,11 +56,27 @@
                 </div>
                 <div class="your-order-total d-flex justify-content-between">
                     <h5 class="your-order-total-left">مجموع</h5>
-                    <h5 class="your-order-total-right">@tmpCartSum</h5>
+                    <h5 class="your-order-total-right">@String.Format("{0:n0} ریال", tmpCartSum)</h5>
                 </div>
             </div>
         </div>
 
-        <a href="#" class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" type="submit">تایید و اتصال به درگاه</a>
+        <a href="#" class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnDargah" type="submit">تایید و اتصال به درگاه</a>
     </div>
 </div>
+
+
+
+@section scripts
+    {
+    <script type="text/javascript">
+        $(function ()
+        {
+            $("#btnDargah").click(function (e) {
+                e.preventDefault();
+                $("#modalDargahAlert").modal('show')
+            });
+            
+        });
+    </script>
+    }
