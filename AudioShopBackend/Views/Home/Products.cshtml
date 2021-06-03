@@ -50,11 +50,11 @@ else
                         <table id="data-table-basic" class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th style="text-align:center;">تاریخ ایجاد</th>
                                     <th style="text-align:center;">عنوان محصول</th>
                                     <th style="text-align:center;">دسته بندی</th>
                                     <th style="text-align:center;">برند</th>
                                     <th style="text-align:center;">نوع</th>
-                                    <th style="text-align:center;">تاریخ ایجاد</th>
                                     <th style="text-align:center;">مبلغ</th>
                                     <th style="text-align:center;">عملیات</th>
                                 </tr>
@@ -63,11 +63,11 @@ else
                                 @foreach (var prod in Model)
                                 {
                                     <tr>
+                                        <td style="text-align:center;">@prod.CreateDate</td>
                                         <td style="text-align:center;">@prod.ProductName</td>
                                         <td style="text-align:center;">@prod.Category.CategoryName</td>
                                         <td style="text-align:center;">@prod.Category_Brands.BrandName</td>
                                         <td style="text-align:center;">@prod.Category_Types.TypeName</td>
-                                        <td style="text-align:center;">@prod.CreateDate</td>
                                         <td style="text-align:center;">@prod.Price</td>
                                         <td style="text-align:center;">
                                             <a href="@Url.Action("EditProduct","Home",new { NidProduct = prod.NidProduct})" class="btn btn-warning notika-btn-warning waves-effect">ویرایش</a>

@@ -219,8 +219,8 @@
     {
     <!-- summernote CSS
     ============================================ -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
     <link href="@Url.Content("~/Content/css/bootstrap-select/bootstrap-select.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/css/notification/notification.css")" rel="stylesheet" />
     @*<link rel="stylesheet" href="@Url.Content("~/Content/css/summernote/summernote.css")">*@
@@ -245,14 +245,15 @@
                 {
                     minHeight: 200
                 })
-            @*$(".panel-body").html(@Html.Raw(Model.ProductDescription))*@
+            var tmpDesc = '@Html.Raw(Model.Product.Description.Trim())'
+            $(".panel-body").html(tmpDesc)
             @*$("#summernote").summernote('code', "@Html.Raw(Model.Product.Description)");*@
             $("#editProductForm").submit(function (e) {
                 e.preventDefault();
                 if ($("#ProductProductName").val() == '' || $("#ProductNidType").find(":selected").val() == '-1' || $("#ProductNidBrand").find(":selected").val() == '-1' || $("#ProductNidCategory").find(":selected").val() == '-1' || $("#ProductPrice").val() == '' || $(".panel-body").html() == '') {
                     myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'fill necessary fields');
                 } else {
-                    //$("#Product_Description").val($(".panel-body").html());
+                    $("#Product_Description").val($(".panel-body").html());
                     $(this).unbind('submit').submit()
                 }
             });

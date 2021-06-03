@@ -1,7 +1,7 @@
 ﻿@model AudioShopFrontend.ViewModels.CategoryViewModel 
 
 @{
-    ViewBag.Title = "Category";
+    ViewBag.Title = Model.Category.CategoryName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,8 +10,8 @@
         <div class="row">
             <div class="col-12">
                 <ul class="page-breadcrumb__menu ForceRTL">
-                    <li class="page-breadcrumb__nav"><a href="@Url.Action("Index")">خانه</a></li>
-                    <li class="page-breadcrumb__nav active">دسته بندی</li>
+                    <li class="page-breadcrumb__nav"><a href="@Url.Action("Index")">خانه </a></li>
+                    <li class="page-breadcrumb__nav active"> دسته بندی @Model.Category.CategoryName</li>
                 </ul>
             </div>
         </div>
@@ -160,16 +160,16 @@
                                             }
                                         </a>
                                         <a onclick="AddToCart('@prod2.ProductName','@prod2.Price','@prod2.Pictures','@prod2.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به سبد</a>
-                                        <span class="product__tag product__tag--discount">-12%</span>
+                                        @*<span class="product__tag product__tag--discount">-12%</span>*@
                                         <button onclick="AddToFav('@prod2.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></button>
                                     </div>
-                                    <div class="product__price m-t-10">
-                                        @*<span class="product__price-del">$11.90</span>*@
-                                        <span class="product__price-reg">@prod2.Price</span>
-                                    </div>
-                                    <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                    <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                         @prod2.ProductName
                                     </a>
+                                    <div class="product__price m-t-10" dir="rtl">
+                                        @*<span class="product__price-del">$11.90</span>*@
+                                        <span class="product__price-reg">@String.Format("{0:n0} ریال", prod2.Price)</span>
+                                    </div>
                                 </div> <!-- End Single Default Product -->
                         }
                         </div>
@@ -196,13 +196,15 @@
                                         </div>
                                         <div class="col-md-5 pos-relative">
                                             <div class="border-right pos-absolute"></div>
-                                            <div class="product__price">
-                                                @*<span class="product__price-del">$11.90</span>*@
-                                                <span class="product__price-reg">@prod1.Price</span>
-                                            </div>
-                                            <a href="@Url.Action("Product","Home",new { NidProduct = prod1.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                            <a href="@Url.Action("Product","Home",new { NidProduct = prod1.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                                 @prod1.ProductName
                                             </a>
+                                            <div class="product__price" dir="rtl">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span style="text-align:right;">قیمت : </span>
+                                                &nbsp;
+                                                <span class="product__price-reg">@String.Format("{0:n0} ریال", prod1.Price)</span>
+                                            </div>
                                             <div class="product__desc m-t-25 m-b-30">
                                                 @*<p>@Html.Raw(prod1.Description)</p>*@
                                             </div>
@@ -212,7 +214,7 @@
                                                 <ul class="shop__list-link">
                                                     <li><a onclick="AddToCart('@prod1.ProductName','@prod1.Price','@prod1.Pictures','@prod1.NidProduct',1)" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به سبد</a></li>
                                                     <li><button  onclick="AddToFav('@prod1.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i> علاقه مندی</button></li>
-                                                    <li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>
+                                                    @*<li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>*@
                                                 </ul>
                                             </div>
                                         </div>

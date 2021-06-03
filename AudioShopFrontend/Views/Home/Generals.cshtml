@@ -87,16 +87,18 @@
                                         }
                                         </a>
                                         <a onclick="AddToCart('@prod.ProductName','@prod.Price','@prod.Pictures','@prod.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
-                                        <span class="product__tag product__tag--discount">-12%</span>
+                                        @*<span class="product__tag product__tag--discount">-12%</span>*@
                                         <a onclick="AddToFav('@prod.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                     </div>
-                                    <div class="product__price m-t-10">
-                                        @*<span class="product__price-del">@prod.Price</span>*@
-                                        <span class="product__price-reg">@prod.Price</span>
-                                    </div>
-                                    <a href="@Url.Action("Product","Home",new { NidProduct = prod.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                    <a href="@Url.Action("Product","Home",new { NidProduct = prod.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                         @prod.ProductName
                                     </a>
+                                    <div class="product__price m-t-10" dir="rtl">
+                                        @*<span class="product__price-del">$11.90</span>*@
+                                        <span style="text-align:right;">قیمت : </span>
+                                        &nbsp;
+                                        <span class="product__price-reg">@String.Format("{0:n0} ریال", prod.Price)</span>
+                                    </div>
                                 </div> <!-- End Single Default Product -->
 
                         }
@@ -123,14 +125,16 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5 pos-relative">
-                                            <div class="border-right pos-absolute"></div>
-                                            <div class="product__price">
-                                                @*<span class="product__price-del">@prod2.Price</span>*@
-                                                <span class="product__price-reg">@prod2.Price</span>
-                                            </div>
-                                            <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                            <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                                 @prod2.ProductName
                                             </a>
+                                            <div class="border-right pos-absolute"></div>
+                                            <div class="product__price" dir="rtl">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span style="text-align:right;">قیمت : </span>
+                                                &nbsp;
+                                                <span class="product__price-reg">@String.Format("{0:n0} ریال", prod2.Price)</span>
+                                            </div>
                                             <div class="product__desc m-t-25 m-b-30">
                                                 <p>Description???</p>
                                             </div>
@@ -140,7 +144,7 @@
                                                 <ul class="shop__list-link">
                                                     <li><a onclick="AddToCart('@prod2.ProductName','@prod2.Price','@prod2.Pictures','@prod2.NidProduct',1)" data-toggle="modal" class="btn btn--block btn--small btn--border-blue btn--uppercase btn--weight m-b-15">اضافه کردن به لیست</a></li>
                                                     <li><a onclick="AddToFav('@prod2.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i>علاقه مندی</a></li>
-                                                    <li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>
+                                                    @*<li><a href="#modalQuickView" data-toggle="modal" class="link--gray link--icon-left shop__quickview-icon"><i class="icon-eye"></i>نمایه محصول</a></li>*@
                                                 </ul>
                                             </div>
                                         </div>

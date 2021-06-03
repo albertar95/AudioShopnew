@@ -9,7 +9,7 @@
             <div class="col-12">
                 <ul class="page-breadcrumb__menu ForceRTL">
                     <li class="page-breadcrumb__nav"><a href="@Url.Action("Index")">خانه</a></li>
-                    <li class="page-breadcrumb__nav active">لیست خرید</li>
+                    <li class="page-breadcrumb__nav active">سبد خرید</li>
                 </ul>
             </div>
         </div>
@@ -32,7 +32,7 @@
                             <tr>
                                 <th>تصویر</th>
                                 <th>نام حصول</th>
-                                <th>قیمت</th>
+                                <th>قیمت واحد</th>
                                 <th>تعداد</th>
                                 <th>مجموع</th>
                                 <th>عملیات</th>
@@ -49,13 +49,13 @@
                                     }
                             </td>
                             <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})">@prods.Product.ProductName</a></td>
-                            <td class="product-price-cart"><span class="amount">@prods.Product.Price</span></td>
+                            <td class="product-price-cart"><span class="amount">@String.Format("{0:0n} ریال", prods.Product.Price)</span></td>
                             <td class="product-quantities">
                                 <div class="quantity d-inline-block">
                                     <input type="number" min="1" step="1" value="@prods.Quantity" id="QuantitySlt" onchange="QuantityChanged('@prods.NidCart','@prods.Product.Price')">
                                 </div>
                             </td>
-                            <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@tmpTotal</td>
+                            <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@String.Format("{0:0n} ریال", tmpTotal)</td>
                             <td class="product-remove">
                                 <button onclick="ClearProductFromCart('@prods.NidProduct')"><i class="fa fa-times"></i></button>
                             </td>
@@ -109,24 +109,24 @@
                     <div class="sidebar__box">
                         <h5 class="sidebar__title">صورتحساب</h5>
                     </div>
-                    <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@tmpAggregate</span></h6>
-                    <div class="total-shipping">
+                    <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@String.Format("{0:0n} ریال", tmpAggregate)</span></h6>
+                    @*<div class="total-shipping">
                         <span>هزینه ارسال</span>
                         <ul class="shipping-cost m-t-10">
                             <li>
                                 <label for="ship-standard">
                                     <input type="radio" class="shipping-select" name="shipping-cost" value="Standard" id="ship-standard" checked><span>عادی</span>
                                 </label>
-                                <span class="ship-price">$20.00</span>
+                                <span class="ship-price">@String.Format("{0:0n} ریال", 20000)</span>
                             </li>
                             <li>
                                 <label for="ship-express">
                                     <input type="radio" class="shipping-select" name="shipping-cost" value="Express" id="ship-express"><span>پست ویژه</span>
                                 </label>
-                                <span class="ship-price">$30.00</span>
+                                <span class="ship-price">@String.Format("{0:0n} ریال", 30000)</span>
                             </li>
                         </ul>
-                    </div>
+                    </div>*@
                     <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@tmpAggregate</span></h4>
                     <a href="@Url.Action("Checkout","Home")" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">پرداخت هزینه</a>
                 </div>

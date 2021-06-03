@@ -14,7 +14,7 @@ using System.Drawing.Imaging;
 
 namespace AudioShopBackend.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         DbTransfer dbTransfer = null;

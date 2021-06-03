@@ -80,15 +80,17 @@
                     </div>
                     <div class="col-md-6">
                         <div class="product-details-box">
-                            <h5 class="section-content__title">@Model.Product.ProductName</h5>
+                            <h5 class="section-content__title ForceRTL">@Model.Product.ProductName</h5>
                             <span class="text-reference"></span>
                             <div class="review-box">
                                 <a href="#product-review" class="link--gray link--icon-left  m-b-5"><i class="fal fa-comment-dots"></i>خواندن نظرات </a>
                                 <button onclick="AddReview('@Model.Product.ProductName','','')" data-toggle="modal" class="link--gray link--icon-left m-b-5"><i class="fal fa-edit"></i> نوشتن نظر</button>
                             </div>
-                            <div class="product__price">
-                                @*<span class="product__price-del">@Model.Product.Price</span>*@
-                                <span class="product__price-reg">@Model.Product.Price</span>
+                            <div class="product__price" dir="rtl">
+                                @*<span class="product__price-del">$11.90</span>*@
+                                <span style="text-align:right;">قیمت : </span>
+                                &nbsp;
+                                <span class="product__price-reg">@String.Format("{0:n0} ریال", Model.Product.Price)</span>
                             </div>
                             <div class="product__desc m-t-25 m-b-30">
                                 <p></p>
@@ -105,7 +107,7 @@
 
                                 </div>
                             </div>
-                            <div class="product-links ">
+                            <div class="product-links" style="display:flex;direction:rtl;">
                                 <div class="product-social m-tb-30">
                                     <span>اشتراک گذاری</span>
                                     <ul class="product-social-link">
@@ -115,7 +117,7 @@
                                         <li><a href="#"><i class="fab fa-telegram"></i></a></li>
                                     </ul>
                                 </div>
-                                <button onclick="AddToFav('@Model.Product.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5"><i class="icon-heart"></i>علاقه مندی ها</button>
+                                <button onclick="AddToFav('@Model.Product.NidProduct')" class="link--gray link--icon-left shop__wishlist-icon m-b-5" style="margin-right:7rem;direction:rtl;"><i class="icon-heart"></i>علاقه مندی ها</button>
                             </div>
                         </div>
                     </div>
@@ -130,7 +132,7 @@
                         <div class="section-content--border">
                             <ul class="tablist tablist--style-black tablist--style-title tablist--style-gap-70 nav ForceRTL">
                                 <li><a class="nav-link active" data-toggle="tab" href="#product-desc">توضیحات محصول</a></li>
-                                <li><a class="nav-link" data-toggle="tab" href="#product-dis">جزییات</a></li>
+                                @*<li><a class="nav-link" data-toggle="tab" href="#product-dis">جزییات</a></li>*@
                                 <li><a class="nav-link" data-toggle="tab" href="#product-review">نظرات</a></li>
                             </ul>
                         </div>
@@ -141,50 +143,22 @@
                                 <!-- Start Tab - Product Description -->
                                 <div class="tab-pane show active" id="product-desc">
                                     <div class="para__content">
-                                        <p class="para__text">@Html.Raw(Model.Product.Description)</p>
-
-                                        @*<p class="para__text">@Model.Description</p>*@
-
-                                        <h6 class="para__title">Product Highlights:</h6>
-                                        <ul class="para__list">
-                                            <li>@Model.Product.Keywords</li>
-                                        </ul>
+                                        <div class="table-responsive-md ForceRTL" style="font-size:larger;">
+                                            @Html.Raw(Model.Product.Description)
+                                        </div>
                                     </div>
                                 </div>  <!-- End Tab - Product Description -->
-                                <!-- Start Tab - Product Details -->
-                                <div class="tab-pane product-dis" id="product-dis">
+                                @*<div class="tab-pane product-dis" id="product-dis">
                                     <div class="product-dis__content">
                                         <a href="#" class="product-dis__img m-b-30"><img src="@Url.Content("~/Content/assets/img/logo/another-logo.jpg")" alt=""></a>
-                                        <div class="table-responsive-md">
-                                            <table class="product-dis__list table table-bordered">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="product-dis__title">Weight</td>
-                                                        <td class="product-dis__text">400 g</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="product-dis__title">Materials</td>
-                                                        <td class="product-dis__text">60% cotton, 40% polyester</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="product-dis__title">Dimensions</td>
-                                                        <td class="product-dis__text">10 x 10 x 15 cm</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="product-dis__title">Other Info</td>
-                                                        <td class="product-dis__text">American heirloom jean shorts pug seitan letterpress</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
                                         @Model.Product.Details
                                     </div>
-                                </div>  <!-- End Tab - Product Details -->
+                                </div>*@
                                 <!-- Start Tab - Product Review -->
                                 <div class="tab-pane product-review" id="product-review">
                                     <!-- Start - Review Comment -->
+                                <!--
                                     <ul class="comment">
-                                        <!-- Start - Review Comment list-->
                                         <li class="comment__list">
                                             <div class="comment__wrapper">
                                                 <div class="comment__img">
@@ -212,7 +186,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Start - Review Comment Reply-->
                                             <ul class="comment__reply">
                                                 <li class="comment__reply-list">
                                                     <div class="comment__wrapper">
@@ -235,9 +208,8 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                            </ul> <!-- End - Review Comment Reply-->
-                                        </li> <!-- End - Review Comment list-->
-                                        <!-- Start - Review Comment list-->
+                                            </ul>
+                                        </li>
                                         <li class="comment__list">
                                             <div class="comment__wrapper">
                                                 <div class="comment__img">
@@ -265,8 +237,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </li> <!-- End - Review Comment list-->
-                                    </ul>  <!-- End - Review Comment -->
+                                        </li>
+                                    </ul>  
+                                -->
 
                                     <button onclick="AddReview('@Model.Product.ProductName','','')" data-toggle="modal" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight m-t-30">نوشتن نظر</button>
                                 </div>  <!-- Start Tab - Product Review -->
@@ -312,13 +285,15 @@
                                                 @*<span class="product__tag product__tag--discount"></span>*@
                                                 <a onclick="AddToFav('@Model.Product.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <div class="product__price m-t-10">
-                                                @*<span class="product__price-del">$11.90</span>*@
-                                                <span class="product__price-reg">@sim.Price</span>
-                                            </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = sim.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                            <a href="@Url.Action("Product",new { NidProduct = sim.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                                 @sim.ProductName
                                             </a>
+                                            <div class="product__price m-t-10">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span style="text-align:right;">قیمت : </span>
+                                                &nbsp;
+                                                <span class="product__price-reg">@String.Format("{0:n0} ریال", sim.Price)</span>
+                                            </div>
                                         </div> <!-- End Single Default Product -->
                                     }
                                 </div>
@@ -516,9 +491,16 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="modal-review-img">
-                                <img class="img-fluid  border-around" src="@Url.Content("~/Content/assets/img/product/size-large/product-home-1-lg-img-1.jpg")" alt="">
+                                @if (!string.IsNullOrEmpty(Model.Product.Pictures))
+                                {
+                                    <img class="product__img" src="@Model.Product.Pictures.Split(',').FirstOrDefault()" alt="">
+                                }
+                                else
+                                {
+                                    <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                }
                             </div>
-                            <span class="modal__product-title m-t-25" id="ReviewTitle"></span>
+                            <span class="modal__product-title m-t-25 ForceRTL" id="ReviewTitle"></span>
                             <div class="product__desc m-t-15">
                                 <p id="ReviewDesc"></p>
                             </div>

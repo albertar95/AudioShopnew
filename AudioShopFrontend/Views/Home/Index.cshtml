@@ -151,16 +151,18 @@
                                                 </a>
 
                                                 <a data-toggle="modal" onclick="AddToCart('@lates.ProductName', '@lates.Price', '@lates.Pictures', '@lates.NidProduct',1)" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
-                                                <span class="product__tag product__tag--discount">-12%</span>
+                                                @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a href="#" onclick="AddToFav('@lates.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <div class="product__price m-t-10">
-                                                <span class="product__price-del">@lates.Price</span>
-                                                <span class="product__price-reg">$10.71</span>
-                                            </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = lates.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                            <a href="@Url.Action("Product",new { NidProduct = lates.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                                 @lates.ProductName
                                             </a>
+                                            <div class="product__price m-t-10" dir="rtl">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span style="text-align:right;">قیمت : </span>
+                                                &nbsp;
+                                                <span class="product__price-reg">@String.Format("{0:n0} ریال", lates.Price)</span>
+                                            </div>
                                         </div>
                                     }
                                 </div>
@@ -222,16 +224,18 @@
                                                 </a>
 
                                                 <a onclick="AddToCart('@specials.ProductName', '@specials.Price', '@specials.Pictures', '@specials.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
-                                                <span class="product__tag product__tag--discount">-12%</span>
+                                                @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@specials.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <div class="product__price m-t-10">
-                                                <span class="product__price-del">@specials.Price</span>
-                                                <span class="product__price-reg">$10.71</span>
-                                            </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = specials.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                            <a href="@Url.Action("Product",new { NidProduct = specials.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                                 @specials.ProductName
                                             </a>
+                                            <div class="product__price m-t-10" dir="rtl">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span style="text-align:right;">قیمت : </span>
+                                                &nbsp;
+                                                <span class="product__price-reg">@String.Format("{0:n0} ریال", specials.Price)</span>
+                                            </div>
                                         </div>
                                     }
                                 </div>
@@ -295,16 +299,18 @@
                                                 </a>
 
                                                 <a onclick="AddToCart('@popular.ProductName', '@popular.Price', '@popular.Pictures', '@popular.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
-                                                <span class="product__tag product__tag--discount">-12%</span>
+                                                @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@popular.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <div class="product__price m-t-10">
-                                                <span class="product__price-del">@popular.Price</span>
-                                                <span class="product__price-reg">$10.71</span>
-                                            </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = popular.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                            <a href="@Url.Action("Product",new { NidProduct = popular.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                                 @popular.ProductName
                                             </a>
+                                            <div class="product__price m-t-10" dir="rtl">
+                                                @*<span class="product__price-del">$11.90</span>*@
+                                                <span style="text-align:right;">قیمت : </span>
+                                                &nbsp;
+                                                <span class="product__price-reg">@String.Format("{0:n0} ریال", popular.Price)</span>
+                                            </div>
                                         </div>
                                     }
                                 </div>
@@ -327,7 +333,7 @@
                 <ul class="menu-content">
                     @foreach (var cat in Model.Categories)
                     {
-                        <li class="menu-item"><a href="@Url.Action("Category",new { Nidcategory = cat.NidCategory})">@cat.CategoryName</a></li>
+                        <li class="menu-item" style="border-bottom:solid 1px #47494a;"><a href="@Url.Action("Category",new { Nidcategory = cat.NidCategory})">@cat.CategoryName</a></li>
                     }
                 </ul>
             </div>
