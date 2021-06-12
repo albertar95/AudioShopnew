@@ -1,6 +1,6 @@
-﻿@model AudioShopFrontend.ViewModels.CheckoutViewModel
+﻿﻿@model AudioShopFrontend.ViewModels.CheckoutViewModel
 @{
-    ViewBag.Title = "CheckoutDetail";
+    ViewBag.Title = "جزییات صورت حساب";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -45,10 +45,10 @@
                     {
                         <li class="d-flex justify-content-between">
                             <span class="your-order-middle-left">@cart.Product.ProductName</span>
-                            <span class="your-order-middle-right">@{tmpCart = (cart.Quantity ?? 1) * (cart.Product.Price);}@String.Format("{0:n0} ریال",tmpCart)</span>
+                            <span class="your-order-middle-right">@{tmpCart = (cart.Quantity ?? 1) * (cart.Product.Price);}@String.Format("{0:n0} ریال", tmpCart)</span>
                         </li>
                                     { tmpCartSum += tmpCart; }
-                    }
+                                }
                 </ul>
                 <div class="your-order-bottom d-flex justify-content-between" style="padding:20px 0;margin:20px 0;">
                     <h6 class="your-order-bottom-left">هزینه ارسال</h6>
@@ -76,7 +76,7 @@
                 e.preventDefault();
                 $("#modalDargahAlert").modal('show')
             });
-            
+
         });
     </script>
-    }
+}
