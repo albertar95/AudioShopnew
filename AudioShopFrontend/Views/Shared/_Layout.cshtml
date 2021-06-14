@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html>
 <head>
     <meta name="description" content="">
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="header__top-content">
-                                @{ 
+                                @{
                                     string userdata = "";
                                     if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
                                     {
@@ -34,35 +34,36 @@
                                         userdata = ticket.UserData;
                                     }
 
-                                <div class="header__top-content--left">
-                                    <div class="contact_cms" style="display:flex;">
-                                        @*<a href="@Url.Action("Logout","Home")"><i class="icon-arrow-left-circle"></i></a>*@
-                                        <span class="cms1 ForceRTL">به سایت carbass خوش آمدید</span>
-                                        @if(userdata != "")
-                                        {
-                                            <span>&nbsp; عزیز &nbsp;</span>
-                                        <div class="user-info user-set-role">
-                                            <a class="user-set-role__button" href="#" data-toggle="dropdown" aria-haspopup="true" style="font-weight:bold;">@userdata.Split(',').Last() <i class="fal fa-chevron-down"></i></a>
-                                            <ul class="expand-dropdown-menu dropdown-menu">
-                                                <li><a href="@Url.Action("MyProfile","Home")">پروفایل کاربر</a></li>
-                                                <li><a href="@Url.Action("Logout","Home")">خروج</a></li>
-                                            </ul>
+                                    <div class="header__top-content--left">
+                                        <div class="contact_cms" style="display:flex;">
+                                            @*<a href="@Url.Action("Logout","Home")"><i class="icon-arrow-left-circle"></i></a>*@
+                                            <span class="cms1 ForceRTL">به سایت carbass خوش آمدید</span>
+                                            @if (userdata != "")
+                                            {
+                                                <span>&nbsp; عزیز &nbsp;</span>
+                                                <div class="user-info user-set-role">
+                                                    <a class="user-set-role__button" href="#" data-toggle="dropdown" aria-haspopup="true" style="font-weight:bold;">@userdata.Split(',').Last() <i class="fal fa-chevron-down"></i></a>
+                                                    <ul class="expand-dropdown-menu dropdown-menu">
+                                                        <li><a href="@Url.Action("MyProfile","Home")">پروفایل کاربر</a></li>
+                                                        <li><a href="@Url.Action("Logout","Home")">خروج</a></li>
+                                                    </ul>
+                                                </div>
+                                            }
                                         </div>
-                                        }
                                     </div>
-                                </div>
-                                <div class="header__top-content--right">
-                                    <div class="user-info user-set-role">
-                                       @if (userdata == "")
-                                       {
-                                        <a class="user-set-role__button" href="@Url.Action("Login","Home")">ورود</a> <span>|</span>
-                                        <a class="user-set-role__button" href="@Url.Action("Register","Home")">ثبت نام</a>
-                                       }else
-                                        {
-                                        <a class="user-set-role__button" href="@Url.Action("Register","Home")">ثبت نام</a>
-                                        }
+                                    <div class="header__top-content--right">
+                                        <div class="user-info user-set-role">
+                                            @if (userdata == "")
+                                            {
+                                                <a class="user-set-role__button" href="@Url.Action("Login","Home")">ورود</a> <span>|</span>
+                                                <a class="user-set-role__button" href="@Url.Action("Register","Home")">ثبت نام</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="user-set-role__button" href="@Url.Action("Register","Home")">ثبت نام</a>
+                                            }
+                                        </div>
                                     </div>
-                                </div>
                                 }
                             </div>
                         </div>
@@ -131,15 +132,15 @@
                         <nav class="firstPageNav">
                             <ul class="header__nav">
                                 <li class="header__nav-item pos-relative">
-                                <a href="@Url.Action("Index","Home")" class="header__nav-link">خانه</a>
+                                    <a href="@Url.Action("Index","Home")" class="header__nav-link">خانه</a>
                                 </li>
                                 <li class="header__nav-item pos-relative">
                                     <a href="@Url.Action("Categories","Home")" class="header__nav-link">دسته بندی ها</a>
                                     <!--Single Dropdown Menu-->
                                     @*<ul class="dropdown__menu pos-absolute">
-                                    </ul>*@
+                                        </ul>*@
                                     <!--Single Dropdown Menu-->
-                                </li> 
+                                </li>
                                 <li class="header__nav-item pos-relative">
                                     @*<a href="@Url.Action("Blog","Home")" class="header__nav-link">مقالات</a>*@
                                     <a href="#" class="header__nav-link">مقالات</a>
@@ -154,7 +155,7 @@
                 </div>
             </div>
         </div>
-    <!--mobile section-->
+        <!--mobile section-->
         <div class="header__mobile mobile-header--1">
             <div class="container-fluid">
                 <div class="row">
@@ -163,7 +164,7 @@
                         <div class="header__mobile-top">
                             <div class="mobile-header__logo">
                                 <a href="@Url.Action("Index","Home")" class="mobile-header__logo-link">
-                                    <img src="@Url.Content("~/Content/assets/img/logo/logo-color.jpg")" alt="" class="mobile-header__logo-img">
+                                    <img src="@Url.Content("~/Content/assets/img/logo/mylogo.jpg")" alt="" class="mobile-header__logo-img">
                                 </a>
                             </div>
                             <div class="header__wishlist-box">
@@ -260,78 +261,78 @@
             </div>
         </div>
 
-            <div id="offcanvas-add-cart__box" class="offcanvas offcanvas-cart offcanvas-add-cart">
-                <div class="offcanvas-add-cart__top m-b-40 ForceRTL">
-                    <span id="CartPopupCount" class="offcanvas-add-cart__top-text"><i class="icon-shopping-cart"></i> تعداد محصولات : @tmpCartCount</span>
-                    <button class="offcanvas-close">&times;</button>
-                </div>
-                <div id="cartpopup">
-                    <!-- Start Add Cart Item Box-->
-                    <ul class="offcanvas-add-cart__menu">
-                        <!-- Start Single Add Cart Item-->
-                        @{
-                    decimal tmpTotal = 0;
-                        }
-                        @foreach (var cartItem in AudioShopFrontend.ViewModels.SharedLayotViewModel.GetCurrentCartItems())
+        <div id="offcanvas-add-cart__box" class="offcanvas offcanvas-cart offcanvas-add-cart">
+            <div class="offcanvas-add-cart__top m-b-40 ForceRTL">
+                <span id="CartPopupCount" class="offcanvas-add-cart__top-text"><i class="icon-shopping-cart"></i> تعداد محصولات : @tmpCartCount</span>
+                <button class="offcanvas-close">&times;</button>
+            </div>
+            <div id="cartpopup">
+                <!-- Start Add Cart Item Box-->
+                <ul class="offcanvas-add-cart__menu">
+                    <!-- Start Single Add Cart Item-->
+                    @{
+                        decimal tmpTotal = 0;
+                    }
+                    @foreach (var cartItem in AudioShopFrontend.ViewModels.SharedLayotViewModel.GetCurrentCartItems())
             {
-                            <li class="offcanvas-add-cart__list pos-relative ForceRTL">
-                                <div class="offcanvas-add-cart__img-box pos-relative">
-                                    <a href="single-1.html" class="offcanvas-add-cart__img-link img-responsive">
-                                        @if (cartItem.Product.Pictures != null)
-                            {
-                                            <img src="@cartItem.Product.Pictures.Split(',').First()" alt="" class="add-cart__img">
-                            }
-                            else
-                            {
-                                            <img src="@Url.Content("~/Content/assets/img/product/size-small/product-home-1-img-1.jpg")" alt="" class="add-cart__img">
-                            }
-                                    </a>
-                                    <span class="offcanvas-add-cart__item-count pos-absolute">@cartItem.Quantity x</span>
-                                </div>
-                                <div class="offcanvas-add-cart__detail" style="margin-right:15px;">
-                                    <a href="single-1.html" class="offcanvas-add-cart__link">@cartItem.Product.ProductName</a>
-                                    <span class="offcanvas-add-cart__price">@String.Format("{0:n0} ریال", cartItem.Product.Price)</span>
-                                </div>
-                                <button class="offcanvas-add-cart__item-dismiss pos-absolute" onclick="ClearProductFromCart('@cartItem.NidProduct')">&times;</button>
-                            </li> <!-- Start Single Add Cart Item-->
-                            tmpTotal += (cartItem.Product.Price)*(cartItem.Quantity ?? 1);
-                        }
-                    </ul> <!-- Start Add Cart Item Box-->
-                    <!-- Start Add Cart Checkout Box-->
-                    <div class="offcanvas-add-cart__checkout-box-bottom">
-                        <!-- Start offcanvas Add Cart Checkout Info-->
-                        <ul class="offcanvas-add-cart__checkout-info">
-                            <!-- Start Single Add Cart Checkout Info-->
-                            <li class="offcanvas-add-cart__checkout-list">
-                                @*<span class="offcanvas-add-cart__checkout-left-info">Subtotal</span>
-                        <span class="offcanvas-add-cart__checkout-right-info">$60.59</span>*@
-                            </li> <!-- End Single Add Cart Checkout Info-->
-                            <!-- Start Single Add Cart Checkout Info-->
-                            <li class="offcanvas-add-cart__checkout-list">
-                                @*<span class="offcanvas-add-cart__checkout-left-info">Shipping</span>
-                        <span class="offcanvas-add-cart__checkout-right-info">$7.00</span>*@
-                            </li> <!-- End Single Add Cart Checkout Info-->
-                            <!-- Start Single Add Cart Checkout Info-->
-                            <li class="offcanvas-add-cart__checkout-list">
-                                @*<span class="offcanvas-add-cart__checkout-left-info">Taxes</span>
-                        <span class="offcanvas-add-cart__checkout-right-info">$0.00</span>*@
-                            </li> <!-- End Single Add Cart Checkout Info-->
-                            <!-- Start Single Add Cart Checkout Info-->
-                            <li class="offcanvas-add-cart__checkout-list ForceRTL">
-                                <span class="offcanvas-add-cart__checkout-left-info">مجموع</span>
-                                <span class="offcanvas-add-cart__checkout-right-info" id="CartPopupPrice">@String.Format("{0:n0} ریال", tmpTotal)</span>
-                            </li> <!-- End Single Add Cart Checkout Info-->
-                        </ul> <!-- End offcanvas Add Cart Checkout Info-->
+                        <li class="offcanvas-add-cart__list pos-relative ForceRTL">
+                            <div class="offcanvas-add-cart__img-box pos-relative">
+                                <a href="single-1.html" class="offcanvas-add-cart__img-link img-responsive">
+                                    @if (cartItem.Product.Pictures != null)
+                                    {
+                                        <img src="@cartItem.Product.Pictures.Split(',').First()" alt="" class="add-cart__img">
+                                    }
+                                    else
+                                    {
+                                        <img src="@Url.Content("~/Content/assets/img/product/size-small/product-home-1-img-1.jpg")" alt="" class="add-cart__img">
+                                    }
+                                </a>
+                                <span class="offcanvas-add-cart__item-count pos-absolute">@cartItem.Quantity x</span>
+                            </div>
+                            <div class="offcanvas-add-cart__detail" style="margin-right:15px;">
+                                <a href="single-1.html" class="offcanvas-add-cart__link">@cartItem.Product.ProductName</a>
+                                <span class="offcanvas-add-cart__price">@String.Format("{0:n0} ریال", cartItem.Product.Price)</span>
+                            </div>
+                            <button class="offcanvas-add-cart__item-dismiss pos-absolute" onclick="ClearProductFromCart('@cartItem.NidProduct')">&times;</button>
+                        </li> <!-- Start Single Add Cart Item-->
+                        tmpTotal += (cartItem.Product.Price) * (cartItem.Quantity ?? 1);
+                    }
+                </ul> <!-- Start Add Cart Item Box-->
+                <!-- Start Add Cart Checkout Box-->
+                <div class="offcanvas-add-cart__checkout-box-bottom">
+                    <!-- Start offcanvas Add Cart Checkout Info-->
+                    <ul class="offcanvas-add-cart__checkout-info">
+                        <!-- Start Single Add Cart Checkout Info-->
+                        <li class="offcanvas-add-cart__checkout-list">
+                            @*<span class="offcanvas-add-cart__checkout-left-info">Subtotal</span>
+                                <span class="offcanvas-add-cart__checkout-right-info">$60.59</span>*@
+                        </li> <!-- End Single Add Cart Checkout Info-->
+                        <!-- Start Single Add Cart Checkout Info-->
+                        <li class="offcanvas-add-cart__checkout-list">
+                            @*<span class="offcanvas-add-cart__checkout-left-info">Shipping</span>
+                                <span class="offcanvas-add-cart__checkout-right-info">$7.00</span>*@
+                        </li> <!-- End Single Add Cart Checkout Info-->
+                        <!-- Start Single Add Cart Checkout Info-->
+                        <li class="offcanvas-add-cart__checkout-list">
+                            @*<span class="offcanvas-add-cart__checkout-left-info">Taxes</span>
+                                <span class="offcanvas-add-cart__checkout-right-info">$0.00</span>*@
+                        </li> <!-- End Single Add Cart Checkout Info-->
+                        <!-- Start Single Add Cart Checkout Info-->
+                        <li class="offcanvas-add-cart__checkout-list ForceRTL">
+                            <span class="offcanvas-add-cart__checkout-left-info">مجموع</span>
+                            <span class="offcanvas-add-cart__checkout-right-info" id="CartPopupPrice">@String.Format("{0:n0} ریال", tmpTotal)</span>
+                        </li> <!-- End Single Add Cart Checkout Info-->
+                    </ul> <!-- End offcanvas Add Cart Checkout Info-->
 
-                        <div class="offcanvas-add-cart__btn-checkout">
-                            <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تکمیل خرید و ثبت سفارش</a>
-                        </div>
-                    </div> <!-- End Add Cart Checkout Box-->
-                </div>
-                </div>
+                    <div class="offcanvas-add-cart__btn-checkout">
+                        <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تکمیل خرید و ثبت سفارش</a>
+                    </div>
+                </div> <!-- End Add Cart Checkout Box-->
+            </div>
+        </div>
         <!--end of mobile section-->
         <div class="offcanvas-overlay"></div>
-        @RenderSection("styles",false)
+        @RenderSection("styles", false)
     </header>
     <main id="main-container" class="main-container">@RenderBody()</main>
     <footer class="footer">
@@ -358,27 +359,27 @@
                     <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
                         <div class="footer__menu">
                             @*<h4 class="footer__nav-title">Products</h4>
-                            <ul class="footer__nav">
-                                <li class="footer__list"><a href="" class="footer__link">Prices drop</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">New products</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Best sales</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Contact us</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Sitemap</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Login</a></li>
-                            </ul>*@
+                                <ul class="footer__nav">
+                                    <li class="footer__list"><a href="" class="footer__link">Prices drop</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">New products</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Best sales</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Contact us</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Sitemap</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Login</a></li>
+                                </ul>*@
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
                         <div class="footer__menu">
                             @*<h4 class="footer__nav-title">Our Company</h4>
-                            <ul class="footer__nav">
-                                <li class="footer__list"><a href="" class="footer__link">Delivery</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Legal Notice</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">About us</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Secure payment</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Sitemap</a></li>
-                                <li class="footer__list"><a href="" class="footer__link">Stores</a></li>
-                            </ul>*@
+                                <ul class="footer__nav">
+                                    <li class="footer__list"><a href="" class="footer__link">Delivery</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Legal Notice</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">About us</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Secure payment</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Sitemap</a></li>
+                                    <li class="footer__list"><a href="" class="footer__link">Stores</a></li>
+                                </ul>*@
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-12 col-12">
@@ -423,11 +424,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                     <span class="modal__product-title" id="modal_name"></span>
-                                     <span class="modal__product-price m-tb-15" id="modal_price"></span>
+                                        <span class="modal__product-title" id="modal_name"></span>
+                                        <span class="modal__product-price m-tb-15" id="modal_price"></span>
                                         <ul class="modal__product-info">
                                             @*<li>Size:<span> S</span></li>
-                                            <li>Quantity:<span>3</span></li>*@
+                                                <li>Quantity:<span>3</span></li>*@
                                         </ul>
                                     </div>
                                 </div>
@@ -438,7 +439,7 @@
                                     <li></li>
                                     <li></li>
                                     @*<li>Taxes:<span>$0.00</span></li>
-                                    <li>Total: <span>$101.78 (tax excl.)</span></li>*@
+                                        <li>Total: <span>$101.78 (tax excl.)</span></li>*@
                                 </ul>
 
                                 <div class="modal__product-cart-buttons">

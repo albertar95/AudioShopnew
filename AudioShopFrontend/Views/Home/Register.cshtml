@@ -1,7 +1,7 @@
-﻿@model AudioShopFrontend.Models.User
+﻿﻿@model AudioShopFrontend.Models.User
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "ثبت نام";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -40,22 +40,22 @@
                                             <div class="login-register-form">
                                                 @using (Html.BeginForm("SubmitLogin", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "LoginForm" }))
                                                 {
-                                                <form action="#" method="post">
-                                                    <div class="form-box__single-group">
-                                                        <input type="text" id="LoginUsername" name="Login.Username" placeholder="نام کاربری">
-                                                    </div>
-                                                    <div class="form-box__single-group">
-                                                        <input type="password" id="LoginPassword" name="Login.Password" placeholder="رمز عبور">
-                                                    </div>
-                                                    <div class="d-flex justify-content-between flex-wrap m-tb-20">
-                                                        <label for="account-remember">
-                                                            <input type="checkbox" id="UserRemember">
-                                                            <span>مرا به خاطر بسپار</span>
-                                                        </label>
-                                                        <a class="link--gray" href="">بازیابی رمز عبور</a>
-                                                    </div>
-                                                    <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnLogin" type="submit">ورود</button>
-                                                </form>
+                                                    <form action="#" method="post">
+                                                        <div class="form-box__single-group">
+                                                            <input type="text" id="LoginUsername" name="Login.Username" placeholder="نام کاربری">
+                                                        </div>
+                                                        <div class="form-box__single-group">
+                                                            <input type="password" id="LoginPassword" name="Login.Password" placeholder="رمز عبور">
+                                                        </div>
+                                                        <div class="d-flex justify-content-between flex-wrap m-tb-20">
+                                                            <label for="account-remember">
+                                                                <input type="checkbox" id="UserRemember">
+                                                                <span>مرا به خاطر بسپار</span>
+                                                            </label>
+                                                            <a class="link--gray" href="">بازیابی رمز عبور</a>
+                                                        </div>
+                                                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnLogin" type="submit">ورود</button>
+                                                    </form>
                                                 }
                                             </div>
                                         </div>
@@ -63,53 +63,53 @@
                                     <div id="lg2" class="tab-pane active">
                                         <div class="login-form-container">
                                             <div class="login-register-form">
-                                               @using (Html.BeginForm("SubmitRegister", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "RegisterForm" }))
-                                               {
-                                                   if (TempData["RegisterError"] != null)
-                                                   {
-                                                    <div class="alert alert-warning" role="alert" id="warningMessageDiv">
-                                                        @TempData["RegisterError"]
-                                                    </div>
-                                                   }
-                                                <form action="#" method="post" style="text-align:right;">
-                                                    <div class="form-box__single-group">
-                                                        <div style="display:flex;">
-                                                            <span style="font-size:large;color:red;">*</span>   <input type="text" id="User_FirstName" name="User.FirstName" placeholder="نام" required>
+                                                @using (Html.BeginForm("SubmitRegister", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "RegisterForm" }))
+                                                {
+                                                    if (TempData["RegisterError"] != null)
+                                                    {
+                                                        <div class="alert alert-warning" role="alert" id="warningMessageDiv">
+                                                            @TempData["RegisterError"]
                                                         </div>
-                                                    </div>
-                                                    <div class="form-box__single-group">
-                                                        <div style="display:flex;">
-                                                            <span style="font-size:large;color:red;">*</span> <input type="text" id="User_Lastname" name="User.LastName" placeholder="نام خانوادگی" required>
+                                                    }
+                                                    <form action="#" method="post" style="text-align:right;">
+                                                        <div class="form-box__single-group">
+                                                            <div style="display:flex;">
+                                                                <span style="font-size:large;color:red;">*</span>   <input type="text" id="User_FirstName" name="User.FirstName" placeholder="نام" required>
+                                                            </div>
                                                         </div>
+                                                        <div class="form-box__single-group">
+                                                            <div style="display:flex;">
+                                                                <span style="font-size:large;color:red;">*</span> <input type="text" id="User_Lastname" name="User.LastName" placeholder="نام خانوادگی" required>
+                                                            </div>
                                                         </div>
-                                                    <div class="form-box__single-group">
-                                                        <div style="display:flex;">
-                                                            <span style="font-size:large;color:red;">*</span> <input type="email" id="User.Username" oninvalid="this.setCustomValidity('ایمیل را صحیح وارد کنید')" name="User.Username" placeholder="ایمیل" required>
+                                                        <div class="form-box__single-group">
+                                                            <div style="display:flex;">
+                                                                <span style="font-size:large;color:red;">*</span> <input type="email" id="User.Username" oninvalid="this.setCustomValidity('ایمیل را صحیح وارد کنید')" name="User.Username" placeholder="ایمیل" required>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-box__single-group m-b-20">
-                                                        <div style="display:flex;">
-                                                            <span style="font-size:large;color:red;">*</span> <input type="password" id="User_Password" name="User.Password" placeholder="رمز عبور" required>
+                                                        <div class="form-box__single-group m-b-20">
+                                                            <div style="display:flex;">
+                                                                <span style="font-size:large;color:red;">*</span> <input type="password" id="User_Password" name="User.Password" placeholder="رمز عبور" required>
+                                                            </div>
                                                         </div>
+                                                        <div class="form-box__single-group m-b-20">
+                                                            <div style="display:flex;">
+                                                                <span style="font-size:large;color:red;"> </span> <input type="password" id="User_Password2" name="User.Password2" placeholder="تکرار رمز عبور" required>
+                                                            </div>
                                                         </div>
-                                                    <div class="form-box__single-group m-b-20">
-                                                        <div style="display:flex;">
-                                                            <span style="font-size:large;color:red;"> </span> <input type="password" id="User_Password2" name="User.Password2" placeholder="تکرار رمز عبور" required>
+                                                        <div class="form-box__single-group m-b-20">
+                                                            <div style="display:flex;">
+                                                                <span style="font-size:large;color:red;"> </span>  <input type="number" id="User_ZipCode" name="User.ZipCode" placeholder="کد پستی" maxlength="10">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-box__single-group m-b-20">
-                                                        <div style="display:flex;">
-                                                            <span style="font-size:large;color:red;"> </span>  <input type="number" id="User_ZipCode" name="User.ZipCode" placeholder="کد پستی" maxlength="10">
+                                                        <div class="form-box__single-group m-b-20">
+                                                            <div style="display:flex;">
+                                                                <span style="font-size:large;color:red;"> </span>  <textarea id="User_Address" name="User.Address" placeholder="آدرس" rows="4"></textarea>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-box__single-group m-b-20">
-                                                        <div style="display:flex;">
-                                                            <span style="font-size:large;color:red;"> </span>  <textarea id="User_Address" name="User.Address" placeholder="آدرس" rows="4"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnRegister" type="submit">ثبت نام</button>
-                                                </form>
-                                               }
+                                                        <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnRegister" type="submit">ثبت نام</button>
+                                                    </form>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -131,8 +131,8 @@
 }
 @section scripts
     {
-<script src="@Url.Content("~/Content/assets/js/notification/bootstrap-growl.min.js")"></script>
-<script src="@Url.Content("~/Content/assets/js/notification/notification-active.js")"></script>
+    <script src="@Url.Content("~/Content/assets/js/notification/bootstrap-growl.min.js")"></script>
+    <script src="@Url.Content("~/Content/assets/js/notification/notification-active.js")"></script>
     <script type="text/javascript">
         $(function ()
         {
@@ -233,4 +233,4 @@
             });
         };
     </script>
-    }
+}

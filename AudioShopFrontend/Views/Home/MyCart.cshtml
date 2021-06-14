@@ -1,6 +1,6 @@
-﻿@model List<AudioShopFrontend.Models.Cart>
+﻿﻿@model List<AudioShopFrontend.Models.Cart>
 @{
-    ViewBag.Title = "MyCart";
+    ViewBag.Title = "سبد خرید";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-breadcrumb">
@@ -40,48 +40,48 @@
                         </thead>
                         <tbody>
                             @foreach (var prods in Model)
-                        {
-                        <tr id="@prods.NidProduct">
-                            <td class="product-thumbnail">
-                                @if (!string.IsNullOrEmpty(prods.Product.Pictures))
-                                    {
-                                    <a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
-                                    }
-                            </td>
-                            <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})">@prods.Product.ProductName</a></td>
-                            <td class="product-price-cart"><span class="amount">@String.Format("{0:n0} ریال", prods.Product.Price)</span></td>
-                            <td class="product-quantities">
-                                <div class="quantity d-inline-block">
-                                    <input type="number" min="1" step="1" value="@prods.Quantity" id="QuantitySlt" onchange="QuantityChanged('@prods.NidCart','@prods.Product.Price')">
-                                </div>
-                            </td>
-                            <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@String.Format("{0:n0} ریال", tmpTotal)</td>
-                            <td class="product-remove">
-                                <button onclick="ClearProductFromCart('@prods.NidProduct')"><i class="fa fa-times"></i></button>
-                            </td>
-                        </tr>
-                             tmpAggregate = tmpAggregate + tmpTotal;
-                        }
+                            {
+                                <tr id="@prods.NidProduct">
+                                    <td class="product-thumbnail">
+                                        @if (!string.IsNullOrEmpty(prods.Product.Pictures))
+                                        {
+                                            <a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                        }
+                                    </td>
+                                    <td class="product-name"><a href="@Url.Action("Product","Home",new { NidProduct = prods.NidProduct})">@prods.Product.ProductName</a></td>
+                                    <td class="product-price-cart"><span class="amount">@String.Format("{0:n0} ریال", prods.Product.Price)</span></td>
+                                    <td class="product-quantities">
+                                        <div class="quantity d-inline-block">
+                                            <input type="number" min="1" step="1" value="@prods.Quantity" id="QuantitySlt" onchange="QuantityChanged('@prods.NidCart','@prods.Product.Price')">
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal" id="@prods.NidCart">@{decimal tmpTotal = (prods.Product.Price * prods.Quantity ?? 1);}@String.Format("{0:n0} ریال", tmpTotal)</td>
+                                    <td class="product-remove">
+                                        <button onclick="ClearProductFromCart('@prods.NidProduct')"><i class="fa fa-times"></i></button>
+                                    </td>
+                                </tr>
+                                            tmpAggregate = tmpAggregate + tmpTotal;
+                                        }
                         </tbody>
                     </table>
                 </div>  <!-- End Cart Table -->
             <!-- Start Cart Table Button -->
-                                <div class="cart-table-button m-t-10">
-                                    <div class="cart-table-button--left">
-                                    </div>
-                                    <div class="cart-table-button--right">
-                                        <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">افزودن کالا های بیشتر به سبد خرید</a>
-                                    </div>
-                                </div>  <!-- End Cart Table Button -->
-                                }
-                                else
-                                {
-                                    <div class="empty-cart m-t-40 text-center">
-                                        <div class="empty-cart-icon title--normal "><i class="fal fa-shopping-cart"></i></div>
-                                        <h3 class="title title--normal title--thin m-tb-30">سبد خرید شما خالی می باشد</h3>
-                                        <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">ادامه خرید</a>
-                                    </div>
-                                }
+                                        <div class="cart-table-button m-t-10">
+                                            <div class="cart-table-button--left">
+                                            </div>
+                                            <div class="cart-table-button--right">
+                                                <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">افزودن کالا های بیشتر به سبد خرید</a>
+                                            </div>
+                                        </div>  <!-- End Cart Table Button -->
+                                        }
+                                        else
+                                        {
+                                            <div class="empty-cart m-t-40 text-center">
+                                                <div class="empty-cart-icon title--normal "><i class="fal fa-shopping-cart"></i></div>
+                                                <h3 class="title title--normal title--thin m-tb-30">سبد خرید شما خالی می باشد</h3>
+                                                <a href="@Url.Action("Index","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight m-t-20">ادامه خرید</a>
+                                            </div>
+                                        }
         </div>
     </div>
     @if (Model.Any())
@@ -111,22 +111,22 @@
                     </div>
                     <h6 class="total-cost">مجموع قیمت محصولات<span id="cartAggregate">@String.Format("{0:n0} ریال", tmpAggregate)</span></h6>
                     @*<div class="total-shipping">
-                        <span>هزینه ارسال</span>
-                        <ul class="shipping-cost m-t-10">
-                            <li>
-                                <label for="ship-standard">
-                                    <input type="radio" class="shipping-select" name="shipping-cost" value="Standard" id="ship-standard" checked><span>عادی</span>
-                                </label>
-                                <span class="ship-price">@String.Format("{0:0n} ریال", 20000)</span>
-                            </li>
-                            <li>
-                                <label for="ship-express">
-                                    <input type="radio" class="shipping-select" name="shipping-cost" value="Express" id="ship-express"><span>پست ویژه</span>
-                                </label>
-                                <span class="ship-price">@String.Format("{0:0n} ریال", 30000)</span>
-                            </li>
-                        </ul>
-                    </div>*@
+                            <span>هزینه ارسال</span>
+                            <ul class="shipping-cost m-t-10">
+                                <li>
+                                    <label for="ship-standard">
+                                        <input type="radio" class="shipping-select" name="shipping-cost" value="Standard" id="ship-standard" checked><span>عادی</span>
+                                    </label>
+                                    <span class="ship-price">@String.Format("{0:0n} ریال", 20000)</span>
+                                </li>
+                                <li>
+                                    <label for="ship-express">
+                                        <input type="radio" class="shipping-select" name="shipping-cost" value="Express" id="ship-express"><span>پست ویژه</span>
+                                    </label>
+                                    <span class="ship-price">@String.Format("{0:0n} ریال", 30000)</span>
+                                </li>
+                            </ul>
+                        </div>*@
                     <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@String.Format("{0:n0} ریال", tmpAggregate)</span></h4>
                     <a href="@Url.Action("Checkout","Home")" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">تکمیل اطلاعات و پرداخت هزینه</a>
                 </div>
@@ -161,4 +161,4 @@
                 });
         }
     </script>
-    }
+}

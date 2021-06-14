@@ -273,6 +273,7 @@
     <Content Include="Content\assets\img\logo\another-logo.jpg" />
     <Content Include="Content\assets\img\logo\logo-color.jpg" />
     <Content Include="Content\assets\img\logo\logo-invert.jpg" />
+    <Content Include="Content\assets\img\logo\mylogo.jpg" />
     <Content Include="Content\assets\img\product\category\category-home-1-img-1.jpg" />
     <Content Include="Content\assets\img\product\category\category-home-1-img-2.jpg" />
     <Content Include="Content\assets\img\product\category\category-home-1-img-3.jpg" />
@@ -621,7 +622,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>4905</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

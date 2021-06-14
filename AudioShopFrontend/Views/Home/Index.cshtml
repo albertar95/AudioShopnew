@@ -1,57 +1,57 @@
-﻿@model AudioShopFrontend.ViewModels.IndexViewModel
+﻿﻿@model AudioShopFrontend.ViewModels.IndexViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "صفحه اصلی";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--slider section-->
 <div class="hero hero-slider hero--1">
     <div class="swiper-wrapper">
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/hero/coming-soon2.jpg);">
+        <div class="hero-img hero-img--1 swiper-slide" style="background: url(../../Content/assets/img/slider/b1.jpg)">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-7 col-sm-10 col-12">
                             <div class="title title--large title--thin"></div>
-                            <div class="title title--large title--regular"></div>
-                            <div class="title title--description"></div>
+                            <div class="title title--large title--regular ForceRTL" style="color:white;">به carbass خوش آمدید</div>
+                            <div class="title title--description ForceRTL"></div>
                             @*<a href="single-1.html" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight"></a>*@
                         </div>
                     </div>
                 </div>
             </div>
         </div> <!-- End Hero Image -->
-        @*<!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/hero/hero-home-1-img-2.jpg);">
+        <!-- Start Hero Image -->
+        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b2.jpg);">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-7 col-sm-10 col-12">
-                            <div class="title title--large title--thin">MICROWAVE</div>
-                            <div class="title title--large title--regular">TOASTER OVEN 2019</div>
-                            <div class="title title--description">Exclusive Offer <span class="title--blue">-20% Off</span> This Week</div>
-                            <a href="single-1.html" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">Shopping Now</a>
+                            <div class="title title--large title--thin" style="color:white;">بلندگو</div>
+                            <div class="title title--large title--regular" style="color:white;">کاروزریا مدل 6970</div>
+                            @*<div class="title title--description">Exclusive Offer <span class="title--blue">-20% Off</span> This Week</div>*@
+                            <a href="https://carbass.ir/Product?NidProduct=da6e671b-8195-4495-b138-ca5c976bb119" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">خرید محصول</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div> <!-- End Hero Image -->
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/hero/hero-home-1-img-3.jpg);">
+        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b3.jpg);">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-7 col-sm-10 col-12">
-                            <div class="title title--large title--thin">SAMSUNG</div>
-                            <div class="title title--large title--regular">GALAXY S9 / S9+</div>
-                            <div class="title title--description">Exclusive Offer <span class="title--blue">-20% Off</span> This Week</div>
-                            <a href="single-1.html" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">Shopping Now</a>
+                            <div class="title title--large title--thin" style="color:white;">آمپلی فایر</div>
+                            <div class="title title--large title--regular" style="color:white;">MB Acoustics</div>
+                            <div class="title title--description" style="color:white;">مدل 6900</div>
+                            <a href="https://carbass.ir/Product?NidProduct=13265363-412f-478c-bd3b-2ba0ad436ce2" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">خرید محصول</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> <!-- End Hero Image -->*@
+        </div> <!-- End Hero Image -->
     </div>
 
     <!-- Add Pagination -->
@@ -60,7 +60,7 @@
     <div class="swiper-buttons">
         <!-- Add Arrows -->
         @*<div class="swiper-button-next hero__nav hero__nav--next"><i class="far fa-chevron-right"></i></div>
-        <div class="swiper-button-prev hero__nav hero__nav--prev"><i class="far fa-chevron-left"></i></div>*@
+            <div class="swiper-button-prev hero__nav hero__nav--prev"><i class="far fa-chevron-left"></i></div>*@
     </div>
 </div>
 <!--end of slider section-->
@@ -352,98 +352,98 @@
                         <div class="col-12">
                             <div class="swiper-outside-arrow-fix pos-relative">
                                 @*<div class="product-counter-slider-1grid overflow-hidden m-t-50">
-                                    <div class="swiper-wrapper">
-                                        <!-- Start Single Counter Product -->
-                                        <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
-                                            <div class="product__img-box">
-                                                <a href="single-1.html" class="product__img--link">
-                                                    <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
-                                                </a>
+                                        <div class="swiper-wrapper">
+                                            <!-- Start Single Counter Product -->
+                                            <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
+                                                <div class="product__img-box">
+                                                    <a href="single-1.html" class="product__img--link">
+                                                        <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                                    </a>
 
-                                                <div class="product__counter-box">
-                                                    <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    <div class="product__counter-box">
+                                                        <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    </div>
+                                                    <span class="product__tag product__tag--new">New</span>
+                                                    <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                                 </div>
-                                                <span class="product__tag product__tag--new">New</span>
-                                                <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                            </div>
-                                            <div class="product__price m-t-10">
-                                                <span class="product__price-del">$11.90</span>
-                                                <span class="product__price-reg">$10.71</span>
-                                            </div>
-                                            <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
-                                                SonicFuel Wireless Over-Ear Headphones
-                                            </a>
-                                        </div> <!-- End Single Counter Product -->
-                                        <!-- Start Single Counter Product -->
-                                        <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
-                                            <div class="product__img-box">
-                                                <a href="single-1.html" class="product__img--link">
-                                                    <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-2.jpg")" alt="">
+                                                <div class="product__price m-t-10">
+                                                    <span class="product__price-del">$11.90</span>
+                                                    <span class="product__price-reg">$10.71</span>
+                                                </div>
+                                                <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
+                                                    SonicFuel Wireless Over-Ear Headphones
                                                 </a>
+                                            </div> <!-- End Single Counter Product -->
+                                            <!-- Start Single Counter Product -->
+                                            <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
+                                                <div class="product__img-box">
+                                                    <a href="single-1.html" class="product__img--link">
+                                                        <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-2.jpg")" alt="">
+                                                    </a>
 
-                                                <div class="product__counter-box">
-                                                    <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    <div class="product__counter-box">
+                                                        <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    </div>
+                                                    <span class="product__tag product__tag--new">New</span>
+                                                    <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                                 </div>
-                                                <span class="product__tag product__tag--new">New</span>
-                                                <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                            </div>
-                                            <div class="product__price m-t-10">
-                                                <span class="product__price-del">$11.90</span>
-                                                <span class="product__price-reg">$10.71</span>
-                                            </div>
-                                            <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
-                                                SonicFuel Wireless Over-Ear Headphones
-                                            </a>
-                                        </div> <!-- End Single Counter Product -->
-                                        <!-- Start Single Counter Product -->
-                                        <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
-                                            <div class="product__img-box">
-                                                <a href="single-1.html" class="product__img--link">
-                                                    <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-3.jpg")" alt="">
+                                                <div class="product__price m-t-10">
+                                                    <span class="product__price-del">$11.90</span>
+                                                    <span class="product__price-reg">$10.71</span>
+                                                </div>
+                                                <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
+                                                    SonicFuel Wireless Over-Ear Headphones
                                                 </a>
+                                            </div> <!-- End Single Counter Product -->
+                                            <!-- Start Single Counter Product -->
+                                            <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
+                                                <div class="product__img-box">
+                                                    <a href="single-1.html" class="product__img--link">
+                                                        <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-3.jpg")" alt="">
+                                                    </a>
 
-                                                <div class="product__counter-box">
-                                                    <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    <div class="product__counter-box">
+                                                        <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    </div>
+                                                    <span class="product__tag product__tag--new">New</span>
+                                                    <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                                 </div>
-                                                <span class="product__tag product__tag--new">New</span>
-                                                <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                            </div>
-                                            <div class="product__price m-t-10">
-                                                <span class="product__price-del">$11.90</span>
-                                                <span class="product__price-reg">$10.71</span>
-                                            </div>
-                                            <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
-                                                SonicFuel Wireless Over-Ear Headphones
-                                            </a>
-                                        </div> <!-- End Single Counter Product -->
-                                        <!-- Start Single Counter Product -->
-                                        <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
-                                            <div class="product__img-box">
-                                                <a href="single-1.html" class="product__img--link">
-                                                    <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-4.jpg")" alt="">
+                                                <div class="product__price m-t-10">
+                                                    <span class="product__price-del">$11.90</span>
+                                                    <span class="product__price-reg">$10.71</span>
+                                                </div>
+                                                <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
+                                                    SonicFuel Wireless Over-Ear Headphones
                                                 </a>
+                                            </div> <!-- End Single Counter Product -->
+                                            <!-- Start Single Counter Product -->
+                                            <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
+                                                <div class="product__img-box">
+                                                    <a href="single-1.html" class="product__img--link">
+                                                        <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-4.jpg")" alt="">
+                                                    </a>
 
-                                                <div class="product__counter-box">
-                                                    <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    <div class="product__counter-box">
+                                                        <div class="product__counter-item" data-countdown="2021/03/01"></div>
+                                                    </div>
+                                                    <span class="product__tag product__tag--new">New</span>
+                                                    <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                                 </div>
-                                                <span class="product__tag product__tag--new">New</span>
-                                                <a href="wishlist.html" class="product__wishlist-icon"><i class="icon-heart"></i></a>
-                                            </div>
-                                            <div class="product__price m-t-10">
-                                                <span class="product__price-del">$11.90</span>
-                                                <span class="product__price-reg">$10.71</span>
-                                            </div>
-                                            <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
-                                                SonicFuel Wireless Over-Ear Headphones
-                                            </a>
-                                        </div> <!-- End Single Counter Product -->
-                                    </div>
-                                    <div class="swiper-buttons">
-                                        <!-- Add Arrows -->
-                                        <div class="swiper-button-next default__nav default__nav--next"><i class="fal fa-chevron-right"></i></div>
-                                        <div class="swiper-button-prev default__nav default__nav--prev"><i class="fal fa-chevron-left"></i></div>
-                                    </div>
-                                </div>*@
+                                                <div class="product__price m-t-10">
+                                                    <span class="product__price-del">$11.90</span>
+                                                    <span class="product__price-reg">$10.71</span>
+                                                </div>
+                                                <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
+                                                    SonicFuel Wireless Over-Ear Headphones
+                                                </a>
+                                            </div> <!-- End Single Counter Product -->
+                                        </div>
+                                        <div class="swiper-buttons">
+                                            <!-- Add Arrows -->
+                                            <div class="swiper-button-next default__nav default__nav--next"><i class="fal fa-chevron-right"></i></div>
+                                            <div class="swiper-button-prev default__nav default__nav--prev"><i class="fal fa-chevron-left"></i></div>
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
                     </div>
@@ -461,130 +461,130 @@
                             </div>
                             <div class="swiper-outside-arrow-fix pos-relative">
                                 @*<div class="product-segment-slider-2 overflow-hidden  m-t-50">
-                                    <div class="swiper-wrapper">
-                                        <!-- Start Single Segment Product -->
-                                        <div class="product__box product__box--segment  swiper-slide">
-                                            <div class="row">
-                                                <div class="col-xl-5 col-lg-12">
-                                                    <div class="product__img-box">
-                                                        <a href="single-1.html" class="product__img--link">
-                                                            <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                        <div class="swiper-wrapper">
+                                            <!-- Start Single Segment Product -->
+                                            <div class="product__box product__box--segment  swiper-slide">
+                                                <div class="row">
+                                                    <div class="col-xl-5 col-lg-12">
+                                                        <div class="product__img-box">
+                                                            <a href="single-1.html" class="product__img--link">
+                                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-7 col-lg-12">
+                                                        <div class="product__price m-t-10">
+                                                            <span class="product__price-del">$11.90</span>
+                                                            <span class="product__price-reg">$10.71</span>
+                                                        </div>
+                                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                                            SonicFuel Wireless Over-Ear Headphones
                                                         </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-7 col-lg-12">
-                                                    <div class="product__price m-t-10">
-                                                        <span class="product__price-del">$11.90</span>
-                                                        <span class="product__price-reg">$10.71</span>
-                                                    </div>
-                                                    <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                                        SonicFuel Wireless Over-Ear Headphones
-                                                    </a>
 
-                                                    <ul class="product__review m-t-15 m-b-20">
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--blank"><i class="icon-star"></i></li>
-                                                    </ul>
+                                                        <ul class="product__review m-t-15 m-b-20">
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--blank"><i class="icon-star"></i></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div> <!-- Start Single Segment Product -->
-                                        <!-- Start Single Segment Product -->
-                                        <div class="product__box product__box--segment  swiper-slide">
-                                            <div class="row">
-                                                <div class="col-xl-5 col-lg-12">
-                                                    <div class="product__img-box">
-                                                        <a href="single-1.html" class="product__img--link">
-                                                            <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-2.jpg")" alt="">
+                                            </div> <!-- Start Single Segment Product -->
+                                            <!-- Start Single Segment Product -->
+                                            <div class="product__box product__box--segment  swiper-slide">
+                                                <div class="row">
+                                                    <div class="col-xl-5 col-lg-12">
+                                                        <div class="product__img-box">
+                                                            <a href="single-1.html" class="product__img--link">
+                                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-2.jpg")" alt="">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-7 col-lg-12">
+                                                        <div class="product__price m-t-10">
+                                                            <span class="product__price-del">$11.90</span>
+                                                            <span class="product__price-reg">$10.71</span>
+                                                        </div>
+                                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                                            SonicFuel Wireless Over-Ear Headphones
                                                         </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-7 col-lg-12">
-                                                    <div class="product__price m-t-10">
-                                                        <span class="product__price-del">$11.90</span>
-                                                        <span class="product__price-reg">$10.71</span>
-                                                    </div>
-                                                    <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                                        SonicFuel Wireless Over-Ear Headphones
-                                                    </a>
 
-                                                    <ul class="product__review m-t-15 m-b-20">
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--blank"><i class="icon-star"></i></li>
-                                                    </ul>
+                                                        <ul class="product__review m-t-15 m-b-20">
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--blank"><i class="icon-star"></i></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div> <!-- Start Single Segment Product -->
-                                        <!-- Start Single Segment Product -->
-                                        <div class="product__box product__box--segment  swiper-slide">
-                                            <div class="row">
-                                                <div class="col-xl-5 col-lg-12">
-                                                    <div class="product__img-box">
-                                                        <a href="single-1.html" class="product__img--link">
-                                                            <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-3.jpg")" alt="">
+                                            </div> <!-- Start Single Segment Product -->
+                                            <!-- Start Single Segment Product -->
+                                            <div class="product__box product__box--segment  swiper-slide">
+                                                <div class="row">
+                                                    <div class="col-xl-5 col-lg-12">
+                                                        <div class="product__img-box">
+                                                            <a href="single-1.html" class="product__img--link">
+                                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-3.jpg")" alt="">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-7 col-lg-12">
+                                                        <div class="product__price m-t-10">
+                                                            <span class="product__price-del">$11.90</span>
+                                                            <span class="product__price-reg">$10.71</span>
+                                                        </div>
+                                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                                            SonicFuel Wireless Over-Ear Headphones
                                                         </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-7 col-lg-12">
-                                                    <div class="product__price m-t-10">
-                                                        <span class="product__price-del">$11.90</span>
-                                                        <span class="product__price-reg">$10.71</span>
-                                                    </div>
-                                                    <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                                        SonicFuel Wireless Over-Ear Headphones
-                                                    </a>
 
-                                                    <ul class="product__review m-t-15 m-b-20">
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--blank"><i class="icon-star"></i></li>
-                                                    </ul>
+                                                        <ul class="product__review m-t-15 m-b-20">
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--blank"><i class="icon-star"></i></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div> <!-- Start Single Segment Product -->
-                                        <!-- Start Single Segment Product -->
-                                        <div class="product__box product__box--segment  swiper-slide">
-                                            <div class="row">
-                                                <div class="col-xl-5 col-lg-12">
-                                                    <div class="product__img-box">
-                                                        <a href="single-1.html" class="product__img--link">
-                                                            <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-4.jpg")" alt="">
+                                            </div> <!-- Start Single Segment Product -->
+                                            <!-- Start Single Segment Product -->
+                                            <div class="product__box product__box--segment  swiper-slide">
+                                                <div class="row">
+                                                    <div class="col-xl-5 col-lg-12">
+                                                        <div class="product__img-box">
+                                                            <a href="single-1.html" class="product__img--link">
+                                                                <img class="product__img" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-4.jpg")" alt="">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-7 col-lg-12">
+                                                        <div class="product__price m-t-10">
+                                                            <span class="product__price-del">$11.90</span>
+                                                            <span class="product__price-reg">$10.71</span>
+                                                        </div>
+                                                        <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
+                                                            SonicFuel Wireless Over-Ear Headphones
                                                         </a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-7 col-lg-12">
-                                                    <div class="product__price m-t-10">
-                                                        <span class="product__price-del">$11.90</span>
-                                                        <span class="product__price-reg">$10.71</span>
-                                                    </div>
-                                                    <a href="single-1.html" class="product__link product__link--underline product__link--weight-light m-t-15">
-                                                        SonicFuel Wireless Over-Ear Headphones
-                                                    </a>
 
-                                                    <ul class="product__review m-t-15 m-b-20">
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--fill"><i class="icon-star"></i></li>
-                                                        <li class="product__review--blank"><i class="icon-star"></i></li>
-                                                    </ul>
+                                                        <ul class="product__review m-t-15 m-b-20">
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--fill"><i class="icon-star"></i></li>
+                                                            <li class="product__review--blank"><i class="icon-star"></i></li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div> <!-- Start Single Segment Product -->
-                                    </div>
-                                    <div class="swiper-buttons">
-                                        <!-- Add Arrows -->
-                                        <div class="swiper-button-next default__nav default__nav--next"><i class="fal fa-chevron-right"></i></div>
-                                        <div class="swiper-button-prev default__nav default__nav--prev"><i class="fal fa-chevron-left"></i></div>
-                                    </div>
-                                </div>*@
+                                            </div> <!-- Start Single Segment Product -->
+                                        </div>
+                                        <div class="swiper-buttons">
+                                            <!-- Add Arrows -->
+                                            <div class="swiper-button-next default__nav default__nav--next"><i class="fal fa-chevron-right"></i></div>
+                                            <div class="swiper-button-prev default__nav default__nav--prev"><i class="fal fa-chevron-left"></i></div>
+                                        </div>
+                                    </div>*@
                             </div>
                         </div>
                     </div> <!-- End Single Segment Area -->
@@ -635,4 +635,4 @@
                 });
         }
     </script>
-    }
+}

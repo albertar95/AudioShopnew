@@ -48,6 +48,7 @@ namespace AudioShopFrontend.Controllers
             List<ProductDTO> Products = new List<ProductDTO>();
             dataTransfer = new DataTransfer();
             TempData["GeneralPageName"] = Typo.ToString();
+            var Settings = dataTransfer.GetAllSettings();
             switch (Typo)
             {
                 case 1:
@@ -55,9 +56,11 @@ namespace AudioShopFrontend.Controllers
                     break;
                 case 2:
                     Products = dataTransfer.GetSpecialProducts();
+                    TempData["GeneralBanner"] = Settings.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue;
                     break;
                 case 3:
                     Products = dataTransfer.GetPopularProducts();
+                    TempData["GeneralBanner"] = Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue;
                     break;
                 default:
                     break;

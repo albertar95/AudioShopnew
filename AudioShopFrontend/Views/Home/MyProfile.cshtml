@@ -1,7 +1,7 @@
-﻿@model AudioShopFrontend.ViewModels.ProfileViewModel
+﻿﻿@model AudioShopFrontend.ViewModels.ProfileViewModel
 
 @{
-    ViewBag.Title = "MyProfile";
+    ViewBag.Title = "پروفایل من";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="page-breadcrumb">
@@ -76,8 +76,8 @@
                                     </div>
                                     <p class="m-t-25">
                                         @*From your account dashboard. you can easily check &amp; view your
-                                        recent orders, manage your shipping and billing addresses and edit your password and
-                                        account details.*@
+                                            recent orders, manage your shipping and billing addresses and edit your password and
+                                            account details.*@
                                     </p>
                                 </div>
                             </div>
@@ -99,14 +99,14 @@
                                             <tbody>
                                                 @foreach (var ord in Model.Orders)
                                                 {
-                                                <tr>
-                                                    <td>1</td>
-                                                    @*<td>@ord.</td>*@
-                                                    <td>@ord.CreateDate.ToShortDateString()</td>
-                                                    <td>@ord.state</td>
-                                                    @*<td>@ord.Quantity</td>*@
-                                                    <td><a href="#">جزییات</a></td>
-                                                </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        @*<td>@ord.</td>*@
+                                                        <td>@ord.CreateDate.ToShortDateString()</td>
+                                                        <td>@ord.state</td>
+                                                        @*<td>@ord.Quantity</td>*@
+                                                        <td><a href="#">جزییات</a></td>
+                                                    </tr>
                                                 }
                                             </tbody>
                                         </table>
@@ -372,4 +372,4 @@
             });
         };
     </script>
-    }
+}
