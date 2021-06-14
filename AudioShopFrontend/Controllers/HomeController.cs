@@ -661,6 +661,12 @@ namespace AudioShopFrontend.Controllers
                 return Json(new JsonResults() { HasValue = false});
             }
         }
+        public ActionResult AddToNewsletter(string Mail)
+        {
+            Setting setting = new Setting() {  NidSetting = Guid.NewGuid(), SettingAttribute = "NewsletterMail", SettingValue = Mail};
+            dataTransfer = new DataTransfer();
+            return Json(new JsonResults() {  HasValue = dataTransfer.AddSetting(setting)});
+        }
         public static string RenderViewToString(ControllerContext context, string viewName, object model)//done
         {
             if (string.IsNullOrEmpty(viewName))

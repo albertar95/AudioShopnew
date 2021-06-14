@@ -74,6 +74,24 @@ namespace AudioShopFrontend.ViewModels
                 return null;
             }
         }
+        public static bool CheckUserLogin()
+        {
+            if (HttpContext.Current.Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                Services.DataTransfer dataTransfer = new Services.DataTransfer();
+                var ticket = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                var tmpUser = dataTransfer.GetUserByNidUser(Guid.Parse(niduser));
+                if (tmpUser != null)
+                    return true;
+                else
+                    return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 

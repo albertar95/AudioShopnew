@@ -8,7 +8,7 @@
 <div class="hero hero-slider hero--1">
     <div class="swiper-wrapper">
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background: url(../../Content/assets/img/slider/b1.jpg)">
+        <div class="hero-img hero-img--1 swiper-slide" style="background: url(../../Content/assets/img/slider/b1.jpg);background-size:contain;background-size:100% 100%;">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
@@ -23,7 +23,7 @@
             </div>
         </div> <!-- End Hero Image -->
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b2.jpg);">
+        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b2.jpg);background-size:contain;background-size:100% 100%;">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
@@ -38,7 +38,7 @@
             </div>
         </div> <!-- End Hero Image -->
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b3.jpg);">
+        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b3.jpg);background-size:contain;background-size:100% 100%;">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
@@ -154,10 +154,10 @@
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a href="#" onclick="AddToFav('@lates.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = lates.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
+                                            <a href="@Url.Action("Product",new { NidProduct = lates.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                 @lates.ProductName
                                             </a>
-                                            <div class="product__price m-t-10" dir="rtl">
+                                            <div class="product__price m-t-10" dir="rtl" style="text-align:center;">
                                                 @*<span class="product__price-del">$11.90</span>*@
                                                 <span style="text-align:right;">قیمت : </span>
                                                 &nbsp;
@@ -227,10 +227,10 @@
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@specials.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = specials.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
+                                            <a href="@Url.Action("Product",new { NidProduct = specials.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                 @specials.ProductName
                                             </a>
-                                            <div class="product__price m-t-10" dir="rtl">
+                                            <div class="product__price m-t-10" dir="rtl" style="text-align:center;">
                                                 @*<span class="product__price-del">$11.90</span>*@
                                                 <span style="text-align:right;">قیمت : </span>
                                                 &nbsp;
@@ -302,10 +302,10 @@
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@popular.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = popular.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
+                                            <a href="@Url.Action("Product",new { NidProduct = popular.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                 @popular.ProductName
                                             </a>
-                                            <div class="product__price m-t-10" dir="rtl">
+                                            <div class="product__price m-t-10" dir="rtl" style="text-align:center;">
                                                 @*<span class="product__price-del">$11.90</span>*@
                                                 <span style="text-align:right;">قیمت : </span>
                                                 &nbsp;
@@ -339,7 +339,7 @@
             </div>
             <!--end of category section-->
             <!--discount section-->
-            <div class="product product--1 swiper-outside-arrow-hover">
+            @*<div class="product product--1 swiper-outside-arrow-hover">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -351,9 +351,8 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="swiper-outside-arrow-fix pos-relative">
-                                @*<div class="product-counter-slider-1grid overflow-hidden m-t-50">
+                                <div class="product-counter-slider-1grid overflow-hidden m-t-50">
                                         <div class="swiper-wrapper">
-                                            <!-- Start Single Counter Product -->
                                             <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
                                                 <div class="product__img-box">
                                                     <a href="single-1.html" class="product__img--link">
@@ -373,8 +372,7 @@
                                                 <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
                                                     SonicFuel Wireless Over-Ear Headphones
                                                 </a>
-                                            </div> <!-- End Single Counter Product -->
-                                            <!-- Start Single Counter Product -->
+                                            </div>
                                             <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
                                                 <div class="product__img-box">
                                                     <a href="single-1.html" class="product__img--link">
@@ -394,8 +392,7 @@
                                                 <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
                                                     SonicFuel Wireless Over-Ear Headphones
                                                 </a>
-                                            </div> <!-- End Single Counter Product -->
-                                            <!-- Start Single Counter Product -->
+                                            </div>
                                             <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
                                                 <div class="product__img-box">
                                                     <a href="single-1.html" class="product__img--link">
@@ -415,8 +412,7 @@
                                                 <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
                                                     SonicFuel Wireless Over-Ear Headphones
                                                 </a>
-                                            </div> <!-- End Single Counter Product -->
-                                            <!-- Start Single Counter Product -->
+                                            </div>
                                             <div class="product__box product__box--counter product__box--border-hover swiper-slide text-center">
                                                 <div class="product__img-box">
                                                     <a href="single-1.html" class="product__img--link">
@@ -436,33 +432,30 @@
                                                 <a href="single-1.html" class="product__link product__link--underline product__link--weight-regular m-t-15">
                                                     SonicFuel Wireless Over-Ear Headphones
                                                 </a>
-                                            </div> <!-- End Single Counter Product -->
+                                            </div>
                                         </div>
                                         <div class="swiper-buttons">
-                                            <!-- Add Arrows -->
                                             <div class="swiper-button-next default__nav default__nav--next"><i class="fal fa-chevron-right"></i></div>
                                             <div class="swiper-button-prev default__nav default__nav--prev"><i class="fal fa-chevron-left"></i></div>
                                         </div>
-                                    </div>*@
+                                    </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <!--end of discount section-->
             <!--latest blog section-->
-            <div class="product product--1">
+            @*<div class="product product--1">
                 <div class="row">
-                    <!-- Start Single Segment Area -->
                     <div class="col-12">
                         <div class="swiper-outside-arrow-hover">
                             <div class="section-content section-content--border">
                                 <h5 class="section-content__title">آخرین مقالات</h5>
                             </div>
                             <div class="swiper-outside-arrow-fix pos-relative">
-                                @*<div class="product-segment-slider-2 overflow-hidden  m-t-50">
+                                <div class="product-segment-slider-2 overflow-hidden  m-t-50">
                                         <div class="swiper-wrapper">
-                                            <!-- Start Single Segment Product -->
                                             <div class="product__box product__box--segment  swiper-slide">
                                                 <div class="row">
                                                     <div class="col-xl-5 col-lg-12">
@@ -490,8 +483,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div> <!-- Start Single Segment Product -->
-                                            <!-- Start Single Segment Product -->
+                                            </div>
                                             <div class="product__box product__box--segment  swiper-slide">
                                                 <div class="row">
                                                     <div class="col-xl-5 col-lg-12">
@@ -519,8 +511,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div> <!-- Start Single Segment Product -->
-                                            <!-- Start Single Segment Product -->
+                                            </div>
                                             <div class="product__box product__box--segment  swiper-slide">
                                                 <div class="row">
                                                     <div class="col-xl-5 col-lg-12">
@@ -548,8 +539,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div> <!-- Start Single Segment Product -->
-                                            <!-- Start Single Segment Product -->
+                                            </div>
                                             <div class="product__box product__box--segment  swiper-slide">
                                                 <div class="row">
                                                     <div class="col-xl-5 col-lg-12">
@@ -577,20 +567,18 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div> <!-- Start Single Segment Product -->
+                                            </div>
                                         </div>
                                         <div class="swiper-buttons">
-                                            <!-- Add Arrows -->
                                             <div class="swiper-button-next default__nav default__nav--next"><i class="fal fa-chevron-right"></i></div>
                                             <div class="swiper-button-prev default__nav default__nav--prev"><i class="fal fa-chevron-left"></i></div>
                                         </div>
-                                    </div>*@
+                                    </div>
                             </div>
                         </div>
-                    </div> <!-- End Single Segment Area -->
+                    </div>
                 </div>
-            </div>
-            <!--end of latest blog section-->
+            </div>*@
         </div>
     </div>
 </div>

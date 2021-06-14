@@ -59,5 +59,6 @@ namespace AudioShopFrontend.Services
         List<Category_TypeDTO> GetCategory_TypeByNidcategory(int Nidcategory);
         List<ProductDTO> GetProductsByNidcategory(int Nidcategory,int pagesize = 10,int toSkip = 0,decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "",int FilterType = 0);
         Tuple<decimal, decimal> GetMinMaxCategoryPrice(int Nidcategory);
+        bool AddSetting(Setting setting);
     }
 }

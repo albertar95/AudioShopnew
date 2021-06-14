@@ -79,10 +79,20 @@
                                     <div class="header__wishlist-box">
                                         <!-- Start Header Wishlist Box -->
                                         <div class="header__wishlist pos-relative">
-                                            <a href="@Url.Action("MyFavorites","Home")" class="header__wishlist-link">
-                                                <i class="icon-heart"></i>
-                                                <span class="wishlist-item-count pos-absolute" id="FavCount">@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetUserFavoritesCount()</span>
-                                            </a>
+                                            @if (userdata != "")
+                                            {
+                                                <a href="@Url.Action("MyFavorites","Home")" class="header__wishlist-link">
+                                                    <i class="icon-heart"></i>
+                                                    <span class="wishlist-item-count pos-absolute" id="FavCount">@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetUserFavoritesCount()</span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#" class="header__wishlist-link">
+                                                    <i class="icon-heart"></i>
+                                                    <span class="wishlist-item-count pos-absolute" id="FavCount">0</span>
+                                                </a>
+                                            }
                                         </div> <!-- End Header Wishlist Box -->
                                         <!-- Start Header Add Cart Box -->
                                         <div class="header-add-cart pos-relative m-l-40">
@@ -108,7 +118,7 @@
                                         </div>
                                         <div class="header__search-input">
                                             <input type="search" id="SearchBox" placeholder="نام محصول مورد نظر را وارد کنید">
-                                            <button class="btn btn--submit btn--blue btn--uppercase btn--weight " type="submit">جستجو</button>
+                                            <button class="btn btn--submit btn--blue btn--uppercase btn--weight " type="submit" id="btnSearch">جستجو</button>
                                         </div>
                                     </form>
                                     <div style="background:#fbf5f5 !important;border-radius: 2px;position: absolute;width: 100%;display:grid;height: auto;z-index:99999;" id="SearchContent" hidden>
@@ -206,7 +216,7 @@
                                     <button class="btn btn--submit btn--blue btn--uppercase btn--weight" type="submit"><i class="fal fa-search"></i></button>
                                 </div>
                             </form>
-                            <div style="background:#fbf5f5 !important;border-radius: 2px;position: absolute;width: 100%;display:grid;height: auto;z-index:99999;padding-left:15px;padding-right:15px;" id="SearchContent1" hidden>
+                            <div style="background:#fbf5f5 !important;border-radius: 2px;position: absolute;width: 100%;display:grid;height: auto;z-index:99999;padding-right:30px;" id="SearchContent1" hidden>
                             </div>
                         </div> <!-- End Header Mobile Middle area -->
 
@@ -217,6 +227,16 @@
         <div id="offcanvas-mobile-menu" class="offcanvas offcanvas-mobile-menu">
             <button class="offcanvas__close offcanvas-close">&times;</button>
             <div class="offcanvas-inner">
+                <div class="offcanvas-userpanel m-b-30">
+                    <ul>
+                        <li class="offcanvas-userpanel__role">
+                            <a href="@Url.Action("Register","Home")">ثبت نام</a>
+                        </li>
+                        <li class="offcanvas-userpanel__role">
+                            <a href="@Url.Action("Login","Home")">ورود</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="offcanvas-menu m-b-30">
                     <h4>منو</h4>
                     <ul>
@@ -237,24 +257,30 @@
                     </ul>
                 </div>
                 <div class="offcanvas-buttons m-b-30">
-                    <a href="@Url.Action("MyProfile","Home")" class="user"><i class="icon-user"></i></a>
-                    <a href="@Url.Action("MyFavorites","Home")"><i class="icon-heart"></i></a>
-                    <a href="@Url.Action("Mycart","Home")"><i class="icon-shopping-cart"></i></a>
+                    @if (AudioShopFrontend.ViewModels.SharedLayotViewModel.CheckUserLogin())
+                    {
+                        <a href="@Url.Action("MyProfile","Home")" class="user"><i class="icon-user"></i></a>
+                        <a href="@Url.Action("MyFavorites","Home")"><i class="icon-heart"></i></a>
+                        <a href="@Url.Action("Mycart","Home")"><i class="icon-shopping-cart"></i></a>
+                    }
+                    else
+                    {
+                        <a href="#" class="user"><i class="icon-user"></i></a>
+                        <a href="#"><i class="icon-heart"></i></a>
+                        <a href="#"><i class="icon-shopping-cart"></i></a>
+                    }
                 </div>
                 <div class="offcanvas-social">
                     <span>با ما همراه باشید</span>
                     <ul>
                         <li>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="https://t.me/carbasswebsite"><i class="fab fa-telegram"></i></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="https://www.youtube.com/channel/UCwhyzxDeJSAwlChXunfndMQ"><i class="fab fa-youtube"></i></a>
                         </li>
                         <li>
-                            <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.instagram.com/carbasswebsite/"><i class="fab fa-instagram"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -325,7 +351,14 @@
                     </ul> <!-- End offcanvas Add Cart Checkout Info-->
 
                     <div class="offcanvas-add-cart__btn-checkout">
-                        <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تکمیل خرید و ثبت سفارش</a>
+                        @if (userdata != "")
+                        {
+                            <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تکمیل خرید و ثبت سفارش</a>
+                        }
+                        else
+                        {
+                            <a href="#" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تکمیل خرید و ثبت سفارش</a>
+                        }
                     </div>
                 </div> <!-- End Add Cart Checkout Box-->
             </div>
@@ -339,11 +372,11 @@
         <div class="footer__top gray-bg p-tb-100 m-t-100">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-4 col-lg-6 col-12">
+                    <div class="col-xl-4 col-lg-4 col-sm-5 col-12">
                         <div class="footer__about">
                             <div class="footer__logo">
-                                <a href="index.html" class="footer__logo-link">
-                                    <img src="assets/img/logo/logo-color.jpg" alt="" class="footer__logo-img">
+                                <a href="@Url.Action("Index","Home")" class="footer__logo-link">
+                                    <img src="@Url.Content("~/Content/assets/img/logo/mylogo.jpg")" alt="" class="footer__logo-img">
                                 </a>
                             </div>
                             <div class="footer__text">
@@ -351,12 +384,12 @@
                             </div>
                             <ul class="footer__address">
                                 <li class="footer__address-item"><span>آدرس :</span> ابتدای خیابان فردوسی،پاساژ امام رضا شماره 3</li>
-                                <li class="footer__address-item ForceRTL"><span>شماره تماس : </span> (021)66743957 </li>
+                                <li class="footer__address-item ForceRTL"><span>شماره تماس : </span> 66743957 (021) </li>
                                 <li class="footer__address-item ForceRTL"><span>ایمیل: </span><a>reply@carbass.ir</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
+                    <div class="col-xl-2 col-lg-2 col-sm-1 col-12">
                         <div class="footer__menu">
                             @*<h4 class="footer__nav-title">Products</h4>
                                 <ul class="footer__nav">
@@ -369,7 +402,7 @@
                                 </ul>*@
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-3 col-sm-6 col-12">
+                    <div class="col-xl-2 col-lg-2 col-sm-1 col-12">
                         <div class="footer__menu">
                             @*<h4 class="footer__nav-title">Our Company</h4>
                                 <ul class="footer__nav">
@@ -382,7 +415,7 @@
                                 </ul>*@
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-12 col-12">
+                    <div class="col-xl-4 col-lg-4 col-sm-5 col-12">
                         <div class="footer__menu">
                             <h4 class="footer__nav-title">ما را در شبکه های اجتماعی دنبال کنید</h4>
                             <ul class="footer__social-nav">
@@ -393,9 +426,9 @@
                         </div>
                         <div class="footer__form">
                             <h4 class="footer__nav-title">عضویت در خبرنامه</h4>
-                            <form action="#" class="footer__form-box" style="direction:rtl;">
-                                <input type="email" placeholder="آدرس ایمیل شما">
-                                <button class="btn btn--blue btn--uppercase btn--weight btn--submit" type="submit">تایید</button>
+                            <form action="#" class="footer__form-box" style="direction:rtl;" id="frmNewsletter">
+                                <input id="YourEmail" type="email" placeholder="آدرس ایمیل شما">
+                                <button class="btn btn--blue btn--uppercase btn--weight btn--submit" id="btnNewsletter" type="submit">تایید</button>
                             </form>
                         </div>
                     </div>
@@ -420,7 +453,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="modal__product-img">
-                                            <img class="img-fluid" id="modal_img" src="assets/img/product/size-normal/product-home-1-img-1.jpg" alt="">
+                                            <img class="img-fluid" id="modal_img" src="" alt="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -496,6 +529,27 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalNewsletterAlert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center">پیام</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 modal__border">
+                                <span class="modal__product-cart-item" id="NewsletterMessage" style="text-align:right;direction:rtl;float:right;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -516,6 +570,37 @@
     @RenderSection("scripts", false)
     <script type="text/javascript">
         $(function () {
+            $("#btnSearch").click(function (e)
+            {
+                e.preventDefault();
+            });
+            $("#btnNewsletter").click(function (e)
+            {
+                e.preventDefault();
+                if ($("#YourEmail").val() != '')
+                {
+                $.ajax(
+                    {
+                        url: '@Url.Action("AddToNewsletter","Home")',
+                        type: 'post',
+                        datatype: 'json',
+                        data: { Mail: $("#YourEmail").val() },
+                        success: function (result) {
+                            if (result.HasValue) {
+                                $("#NewsletterMessage").text('ایمیل شما با موفقیت به خبر نامه اضافه گردید.از اعتماد شما متشکریم.');
+                                $('#frmNewsletter').each(function () { this.reset(); });
+                            } else {
+                                $("#NewsletterMessage").text('خطا در انجام عملیات.لطفا مجدد امتحان نمایید');
+                            }
+                        },
+                        error: function ()
+                        {
+                            $("#NewsletterMessage").text('خطا در انجام عملیات.لطفا مجدد امتحان نمایید');
+                        }
+                    });
+                    $("#modalNewsletterAlert").modal('show');
+                }
+            });
             $("#SearchBox").on('input', function () {
                 $("#SearchBox1").val($("#SearchBox").val());
                 if ($("#SearchBox").val().trim().length > 2)

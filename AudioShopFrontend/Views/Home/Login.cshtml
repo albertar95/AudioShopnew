@@ -34,7 +34,7 @@
                                 <div class="tab-content" style="text-align:right;">
                                     <div id="lg1" class="tab-pane active">
                                         <div class="login-form-container">
-                                            <div class="login-register-form">
+                                            <div class="login-register-form" style="padding:.25rem;">
                                                 @using (Html.BeginForm("SubmitLogin", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "LoginForm" }))
                                                 {
                                                     <form action="#" method="post">
@@ -80,6 +80,7 @@
     <script type="text/javascript">
         $(function ()
         {
+            $("#LoginUsername").focus()
             var isChecked = false;
             $("#UserRemember").change(function ()
             {

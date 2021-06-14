@@ -1868,9 +1868,9 @@ button.btn--block {
   display: inline-block;
   margin-right: 10px;
 }
-.product-social-link li:last-child {
+/*.product-social-link li:last-child {
   margin-right: 0;
-}
+}*/
 .product-social-link li:nth-child(1) a:hover {
   background: #3c5b9b;
 }
@@ -3753,14 +3753,7 @@ table tbody > tr td a:hover {
 .pro-remove button:hover {
   color: #ed3c32;
 }
-
-.login-form-container {
-  background: transparent none repeat scroll 0 0;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  padding: 80px;
-  text-align: left;
-}
-
+@media (max-width: 425px) {.login-form-container {background: transparent none repeat scroll 0 0;box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);padding: 0 2rem 0 2rem;text-align: left;}}@media (min-width: 425px) and (max-width:556px ) {.login-form-container {background: transparent none repeat scroll 0 0;box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);padding: 0 4rem 0 4rem;text-align: left;}}@media (min-width: 556px) and (max-width:668px ) {.login-form-container {background: transparent none repeat scroll 0 0;box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);padding: 0 6rem 0 6rem;text-align: left;}}@media (min-width: 668px) and (max-width:720px ) {.login-form-container {background: transparent none repeat scroll 0 0;box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);padding: 0 8rem 0 8rem;text-align: left;}}@media (min-width: 720px) and (max-width:850px ) {.login-form-container {background: transparent none repeat scroll 0 0;box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);padding: 0 10rem 0 10rem;text-align: left;}}@media (min-width: 850px) and (max-width:991px ) {.login-form-container {background: transparent none repeat scroll 0 0;box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);padding: 0 12rem 0 12rem;text-align: left;}}@media (min-width: 991px) {.login-form-container {background: transparent none repeat scroll 0 0;box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);padding: 80px;text-align: left;}}
 /*****************************
 36 - Layout - Offacnvas
 *****************************/

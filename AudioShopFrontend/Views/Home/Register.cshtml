@@ -37,7 +37,7 @@
                                 <div class="tab-content" style="text-align:right;">
                                     <div id="lg1" class="tab-pane">
                                         <div class="login-form-container">
-                                            <div class="login-register-form">
+                                            <div class="login-register-form" style="padding:.25rem;">
                                                 @using (Html.BeginForm("SubmitLogin", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "LoginForm" }))
                                                 {
                                                     <form action="#" method="post">
@@ -62,7 +62,7 @@
                                     </div>
                                     <div id="lg2" class="tab-pane active">
                                         <div class="login-form-container">
-                                            <div class="login-register-form">
+                                            <div class="login-register-form" style="padding:.25rem;">
                                                 @using (Html.BeginForm("SubmitRegister", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "RegisterForm" }))
                                                 {
                                                     if (TempData["RegisterError"] != null)
@@ -94,7 +94,7 @@
                                                         </div>
                                                         <div class="form-box__single-group m-b-20">
                                                             <div style="display:flex;">
-                                                                <span style="font-size:large;color:red;"> </span> <input type="password" id="User_Password2" name="User.Password2" placeholder="تکرار رمز عبور" required>
+                                                                <span style="font-size:large;color:red;">*</span> <input type="password" id="User_Password2" name="User.Password2" placeholder="تکرار رمز عبور" required>
                                                             </div>
                                                         </div>
                                                         <div class="form-box__single-group m-b-20">
@@ -136,6 +136,7 @@
     <script type="text/javascript">
         $(function ()
         {
+            $("#User_FirstName").focus();
             setTimeout(function () {
                 $("#warningMessageDiv").prop('hidden', 'hidden');
             }, 10000);

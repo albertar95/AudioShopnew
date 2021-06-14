@@ -461,5 +461,14 @@ namespace AudioShopFrontend.Services
             else
                 return false;
         }
+
+        public bool AddSetting(Setting setting)
+        {
+            db.Entry(setting).State = System.Data.Entity.EntityState.Added;
+            if (db.SaveChanges() == 1)
+                return true;
+            else
+                return false;
+        }
     }
 }

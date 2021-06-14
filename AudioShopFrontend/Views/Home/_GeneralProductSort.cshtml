@@ -20,7 +20,7 @@
                     @*<span class="product__tag product__tag--discount">-12%</span>*@
                     <a onclick="AddToFav('@prod.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                 </div>
-                <a href="@Url.Action("Product","Home",new { NidProduct = prod.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
+                <a href="@Url.Action("Product","Home",new { NidProduct = prod.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                     @prod.ProductName
                 </a>
                 <div class="product__price m-t-10" dir="rtl">
@@ -55,17 +55,17 @@
                     </div>
                     <div class="col-md-5 pos-relative">
                         <div class="border-right pos-absolute"></div>
-                        <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15">
+                        <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                             @prod2.ProductName
                         </a>
-                        <div class="product__price" dir="rtl">
+                        <div class="product__price" dir="rtl" style="text-align:center;">
                             @*<span class="product__price-del">$11.90</span>*@
                             <span style="text-align:right;">قیمت : </span>
                             &nbsp;
                             <span class="product__price-reg">@String.Format("{0:n0} ریال", prod2.Price)</span>
                         </div>
                         <div class="product__desc m-t-25 m-b-30">
-                            <p>Description???</p>
+                            @*<p>Description???</p>*@
                         </div>
                     </div>
                     <div class="col-md-3">
