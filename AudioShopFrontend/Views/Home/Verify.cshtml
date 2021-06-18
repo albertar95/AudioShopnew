@@ -1,0 +1,130 @@
+﻿@model AudioShopFrontend.ViewModels.CheckoutViewModel
+
+@{
+    ViewBag.Title = "Verify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="col-lg-8 mx-auto" style="margin-top:50px;">
+    <div class="your-order-section">
+        @switch (Model.Order.state)
+        {
+            case 100:
+                <div id="ResultMessage" class="alert alert-success">
+                    <p style="text-align:center;font-size:larger;">خرید شما با موفقیت انجام گردید.جهت پیگیری سفارش به پروفایل کاربری خود رجوع کنید</p>
+                </div>
+                break;
+            case -100:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">تراکنش ناموفق بوده یا توسط کاربر لغو شده است</p>
+                </div>
+                break;
+            case -101:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">خطایی در سرور رخ داده است.لطفا با پشتیبانی سایت تماس بگیرید</p>
+                </div>
+                break;
+            case -1:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">اطلاعات ارسال شده ناقص است</p>
+                </div>
+                break;
+            case -2:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">و يا مرچنت كد پذيرنده صحيح نيست IP</p>
+                </div>
+                break;
+            case -3:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">با توجه به محدوديت هاي شاپرك امكان پرداخت با رقم درخواست شده ميسر نمي باشد</p>
+                </div>
+                break;
+            case -4:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">سطح تاييد پذيرنده پايين تر از سطح نقره اي است</p>
+                </div>
+                break;
+            case -11:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">درخواست مورد نظر يافت نشد</p>
+                </div>
+                break;
+            case -12:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">امكان ويرايش درخواست ميسر نمي باشد</p>
+                </div>
+                break;
+            case -21:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">هيچ نوع عمليات مالي براي اين تراكنش يافت نشد</p>
+                </div>
+                break;
+            case -22:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">تراكنش نا موفق ميباشد</p>
+                </div>
+                break;
+            case -33:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">رقم تراكنش با رقم پرداخت شده مطابقت ندارد</p>
+                </div>
+                break;
+            case -34:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">سقف تقسيم تراكنش از لحاظ تعداد يا رقم عبور نموده است</p>
+                </div>
+                break;
+            case -40:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">اجازه دسترسي به متد مربوطه وجود ندارد</p>
+                </div>
+                break;
+            case -41:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">اطلاعات ارسال شده مربوط به additionalData غیرمعتبر می باشد</p>
+                </div>
+                break;
+            case -42:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">مدت زمان معتبر طول عمر شناسه پرداخت بايد بين 30 دقيه تا 45 روز مي باشد</p>
+                </div>
+                break;
+            case -54:
+                <div id="ResultMessage" class="alert alert-danger">
+                    <p style="text-align:center;font-size:larger;">درخواست مورد نظر آرشيو شده است</p>
+                </div>
+                break;
+            case 101:
+                <div id="ResultMessage" class="alert alert-success">
+                    <p style="text-align:center;font-size:larger;">عمليات پرداخت موفق بوده است</p>
+                </div>
+                break;
+        }
+        <div class="section-content">
+            <h5 class="section-content__title">اطلاعات تکمیلی</h5>
+        </div>
+        <div class="your-order-box gray-bg m-t-40 m-b-30 ForceRTL">
+            <div class="your-order-product-info">
+                <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
+                    <h6 class="your-order-bottom-left">نام و نام خانوادگی</h6>
+                    <span class="your-order-bottom-right">@Model.Order.Firstname  @Model.Order.Lastname</span>
+                </div>
+                <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
+                    <h6 class="your-order-bottom-left">آدرس</h6>
+                    <span class="your-order-bottom-right">@Model.Order.Address</span>
+                </div>
+                <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
+                    <h6 class="your-order-bottom-left">کدپستی</h6>
+                    <span class="your-order-bottom-right">@Model.Order.Zipcode</span>
+                </div>
+                <div class="your-order-total d-flex justify-content-between">
+                    <h5 class="your-order-total-left">مجموع</h5>
+                    <h5 class="your-order-total-right">@String.Format("{0:n0} ریال", Model.Order.TotalPrice)</h5>
+                </div>
+            </div>
+        </div>
+
+        <a href="@Url.Action("MyProfile","Home")" class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnProfile" type="submit">پروفایل من</a>
+    </div>
+</div>

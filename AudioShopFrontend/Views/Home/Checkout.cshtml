@@ -27,74 +27,179 @@
                 <div class="section-content">
                     <h5 class="section-content__title">جزییات مرسوله</h5>
                 </div>
-                <form action="#" class="form-box ForceRTL">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-box__single-group">
-                                <label for="form-first-name">نام</label>
-                                <input type="text" id="form-first-name" value="@Model.User.FirstName" disabled>
+                <form action="#" enctype="application/x-www-form-urlencoded" class="form-box ForceRTL" id="FrmOrder">
+                    @if (Model.Order != null)
+                    {
+                        <input type="text" value="@Model.Order.TotalPrice" name="TotalPrice" id="TotalPrice" hidden />
+                        <input type="text" value="@Model.Order.NidUser" name="NidUser" id="NidUser" hidden />
+                        <input type="text" value="@Model.Order.NidOrder" name="NidOrder" id="NidOrder" hidden />
+                        <input type="number" value="@Model.Order.state" name="state" id="state" hidden />
+                        <input type="text" value="@Model.Order.CreateDate" name="CreateDate" id="CreateDate" hidden />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-first-name">نام</label>
+                                    <input type="text" value="@Model.Order.Firstname" name="Firstname" id="Firstname" readonly>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-box__single-group">
-                                <label for="form-last-name">نام خانوادگی</label>
-                                <input type="text" id="form-last-name" value="@Model.User.LastName" disabled>
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-last-name">نام خانوادگی</label>
+                                    <input type="text" id="Lastname" value="@Model.Order.Lastname" name="Lastname" readonly>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-box__single-group">
-                                <label for="form-country">* استان</label>
-                                <select id="form-country">
-                                    <option value="0" selected>استان مورد نظر را انتخاب نمایید</option>
-                                    <option value="1">تهران</option>
-                                </select>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-country">* استان</label>
+                                    <select id="StateId" name="StateId" required>
+                                        @if (Model.Order.StateId == 0)
+                                        {
+                                            <option value="0" disabled selected>استان مورد نظر را انتخاب نمایید</option>
+                                        }
+                                        else if (Model.Order.StateId == 1)
+                                        {
+                                            <option value="0" disabled>استان مورد نظر را انتخاب نمایید</option>
+                                            <option value="1" selected>تهران</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0" disabled selected>استان مورد نظر را انتخاب نمایید</option>
+                                            <option value="1">تهران</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-box__single-group">
-                                <label for="form-city">* شهر</label>
-                                <select id="form-city">
-                                    <option value="0" selected>شهر مورد نظر را انتخاب نمایید</option>
-                                    <option value="1">تهران</option>
-                                </select>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-city">* شهر</label>
+                                    <select id="CityId" name="CityId" required>
+                                        @if (Model.Order.StateId == 0)
+                                        {
+                                            <option value="0" disabled selected>شهر مورد نظر را انتخاب نمایید</option>
+                                        }
+                                        else if (Model.Order.StateId == 1)
+                                        {
+                                            <option value="0" disabled>شهر مورد نظر را انتخاب نمایید</option>
+                                            <option value="1" selected>تهران</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="0" disabled selected>شهر مورد نظر را انتخاب نمایید</option>
+                                            <option value="1">تهران</option>
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-box__single-group">
-                                <label for="form-address-1">آدرس</label>
-                                <textarea id="form-address-1" rows="5">@Model.User.Address </textarea>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-address-1">* آدرس</label>
+                                    <textarea id="Address" rows="5" name="Address" required>@Model.Order.Address </textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-box__single-group">
-                                <label for="form-zipcode">* کد پستی</label>
-                                <input type="text" id="form-zipcode" value="@Model.User.ZipCode">
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-zipcode">* کد پستی</label>
+                                    <input type="text" id="Zipcode" name="Zipcode" value="@Model.Order.Zipcode" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-box__single-group">
-                                <label for="form-phone">شماره تماس</label>
-                                <input type="text" id="form-phone">
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-phone">شماره تماس</label>
+                                    <input type="text" id="Tel" name="Tel" value="@Model.Order.Tel">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-box__single-group">
-                                <label for="form-email">آدرس ایمیل</label>
-                                <input type="email" id="form-email" value="@Model.User.Username">
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-email">آدرس ایمیل</label>
+                                    <input type="email" id="Email" name="Email" value="@Model.Order.Email">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-box__single-group">
-                                <h6>توضیحات مرسوله</h6>
-                                <textarea id="form-additional-info" rows="5" placeholder="در صورت نیاز،توضیحات خود را بنویسید"></textarea>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <h6>توضیحات مرسوله</h6>
+                                    <textarea id="Description" name="Description" rows="5" placeholder="در صورت نیاز،توضیحات خود را بنویسید">@Model.Order.Description</textarea>
+                                </div>
                             </div>
+                            <!-- Add Another Shipping Address -->
+                            <div class="col-md-12">
+                                @*<button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnEdit" style="margin-top:20px;">ویرایش اطلاعات</button>*@
+                                @*<button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnSave" style="margin-top:20px;">ذخیره</button>*@
+                                <button class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnContinue" type="submit">تایید اطلاعات ارسال محصول و ادامه</button>
+                            </div>  <!-- End Another Shipping Address -->
                         </div>
-                        <!-- Add Another Shipping Address -->
-                        <div class="col-md-12">
-                            @*<button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnEdit" style="margin-top:20px;">ویرایش اطلاعات</button>*@
-                            <button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnSave" style="margin-top:20px;">ذخیره</button>
-                        </div>  <!-- End Another Shipping Address -->
-                    </div>
+                    }
+                    else
+                    {
+                        <input type="text" value="@Model.User.NidUser" name="NidUser" id="NidUser" hidden />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-first-name">نام</label>
+                                    <input type="text" value="@Model.User.FirstName" name="Firstname" id="Firstname" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-last-name">نام خانوادگی</label>
+                                    <input type="text" id="Lastname" value="@Model.User.LastName" name="Lastname" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-country">* استان</label>
+                                    <select id="StateId" name="StateId" required>
+                                        <option value="0" selected>استان مورد نظر را انتخاب نمایید</option>
+                                        <option value="1">تهران</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-city">* شهر</label>
+                                    <select id="CityId" name="CityId" required>
+                                        <option value="0" selected>شهر مورد نظر را انتخاب نمایید</option>
+                                        <option value="1">تهران</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-address-1">* آدرس</label>
+                                    <textarea id="Address" rows="5" name="Address" required>@Model.User.Address </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <label for="form-zipcode">* کد پستی</label>
+                                    <input type="text" id="Zipcode" name="Zipcode" value="@Model.User.ZipCode" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-phone">شماره تماس</label>
+                                    <input type="text" id="Tel" name="Tel">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-box__single-group">
+                                    <label for="form-email">آدرس ایمیل</label>
+                                    <input type="email" id="Email" name="Email" value="@Model.User.Username">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-box__single-group">
+                                    <h6>توضیحات مرسوله</h6>
+                                    <textarea id="Description" name="Description" rows="5" placeholder="در صورت نیاز،توضیحات خود را بنویسید"></textarea>
+                                </div>
+                            </div>
+                            <!-- Add Another Shipping Address -->
+                            <div class="col-md-12">
+                                @*<button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnEdit" style="margin-top:20px;">ویرایش اطلاعات</button>*@
+                                @*<button class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" id="btnSave" style="margin-top:20px;">ذخیره</button>*@
+                                <button class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnContinue" type="submit">تایید اطلاعات ارسال محصول و ادامه</button>
+                            </div>  <!-- End Another Shipping Address -->
+                        </div>
+                    }
                 </form>
             </div> <!-- End Client Shipping Address -->
         }
@@ -184,7 +289,7 @@
                             {
                                 <li class="d-flex justify-content-between">
                                     <span class="your-order-middle-left">@cart.Product.ProductName</span>
-                                    <span class="your-order-middle-right">@{tmpCart = (cart.Quantity ?? 1) * (cart.Product.Price);}@String.Format("{0:n0}", tmpCart)</span>
+                                    <span class="your-order-middle-right">@{tmpCart = (cart.Quantity ?? 1) * (cart.Product.Price);}@String.Format("{0:n0} ریال", tmpCart)</span>
                                 </li>
                                             { tmpCartSum += tmpCart; }
                                         }
@@ -195,12 +300,10 @@
                         </div>
                         <div class="your-order-total d-flex justify-content-between">
                             <h5 class="your-order-total-left">مجموع</h5>
-                            <h5 class="your-order-total-right">@String.Format("{0:n0}", tmpCartSum)</h5>
+                            <h5 class="your-order-total-right">@String.Format("{0:n0} ریال", tmpCartSum)</h5>
                         </div>
                     </div>
                 </div>
-
-                <button class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnContinue" type="submit">تایید اطلاعات ارسال محصول و ادامه</button>
             </div>
         </div> <!-- End Order Wrapper -->
     </div>
@@ -218,86 +321,32 @@
     <script type="text/javascript">
         $(function ()
         {
-            $("#btnEdit").click(function (e)
+            $("#btnContinue").click(function (e)
             {
                 e.preventDefault();
-                $("#btnSave").removeAttr('hidden');
-                $("#btnEdit").attr('hidden', 'hidden');
-                $("#form-country").removeAttr('disabled');
-                $("#form-address-1").removeAttr('disabled');
-                $("#form-zipcode").removeAttr('disabled');
-                $("#form-phone").removeAttr('disabled');
-                $("#form-additional-info").removeAttr('disabled');
-            });
-            $("#btnSave").click(function (e)
-            {
-                e.preventDefault();
-                if($("#form-address-1").val() == '' && $("#form-zipcode").val() == '')
-                {
-                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'لطفا اطلاعات آدرس خود را به درستی وارد کنید');
-                }else
-                {
+               @{
+                    string tmpnidorder = "";
+                    if (Model.Order != null)
+                    {
+                        tmpnidorder = Model.Order.NidOrder.ToString();
+                    }
+                }
                 $.ajax(
                     {
-                        url: '@Url.Action("UpdateUserAddress", "Home")',
+                        url: '@Url.Action("CheckoutSubmit","Home")',
                         type: 'post',
                         datatype: 'json',
-                        data: { NidUser: '@Model.User.NidUser', Address: $("#form-address-1").val(), ZipCode: $("#form-zipcode").val(), Tel: $("#form-phone").val() },
-                        success: function (result)
-                        {
-                            if(result.HasValue)
-                            {
-                                myNotify('bottom', 'center', '', 'success', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
-                                //$("#btnEdit").removeAttr('hidden');
-                                //$("#btnSave").attr('hidden', 'hidden');
-                                //$("#form-first-name").attr('disabled', 'disabled');
-                                //$("#form-last-name").attr('disabled', 'disabled');
-                                //$("#form-country").attr('disabled', 'disabled');
-                                //$("#form-address-1").attr('disabled', 'disabled');
-                                //$("#form-zipcode").attr('disabled', 'disabled');
-                                //$("#form-phone").attr('disabled', 'disabled');
-                                //$("#form-email").attr('disabled', 'disabled');
-                                //$("#form-additional-info").attr('disabled', 'disabled');
-                            }else
-                            {
+                        @*data: { NidUser: '@Model.User.NidUser', Order: $("#FrmOrder").serialize(), NidOrder: '@tmpnidorder' },*@
+                        data:$("#FrmOrder").serialize(),
+                        success: function (result) {
+                            if (result.HasValue) {
+                                window.location.href = '/CheckoutDetail?NidOrder=' + result.Message;
+                            } else {
                                 myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
                             }
                         },
                         error: function () { }
-                    })
-                }
-            });
-            $("#btnContinue").click(function (e)
-            {
-                e.preventDefault();
-                if ($("#form-address-1").val() == '' || $("#form-zipcode").val() == '' || $("#form-country").val() == '0' || $("#form-city").val() == '0')
-                {
-                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', 'لطفا اطلاعات آدرس خود را به درستی وارد کنید');
-                } else
-                {
-                    @{
-                        string tmpnidorder = "";
-                        if (Model.Order != null)
-                        {
-                            tmpnidorder = Model.Order.NidOrder.ToString();
-                        }
-                       }
-                    $.ajax(
-                        {
-                        url: '@Url.Action("CheckoutSubmit","Home")',
-                            type: 'post',
-                            datatype: 'json',
-                            data: { NidUser: '@Model.User.NidUser', Description: $("#form-address-1").val(),NidOrder:'@tmpnidorder' },
-                            success: function (result) {
-                                if (result.HasValue) {
-                                    window.location.href = '/CheckoutDetail?NidOrder=' + result.Message;
-                                } else {
-                                    myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', result.Message);
-                                }
-                            },
-                            error: function () { }
-                        })
-                }
+                    });
             });
         });
         function myNotify(from, align, icon, type, animIn, animOut, myMessage) {

@@ -15,6 +15,7 @@ namespace AudioShopFrontend.Controllers
     public class HomeController : Controller
     {
         DataTransfer dataTransfer = null;
+        const string Merchant = "42022b3d-9a49-4bd8-9c2c-73ce0a5303f9";
         // GET: Home
         public ActionResult Index()//done
         {
@@ -454,30 +455,48 @@ namespace AudioShopFrontend.Controllers
             else
                 return Json(new JsonResults() {  HasValue = false, Message = "خطا در سرور.لطفا مجددا امتحان کنید"});
         }
-        public ActionResult CheckoutSubmit(Guid NidUser,string Description,string NidOrder)
+        public ActionResult CheckoutSubmit(Order Order)
         {
             dataTransfer = new DataTransfer();
-            if(NidOrder == "")
+            if (Order.NidOrder == Guid.Empty)
             {
-                List<string> carts = new List<string>();
+                var tmpCarts = dataTransfer.GetAllCartByNidUser(Order.NidUser);
                 decimal total = 0;
-                foreach (var cart in dataTransfer.GetAllCartByNidUser(NidUser))
+                foreach (var cart in tmpCarts)
                 {
-                    carts.Add(cart.NidCart.ToString());
                     total += cart.Product.Price * cart.Quantity ?? 1;
                 }
-                Order order = new Order() { NidOrder = Guid.NewGuid(), NidUser = NidUser, CreateDate = DateTime.Now, Description = Description, NidCarts = string.Join(",", carts), state = 0, TotalPrice = total };
-                if (dataTransfer.AddOrder(order))
-                    return Json(new JsonResults() { HasValue = true, Message = order.NidOrder.ToString() });
+                Order.CreateDate = DateTime.Now;
+                Order.NidOrder = Guid.NewGuid();
+                Order.state = 0;
+                Order.TotalPrice = total;
+                if (dataTransfer.AddOrder(Order))
+                {
+                    foreach (var cart in tmpCarts)
+                    {
+                        cart.NidOrder = Order.NidOrder;
+                        dataTransfer.UpdateCart(cart);
+                    }
+                }
                 else
                     return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+                if(!dataTransfer.AddShip(new Ship() {  NidShip = Guid.NewGuid(), NidOrder = Order.NidOrder, CreateDate = DateTime.Now, Address = Order.Address, ShipPrice = 0, State = 0, ZipCode = Order.Zipcode}))
+                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+
+                return Json(new JsonResults() { HasValue = true, Message = Order.NidOrder.ToString() });
             }
             else
             {
-                var order = dataTransfer.GetOrderByNidOrder(Guid.Parse(NidOrder));
-                order.Description = Description;
-                if(dataTransfer.UpdateOrder(order))
-                    return Json(new JsonResults() { HasValue = true, Message = order.NidOrder.ToString() });
+                if (dataTransfer.UpdateOrder(Order))
+                {
+                    var tmpShip = dataTransfer.GetShipByNidOrder(Order.NidOrder);
+                    if (tmpShip == null)
+                    {
+                        if (!dataTransfer.AddShip(new Ship() { NidShip = Guid.NewGuid(), NidOrder = Order.NidOrder, CreateDate = DateTime.Now, Address = Order.Address, ShipPrice = 0, State = 0, ZipCode = Order.Zipcode }))
+                            return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+                    }
+                    return Json(new JsonResults() { HasValue = true, Message = Order.NidOrder.ToString() });
+                }
                 else
                     return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
             }
@@ -486,11 +505,7 @@ namespace AudioShopFrontend.Controllers
         {
             dataTransfer = new DataTransfer();
             var order = dataTransfer.GetOrderByNidOrder(NidOrder);
-            List<Cart> carts = new List<Cart>();
-            foreach (var cart in order.NidCarts.Split(','))
-            {
-                carts.Add(dataTransfer.GetCartByNidCart(Guid.Parse(cart)));
-            }
+            List<Cart> carts = dataTransfer.GetAllCartsByNidOrder(NidOrder);
             CheckoutViewModel cvm = new CheckoutViewModel() {  Carts = carts, Order = order, User = order.User};
             return View(cvm);
         }
@@ -666,6 +681,74 @@ namespace AudioShopFrontend.Controllers
             Setting setting = new Setting() {  NidSetting = Guid.NewGuid(), SettingAttribute = "NewsletterMail", SettingValue = Mail};
             dataTransfer = new DataTransfer();
             return Json(new JsonResults() {  HasValue = dataTransfer.AddSetting(setting)});
+        }
+        public ActionResult Payment(Guid NidOrder,decimal TotalPrice)
+        {
+            dataTransfer = new DataTransfer();
+            var tmporder = dataTransfer.GetOrderByNidOrder(NidOrder);
+            if(tmporder != null)
+            {
+                System.Net.ServicePointManager.Expect100Continue = false;
+                Zarinpal.PaymentGatewayImplementationServicePortTypeClient zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
+                string Authority;
+
+                int Status = zp.PaymentRequest(Merchant, int.Parse((tmporder.TotalPrice/10).ToString()), "خرید از سایت کاربیس",
+                    tmporder.Email, tmporder.Tel, "https://carbass.ir/Verify/" + NidOrder, out Authority);
+
+                if (Status == 100)
+                {
+                    return Redirect("https://www.zarinpal.com/pg/StartPay/" + Authority);
+                }
+                else
+                {
+                    TempData["dargahRedirectError"] = "در انتقال به درگاه خطایی رخ داده است.لطفا مجدد امتحان کنید";
+                    return RedirectToAction("CheckoutDetail","Home");
+                }
+            }
+            else
+            {
+                TempData["dargahRedirectError"] = "خطایی در سرور رخ داده است.لطفا مجدد امتحان نمایید";
+                return RedirectToAction("CheckoutDetail", "Home");
+            }
+        }
+        public ActionResult Verify(Guid NidOrder)
+        {
+            dataTransfer = new DataTransfer();
+            Order tmpOrder = dataTransfer.GetOrderByNidOrder(NidOrder);
+            List<Cart> carts = dataTransfer.GetAllCartsByNidOrder(NidOrder);
+            if (Request.QueryString["Status"] != "" && Request.QueryString["Status"] != null && Request.QueryString["Authority"] != "" && Request.QueryString["Authority"] != null)
+            {
+                if (Request.QueryString["Status"].ToString().Equals("OK"))
+                {
+                    int Amount = int.Parse((tmpOrder.TotalPrice / 10).ToString());
+                    long RefID;
+                    System.Net.ServicePointManager.Expect100Continue = false;
+                    Zarinpal.PaymentGatewayImplementationServicePortTypeClient zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
+
+                    int Status = zp.PaymentVerification(Merchant, Request.QueryString["Authority"].ToString(), Amount, out RefID);
+                    tmpOrder.state = Status;
+                    tmpOrder.RefId = RefID;
+                    if (dataTransfer.UpdateOrder(tmpOrder))
+                    {
+                        foreach (var cart in carts)
+                        {
+                            cart.State = 1;
+                            dataTransfer.UpdateCart(cart);
+                        }
+                    }
+                }
+                else
+                {
+                    tmpOrder.state = -100;
+                    dataTransfer.UpdateOrder(tmpOrder);
+                }
+            }
+            else
+            {
+                tmpOrder.state = -101;
+                dataTransfer.UpdateOrder(tmpOrder);
+            }
+            return View(new CheckoutViewModel() {  Carts = carts, Order = tmpOrder});
         }
         public static string RenderViewToString(ControllerContext context, string viewName, object model)//done
         {

@@ -44,6 +44,8 @@ namespace AudioShopFrontend.Services
         Cart GetCartByNidCart(Guid NidCart);
         Cart GetCartByNidUserAndProduct(Guid NidUser,Guid NidProduct);
         decimal UpdateCartQuantity(Guid NidCart, int Quantity);
+        List<Cart> GetAllCartsByNidOrder(Guid NidOrder);
+        bool UpdateCart(Cart cart);
         //search
         List<ProductDTO> SearchProduct(string input,int Nidcategory = 0);
         //orders
@@ -60,5 +62,8 @@ namespace AudioShopFrontend.Services
         List<ProductDTO> GetProductsByNidcategory(int Nidcategory,int pagesize = 10,int toSkip = 0,decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "",int FilterType = 0);
         Tuple<decimal, decimal> GetMinMaxCategoryPrice(int Nidcategory);
         bool AddSetting(Setting setting);
+        //ships
+        bool AddShip(Ship ship);
+        Ship GetShipByNidOrder(Guid NidOrder);
     }
 }

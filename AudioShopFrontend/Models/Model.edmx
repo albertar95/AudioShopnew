@@ -12,6 +12,7 @@
           <Property Name="NidCart" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NidUser" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NidProduct" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="NidOrder" Type="uniqueidentifier" />
           <Property Name="Quantity" Type="int" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="State" Type="tinyint" Nullable="false" />
@@ -72,11 +73,19 @@
           </Key>
           <Property Name="NidOrder" Type="uniqueidentifier" Nullable="false" />
           <Property Name="NidUser" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="NidCarts" Type="ntext" Nullable="false" />
           <Property Name="TotalPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="state" Type="tinyint" Nullable="false" />
+          <Property Name="state" Type="int" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Zipcode" Type="decimal" Precision="12" Scale="0" />
+          <Property Name="Tel" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="RefId" Type="bigint" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -641,6 +650,7 @@
           <Property Name="NidCart" Type="Guid" Nullable="false" />
           <Property Name="NidUser" Type="Guid" Nullable="false" />
           <Property Name="NidProduct" Type="Guid" Nullable="false" />
+          <Property Name="NidOrder" Type="Guid" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="State" Type="Byte" Nullable="false" />
@@ -677,11 +687,19 @@
           </Key>
           <Property Name="NidOrder" Type="Guid" Nullable="false" />
           <Property Name="NidUser" Type="Guid" Nullable="false" />
-          <Property Name="NidCarts" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="state" Type="Byte" Nullable="false" />
+          <Property Name="state" Type="Int32" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Zipcode" Type="Decimal" Precision="12" Scale="0" />
+          <Property Name="Tel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RefId" Type="Int64" />
           <NavigationProperty Name="User" Relationship="ASDbModel.FK_Orders_Users" FromRole="Order" ToRole="User" />
           <NavigationProperty Name="Ships" Relationship="ASDbModel.FK_Ships_Orders" FromRole="Order" ToRole="Ship" />
         </EntityType>
@@ -840,6 +858,7 @@
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="NidOrder" ColumnName="NidOrder" />
                 <ScalarProperty Name="NidProduct" ColumnName="NidProduct" />
                 <ScalarProperty Name="NidUser" ColumnName="NidUser" />
                 <ScalarProperty Name="NidCart" ColumnName="NidCart" />
@@ -849,11 +868,19 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ASDbModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="RefId" ColumnName="RefId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="NidCarts" ColumnName="NidCarts" />
                 <ScalarProperty Name="NidUser" ColumnName="NidUser" />
                 <ScalarProperty Name="NidOrder" ColumnName="NidOrder" />
               </MappingFragment>

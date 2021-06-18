@@ -22,11 +22,19 @@ namespace AudioShopFrontend.Models
     
         public System.Guid NidOrder { get; set; }
         public System.Guid NidUser { get; set; }
-        public string NidCarts { get; set; }
         public decimal TotalPrice { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string Description { get; set; }
-        public byte state { get; set; }
+        public int state { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public Nullable<int> StateId { get; set; }
+        public Nullable<int> CityId { get; set; }
+        public string Address { get; set; }
+        public Nullable<decimal> Zipcode { get; set; }
+        public string Tel { get; set; }
+        public string Email { get; set; }
+        public Nullable<long> RefId { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

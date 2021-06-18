@@ -13,23 +13,23 @@
             <div class="your-order-product-info">
                 <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
                     <h6 class="your-order-bottom-left">نام و نام خانواادگی</h6>
-                    <span class="your-order-bottom-right">@Model.User.FirstName  @Model.User.LastName</span>
+                    <span class="your-order-bottom-right">@Model.Order.Firstname  @Model.Order.Lastname</span>
                 </div>
                 <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
                     <h6 class="your-order-bottom-left">آدرس</h6>
-                    <span class="your-order-bottom-right">@Model.User.Address</span>
+                    <span class="your-order-bottom-right">@Model.Order.Address</span>
                 </div>
                 <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
                     <h6 class="your-order-bottom-left">کدپستی</h6>
-                    <span class="your-order-bottom-right">@Model.User.ZipCode</span>
+                    <span class="your-order-bottom-right">@Model.Order.Zipcode</span>
                 </div>
                 <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
                     <h6 class="your-order-bottom-left">شماره تماس</h6>
-                    <span class="your-order-bottom-right">@Model.User.Tel</span>
+                    <span class="your-order-bottom-right">@Model.Order.Tel</span>
                 </div>
                 <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
                     <h6 class="your-order-bottom-left">آدرس ایمیل</h6>
-                    <span class="your-order-bottom-right">@Model.User.Username</span>
+                    <span class="your-order-bottom-right">@Model.Order.Email</span>
                 </div>
                 <div class="your-order-bottom d-flex justify-content-between" style="border-bottom:1px solid #d6cece;padding:20px 0;margin:20px 0;">
                     <h6 class="your-order-bottom-left">توضیحات مرسوله</h6>
@@ -61,22 +61,74 @@
             </div>
         </div>
 
-        <a href="#" class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnDargah" type="submit">تایید و اتصال به درگاه</a>
+        <a href="@Url.Action("Payment","Home",new { NidOrder = Model.Order.NidOrder, TotalPrice = Model.Order.TotalPrice})" class="btn btn--block btn--small btn--blue btn--uppercase btn--weight" id="btnDargah" type="submit">تایید و اتصال به درگاه</a>
     </div>
 </div>
 
 
+@section styles
+    {
 
+    <link href="@Url.Content("~/Content/css/notification/notification.css")" rel="stylesheet" />
+}
 @section scripts
     {
+<script src="@Url.Content("~/Content/js/notification/bootstrap-growl.min.js")"></script>
+<script src="@Url.Content("~/Content/js/notification/notification-active.js")"></script>
     <script type="text/javascript">
         $(function ()
         {
-            $("#btnDargah").click(function (e) {
-                e.preventDefault();
-                $("#modalDargahAlert").modal('show')
-            });
+            var dargahRedirectErrormessage = '@TempData["dargahRedirectError"]';
+            if(dargahRedirectErrormessage != "")
+            {
+                myNotify('bottom', 'center', '', 'warning', 'animated fadeInLeft', 'animated fadeOutLeft', dargahRedirectErrormessage);
+            }
+            //$("#btnDargah").click(function (e) {
+            //    e.preventDefault();
+            //    $("#modalDargahAlert").modal('show')
+            //});
 
         });
+        function myNotify(from, align, icon, type, animIn, animOut, myMessage) {
+            $.growl({
+                icon: icon,
+                title: '',
+                message: myMessage,
+                url: ''
+            }, {
+                element: 'body',
+                type: type,
+                allow_dismiss: true,
+                placement: {
+                    from: from,
+                    align: align
+                },
+                offset: {
+                    x: 20,
+                    y: 85
+                },
+                spacing: 10,
+                z_index: 1031,
+                delay: 2500,
+                timer: 1000,
+                url_target: '_blank',
+                mouse_over: false,
+                animate: {
+                    enter: animIn,
+                    exit: animOut
+                },
+                icon_type: 'class',
+                template: '<div data-growl="container" class="alert" role="alert">' +
+								'<button type="button" class="close" data-growl="dismiss">' +
+									'<span aria-hidden="true">&times;</span>' +
+									'<span class="sr-only">Close</span>' +
+								'</button>' +
+								'<span data-growl="icon"></span>' +
+								'<span data-growl="title"></span>' +
+								'<span data-growl="message"></span>' +
+								'<a href="#" data-growl="url"></a>' +
+							'</div>'
+            });
+        };
     </script>
 }

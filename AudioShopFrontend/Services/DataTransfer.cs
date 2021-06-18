@@ -470,5 +470,33 @@ namespace AudioShopFrontend.Services
             else
                 return false;
         }
+
+        public List<Cart> GetAllCartsByNidOrder(Guid NidOrder)
+        {
+            return db.Carts.Where(p => p.NidOrder == NidOrder).ToList();
+        }
+
+        public bool UpdateCart(Cart cart)
+        {
+            db.Entry(cart).State = System.Data.Entity.EntityState.Modified;
+            if (db.SaveChanges() == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public bool AddShip(Ship ship)
+        {
+            db.Entry(ship).State = System.Data.Entity.EntityState.Added;
+            if (db.SaveChanges() == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public Ship GetShipByNidOrder(Guid NidOrder)
+        {
+            return db.Ships.Where(p => p.NidOrder == NidOrder).FirstOrDefault();
+        }
     }
 }

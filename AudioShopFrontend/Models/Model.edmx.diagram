@@ -22,10 +22,10 @@
         <EntityTypeShape EntityType="ASDbModel.User" Width="1.5" PointX="5.25" PointY="9.75" />
         <AssociationConnector Association="ASDbModel.FK_Comments_Users" />
         <AssociationConnector Association="ASDbModel.FK_Favorites_Users" />
-        <EntityTypeShape EntityType="ASDbModel.Cart" Width="1.5" PointX="7.5" PointY="5.875" />
+        <EntityTypeShape EntityType="ASDbModel.Cart" Width="1.5" PointX="7.5" PointY="5.75" />
         <AssociationConnector Association="ASDbModel.FK_Carts_Products" />
         <AssociationConnector Association="ASDbModel.FK_Carts_Users" />
-        <EntityTypeShape EntityType="ASDbModel.Order" Width="1.5" PointX="7.5" PointY="13.5" />
+        <EntityTypeShape EntityType="ASDbModel.Order" Width="1.5" PointX="7.5" PointY="12.75" />
         <AssociationConnector Association="ASDbModel.FK_Orders_Users" />
         <AssociationConnector Association="ASDbModel.FK_Ships_Orders" />
         </Diagram>

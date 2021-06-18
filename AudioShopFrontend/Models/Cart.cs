@@ -17,6 +17,7 @@ namespace AudioShopFrontend.Models
         public System.Guid NidCart { get; set; }
         public System.Guid NidUser { get; set; }
         public System.Guid NidProduct { get; set; }
+        public Nullable<System.Guid> NidOrder { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public byte State { get; set; }
