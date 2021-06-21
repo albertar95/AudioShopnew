@@ -313,12 +313,11 @@
 </div>
 
 
-    <!-- Start Modal Add cart -->
-<div class="modal fade" id="modalAddCart" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalAddThisCart" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center">Product Successfully Added To Your Shopping Cart</h5>
+                <h5 class="modal-title text-center">محصول با موفقیت به سبد خرید اضافه گردید</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -330,31 +329,31 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="modal__product-img">
-                                        <img class="img-fluid" src="@Url.Content("~/Content/assets/img/product/size-normal/product-home-1-img-1.jpg")" alt="">
+                                        <img class="img-fluid" id="modal_img" src="" alt="">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <span class="modal__product-title">SonicFuel Wireless Over-Ear Headphones</span>
-                                    <span class="modal__product-price m-tb-15">$31.59</span>
-                                    <ul class="modal__product-info ">
-                                        <li>Size:<span> S</span></li>
-                                        <li>Quantity:<span>3</span></li>
+                                    <span class="modal__product-title" id="modal_name"></span>
+                                    <span class="modal__product-price m-tb-15" id="modal_price"></span>
+                                    <ul class="modal__product-info">
+                                        @*<li>Size:<span> S</span></li>
+                                            <li>Quantity:<span>3</span></li>*@
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 modal__border">
-                            <span class="modal__product-cart-item">There are 3 items in your cart.</span>
+                            <span class="modal__product-cart-item" style="text-align:right;direction:rtl;float:right;"><i id="modal_prodcount"></i> محصول در سبد خرید وجود دارد  </span>
                             <ul class="modal__product-shipping-info m-tb-15">
-                                <li>Total products:<span>$94.78</span></li>
-                                <li>Total shipping:<span>$7.00</span></li>
-                                <li>Taxes:<span>$0.00</span></li>
-                                <li>Total: <span>$101.78 (tax excl.)</span></li>
+                                <li></li>
+                                <li></li>
+                                @*<li>Taxes:<span>$0.00</span></li>
+                                    <li>Total: <span>$101.78 (tax excl.)</span></li>*@
                             </ul>
 
                             <div class="modal__product-cart-buttons">
-                                <a href="#" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight" data-dismiss="modal">Continue Shopping</a>
-                                <a href="checkout.html" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">Process to checkout</a>
+                                <a href="#" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight" data-dismiss="modal">ادامه خرید</a>
+                                <a href="@Url.Action("MyCart","Home")" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">تسویه حساب</a>
                             </div>
 
                         </div>
@@ -363,8 +362,7 @@
             </div>
         </div>
     </div>
-</div> <!-- End Modal Add cart -->
-<!-- Start Modal Quickview cart -->
+</div>
 <div class="modal fade" id="modalQuickView" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -579,15 +577,17 @@
                     url: '@Url.Action("AddProductToCart","Home")',
                     type: 'post',
                     datatype: 'json',
-                    data: { NidProduct: NidProd, Quantity: currentProductNumber },
+                    data: { NidProduct: NidProd, Quantity: currentProductNumber, price:Price },
                     success: function (result) {
                         if (result.HasValue) {
-                            $("#CartCount").html(result.Html);
+                            $("#CartCount").html(result.tmpNidCategory);
+                            $("#CartPopupCount").text('تعداد محصولات : ' + result.tmpNidCategory);
+                            $("#cartpopup").html(result.Html);
                             $("#modal_img").attr("src", ImageUrl)
                             $("#modal_name").text(productName)
-                            $("#modal_price").text(Price)
-                            $("#modal_prodcount").text(result.Html)
-                            $("#modalAddCart").modal('show')
+                            $("#modal_price").text(result.Message)
+                            $("#modal_prodcount").text(result.tmpNidCategory)
+                            $("#modalAddThisCart").modal('show')
                         } else {
                             $("#modalAddCartAlert").modal('show')
                         }

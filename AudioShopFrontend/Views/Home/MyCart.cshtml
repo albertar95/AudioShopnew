@@ -128,7 +128,7 @@
                             </ul>
                         </div>*@
                     <h4 class="grand-total m-tb-25">مجموع صورتحساب <span id="cartSumAggregate">@String.Format("{0:n0} ریال", tmpAggregate)</span></h4>
-                    <a href="@Url.Action("Checkout","Home")" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight" type="submit">تکمیل اطلاعات و پرداخت هزینه</a>
+                    <a href="@Url.Action("Checkout","Home")" class="btn btn--box btn--small btn--blue btn--uppercase btn--weight"id="btnsubmit">تکمیل اطلاعات و پرداخت هزینه</a>
                 </div>
             </div>
         </div>
@@ -138,6 +138,16 @@
 @section scripts
     {
     <script type="text/javascript">
+        $(function ()
+        {
+            $("#btnsubmit").click(function (e) {
+                e.preventDefault();
+                var currentCart = $("#cartSumAggregate").text();
+                if (currentCart != '0') {
+                    window.location.href = '@Url.Action("Checkout", "Home")';
+                }
+            });
+        });
         function QuantityChanged(nidcart,price)
         {
             $.ajax(

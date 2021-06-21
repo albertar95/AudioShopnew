@@ -398,7 +398,10 @@ namespace AudioShopFrontend.Services
 
         public decimal CartPriceAggregateByNidUser(Guid NidUser)
         {
-            return db.Carts.Where(p => p.NidUser == NidUser && p.State == 0).Select(q => (q.Product.Price)*(q.Quantity ?? 1)).Sum();
+            if (db.Carts.Where(p => p.NidUser == NidUser && p.State == 0).Any())
+                return db.Carts.Where(p => p.NidUser == NidUser && p.State == 0).Select(q => (q.Product.Price) * (q.Quantity ?? 1)).Sum();
+            else
+                return 0;
         }
 
         public Cart GetCartByNidUserAndProduct(Guid NidUser, Guid NidProduct)

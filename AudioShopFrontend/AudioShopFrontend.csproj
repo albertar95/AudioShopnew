@@ -423,6 +423,30 @@
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
     <Content Include="scripts\modernizr-2.6.2.js" />
+    <Content Include="Service References\ZarinpalTest\AudioShopFrontend.ZarinpalTest.GetUnverifiedTransactionsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ZarinpalTest\AudioShopFrontend.ZarinpalTest.PaymentRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ZarinpalTest\AudioShopFrontend.ZarinpalTest.PaymentRequestWithExtraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ZarinpalTest\AudioShopFrontend.ZarinpalTest.PaymentVerificationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ZarinpalTest\AudioShopFrontend.ZarinpalTest.PaymentVerificationWithExtraResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ZarinpalTest\AudioShopFrontend.ZarinpalTest.RefreshAuthorityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Service References\ZarinpalTest\configuration91.svcinfo" />
+    <None Include="Service References\ZarinpalTest\configuration.svcinfo" />
+    <None Include="Service References\ZarinpalTest\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Service References\Zarinpal\AudioShopFrontend.Zarinpal.GetUnverifiedTransactionsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -441,6 +465,7 @@
     <Content Include="Service References\Zarinpal\AudioShopFrontend.Zarinpal.RefreshAuthorityResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\ZarinpalTest\PaymentGatewayImplementationService.wsdl" />
     <None Include="Service References\Zarinpal\configuration91.svcinfo" />
     <None Include="Service References\Zarinpal\configuration.svcinfo" />
     <None Include="Service References\Zarinpal\Reference.svcmap">
@@ -512,6 +537,11 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ZarinpalTest\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\Zarinpal\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -647,6 +677,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\ZarinpalTest\" />
     <WCFMetadataStorage Include="Service References\Zarinpal\" />
   </ItemGroup>
   <PropertyGroup>

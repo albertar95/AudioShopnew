@@ -17,6 +17,7 @@ namespace AudioShopFrontend.Controllers
         DataTransfer dataTransfer = null;
         const string Merchant = "42022b3d-9a49-4bd8-9c2c-73ce0a5303f9";
         // GET: Home
+        //demostration section
         public ActionResult Index()//done
         {
             IndexViewModel ivm = new IndexViewModel();
@@ -76,314 +77,6 @@ namespace AudioShopFrontend.Controllers
             ppvm.Similars = dataTransfer.GetSimilarProducts(NidProduct);
             return View(ppvm);
         }
-        public ActionResult Register()//done
-        {
-            return View();
-        }
-        public ActionResult Login()//done
-        {
-            return View();
-        }
-        public ActionResult SubmitLogin(string Username,string Password,bool isPersistant)//done
-        {
-            dataTransfer = new DataTransfer();
-            var User = dataTransfer.GetUserByUsername(Username);
-            if(User != null)
-            {
-                if (DataTransfer.Encrypt(Password) == User.Password)
-                {
-                    FormsAuthenticationTicket Ticket = new FormsAuthenticationTicket(1, User.Username, DateTime.Now, DateTime.Now.AddMinutes(30), isPersistant, User.NidUser.ToString() + "," + User.FirstName + " " + User.LastName, FormsAuthentication.FormsCookiePath);
-                    string encTicket = FormsAuthentication.Encrypt(Ticket);
-                    Response.Cookies.Add(new HttpCookie("AudioShopLogin", encTicket));
-                    //cartcookie
-                    var cartandfav = dataTransfer.GetCartAndFavoriteCount(User.NidUser);
-                    if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
-                    {
-                        Response.Cookies["AudioShopCart"].Value = cartandfav.Item1.ToString();
-                    }
-                    else
-                    {
-                        HttpCookie newCookie = new HttpCookie("AudioShopCart", cartandfav.Item1.ToString());
-                        Response.Cookies.Add(newCookie);
-                    }
-                    //favcookie
-                    if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
-                    {
-                        Response.Cookies["AudioShopFavorites"].Value = cartandfav.Item2.ToString();
-                    }
-                    else
-                    {
-                        HttpCookie newCookie = new HttpCookie("AudioShopFavorites", cartandfav.Item2.ToString());
-                        Response.Cookies.Add(newCookie);
-                    }
-                    //expiries
-                    if (isPersistant)
-                    {
-                        Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddDays(7);
-                        Response.Cookies["AudioShopCart"].Expires = DateTime.Now.AddDays(7);
-                        Response.Cookies["AudioShopFavorites"].Expires = DateTime.Now.AddDays(7);
-                    }
-                    else
-                    {
-                        Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddHours(4);
-                        Response.Cookies["AudioShopCart"].Expires = DateTime.Now.AddHours(4);
-                        Response.Cookies["AudioShopFavorites"].Expires = DateTime.Now.AddHours(4);
-                    }
-                    //Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddMinutes(30);
-                    //Response.Cookies["AudioShopLogin"].HttpOnly = true;
-                    //Response.Cookies["AudioShopLogin"].Secure = true;
-                    return Json(new JsonResults() { HasValue = true });
-                }
-                else
-                    return Json(new JsonResults() { HasValue = false, Message = "رمز عبور اشتباه می باشد" });
-            }else
-                return Json(new JsonResults() { HasValue = false,Message = "نام کاربری موجود نمی باشد" });
-        }
-        public ActionResult SubmitRegister(User User)//done
-        {
-            dataTransfer = new DataTransfer();
-            if(!dataTransfer.CheckUsername(User.Username))
-            {
-                User.CreateDate = DateTime.Now;
-                User.Enabled = true;
-                User.IsAdmin = false;
-                User.NidUser = Guid.NewGuid();
-                User.Password = DataTransfer.Encrypt(User.Password);
-                if(dataTransfer.AddUser(User))
-                    return RedirectToAction("Index");
-                else
-                {
-                    TempData["RegisterError"] = "error in database";
-                    return View("Register");
-                }
-            }
-            else
-            {
-                TempData["RegisterError"] = "username already exists";
-                return RedirectToAction("Register");
-            }
-            
-        }
-        public ActionResult Logout()//done
-        {
-            Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddYears(-1);
-            Response.Cookies["AudioShopCart"].Expires = DateTime.Now.AddYears(-1);
-            Response.Cookies["AudioShopFavorites"].Expires = DateTime.Now.AddYears(-1);
-            return RedirectToAction("Index");
-        }
-        public ActionResult MyCart()//done
-        {
-            List<Cart> carts = new List<Cart>();
-            dataTransfer = new DataTransfer();
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-                carts = dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser));
-            }
-            return View(carts);
-        }
-        public ActionResult CartQuantityChanged(Guid NidCart,int Quantity)//done
-        {
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-            
-                dataTransfer = new DataTransfer();
-            decimal tmpresult = dataTransfer.UpdateCartQuantity(NidCart,Quantity);
-            if (tmpresult != 0)
-            return Json(new JsonResults() { HasValue = true, Html = String.Format("{0:n0}",tmpresult), Message = String.Format("{0:n0}", dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser))) });
-            else
-                return Json(new JsonResults() { HasValue = false });
-            }else
-                return Json(new JsonResults() { HasValue = false });
-        }
-        public ActionResult MyFavorites()//done
-        {
-            List<Favorite> favs = new List<Favorite>();
-            dataTransfer = new DataTransfer();
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-                favs = dataTransfer.GetAllFavoritesByNidUser(Guid.Parse(niduser));
-            }
-            return View(favs);
-        }
-        public ActionResult AddProductToFavorites(Guid NidProduct)//done
-        {
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-                dataTransfer = new DataTransfer();
-                int favs = dataTransfer.AddFavorite(new Favorite() { NidFav = Guid.NewGuid(), CreateDate = DateTime.Now, NidProduct = NidProduct, NidUser = Guid.Parse(niduser) });
-                if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
-                {
-                    Response.Cookies["AudioShopFavorites"].Value = favs.ToString();
-                }
-                else
-                {
-                    HttpCookie newCookie = new HttpCookie("AudioShopFavorites", favs.ToString());
-                    Response.Cookies.Add(newCookie);
-                }
-                return Json(new JsonResults() { HasValue = true, Html = favs.ToString() });
-            }
-            else
-            return Json(new JsonResults() {  HasValue = false});
-        }
-        public ActionResult AddProductToCart(Guid NidProduct,int Quantity)//done
-        {
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-                dataTransfer = new DataTransfer();
-                int carts = dataTransfer.AddCart(new Cart() {  CreateDate = DateTime.Now, NidCart = Guid.NewGuid(), NidProduct = NidProduct, NidUser = Guid.Parse(niduser), Quantity = Quantity});
-                if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
-                {
-                    Response.Cookies["AudioShopCart"].Value = carts.ToString();
-                }
-                else
-                {
-                    HttpCookie newCookie = new HttpCookie("AudioShopCart", carts.ToString());
-                    Response.Cookies.Add(newCookie);
-                }
-                return Json(new JsonResults() { HasValue = true, tmpNidCategory = carts, Html = RenderViewToString(this.ControllerContext, "_CartPopup", null) });
-            }
-            return Json(new JsonResults() { HasValue = false });
-        }
-        public ActionResult RemoveProductFromCart(Guid NidProduct)//done
-        {
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-                dataTransfer = new DataTransfer();
-                var tmpcart = dataTransfer.GetCartByNidUserAndProduct(Guid.Parse(niduser),NidProduct);
-                if(tmpcart != null)
-                {
-                    int carts = dataTransfer.RemoveCart(tmpcart);
-                    if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
-                    {
-                        Response.Cookies["AudioShopCart"].Value = carts.ToString();
-                    }
-                    else
-                    {
-                        HttpCookie newCookie = new HttpCookie("AudioShopCart", carts.ToString());
-                        Response.Cookies.Add(newCookie);
-                    }
-                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CartPopup",null), tmpNidCategory = carts, Message = dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser)).ToString() });
-                }
-            }
-            return Json(new JsonResults() { HasValue = false });
-        }
-        public ActionResult RemoveProductFromFav(Guid NidFav)//done
-        {
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-                dataTransfer = new DataTransfer();
-                var tmpfav = dataTransfer.GetFavoriteById(NidFav);
-                if (tmpfav != null)
-                {
-                    int favs = dataTransfer.RemoveFavorite(tmpfav);
-                    if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
-                    {
-                        Response.Cookies["AudioShopFavorites"].Value = favs.ToString();
-                    }
-                    else
-                    {
-                        HttpCookie newCookie = new HttpCookie("AudioShopFavorites", favs.ToString());
-                        Response.Cookies.Add(newCookie);
-                    }
-                    return Json(new JsonResults() { HasValue = true, tmpNidCategory = favs });
-                }
-            }
-            return Json(new JsonResults() { HasValue = false });
-        }
-        public ActionResult MyProfile()//done
-        {
-            ProfileViewModel pvm = new ProfileViewModel();
-            List<Order> Orders = new List<Order>();
-            Models.User User = new User();
-            List<Favorite> favs = new List<Favorite>();
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                dataTransfer = new DataTransfer();
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string NidUser = ticket.UserData.Split(',').First();
-                User = dataTransfer.GetUserByNidUser(Guid.Parse(NidUser));
-                Orders = dataTransfer.GetUsersOrder(Guid.Parse(NidUser));
-                favs = dataTransfer.GetAllFavoritesByNidUser(Guid.Parse(NidUser));
-            }
-            pvm.Orders = Orders;
-            pvm.UserInfo = User;
-            pvm.Favorites = favs;
-            return View(pvm);
-        }
-        public ActionResult ChangePassword(string CurrentPassword,string NewPassword)//done
-        {
-            string message = "";
-            bool IsUpdated = false;
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                dataTransfer = new DataTransfer();
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string NidUser = ticket.UserData.Split(',').First();
-                var CurrentUser = dataTransfer.GetUserByNidUser(Guid.Parse(NidUser));
-                if (CurrentUser != null)
-                {
-                    if (CurrentUser.Password == DataTransfer.Encrypt(CurrentPassword))
-                    {
-                        CurrentUser.Password = DataTransfer.Encrypt(NewPassword);
-                        if (dataTransfer.UpdateUser(CurrentUser))
-                        {
-                            message = "رمز عبور شما با موفقیت تغییر کرد";
-                            IsUpdated = true;
-                        }
-                        else
-                            message = "مشکل در سرور.لطفا مجددا امتحان نمایید";
-                    }
-                    else
-                        message = "لطفا رمز عبور فعلی خود را صحیح وارد نمایید";
-                }
-                else
-                    message = "نام کاربری یافت نشد";
-            }
-            else
-                message = "کاربر وارد نشده است";
-
-            return Json(new JsonResults() { HasValue = IsUpdated, Message = message });
-        }
-        public ActionResult ChangeAddress(string NewAddress)//done
-        {
-            string message = "";
-            bool IsUpdated = false;
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                dataTransfer = new DataTransfer();
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string NidUser = ticket.UserData.Split(',').First();
-                var CurrentUser = dataTransfer.GetUserByNidUser(Guid.Parse(NidUser));
-                if (CurrentUser != null)
-                {
-                    CurrentUser.Address = NewAddress;
-                    if (dataTransfer.UpdateUser(CurrentUser))
-                    {
-                        message = "آدرس شما با موفقیت ویرایش گردید";
-                        IsUpdated = true;
-                    }
-                }
-                else
-                    message = "نام کاربری یافت نشد";
-            }
-            else
-                message = "کاربر وارد نشده است";
-            return Json(new JsonResults() { HasValue = IsUpdated, Message = message });
-        }
         public ActionResult AboutUs()//done
         {
             return View();
@@ -392,122 +85,17 @@ namespace AudioShopFrontend.Controllers
         {
             return View();
         }
-        public ActionResult SubmitAddReview(string CommentText,string NidUser)//done
-        {
-            Comment tmpcomment = new Comment() {  CreateDate = DateTime.Now, NidComment = Guid.NewGuid(), State = 2};
-            if(NidUser != "")
-            {
-                tmpcomment.NidUser = Guid.Parse(NidUser);
-                tmpcomment.CommentText = CommentText;
-                dataTransfer = new DataTransfer();
-                if (dataTransfer.AddComment(tmpcomment))
-                    return Json(new JsonResults() { HasValue = true, Message = "نظر شما با موفقیت ثبت شد" });
-                else
-                    return Json(new JsonResults() { HasValue = false, Message = "مشکل در سرور.لطفا مجدد امتحان کنید" });
-            }
-            else
-            {
-                return Json(new JsonResults() { HasValue = false, Message = "برای ثبت نظر می بایست ابتدا وارد شوید" });
-            }
-        }
         public ActionResult Categories()//done
         {
             dataTransfer = new DataTransfer();
             var result = dataTransfer.GetAllCategory();
             return View(result);
         }
-
         public ActionResult MoreCategories(int PageNumber)//done
         {
             dataTransfer = new DataTransfer();
             var result = dataTransfer.GetAllCategory(10,PageNumber*10);
             return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_MoreCategories", result), tmpNidCategory = PageNumber + 1 });
-        }
-        public ActionResult Checkout()
-        {
-            CheckoutViewModel cvm = new CheckoutViewModel();
-            List<Cart> carts = new List<Cart>();
-            User user = null;
-            Order order = null;
-            dataTransfer = new DataTransfer();
-            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
-            {
-                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
-                string niduser = ticket.UserData.Split(',').First();
-                carts = dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser));
-                user = dataTransfer.GetUserByNidUser(Guid.Parse(niduser));
-                order = dataTransfer.GetUsersOrder(Guid.Parse(niduser)).Where(p => p.state == 0).FirstOrDefault();
-            }
-            cvm.User = user;
-            cvm.Carts = carts;
-            cvm.Order = order;
-            return View(cvm);
-        }
-        public ActionResult UpdateUserAddress(Guid NidUser,string Address,string ZipCode,string Tel)
-        {
-            dataTransfer = new DataTransfer();
-            var user = dataTransfer.GetUserByNidUser(NidUser);
-            user.Address = Address;
-            user.ZipCode = decimal.Parse(ZipCode);
-            user.Tel = Tel;
-            if(dataTransfer.UpdateUser(user))
-            return Json(new JsonResults() {  HasValue = true, Message = "اطلاعات کاربری با موفقیت ثبت گردید"});
-            else
-                return Json(new JsonResults() {  HasValue = false, Message = "خطا در سرور.لطفا مجددا امتحان کنید"});
-        }
-        public ActionResult CheckoutSubmit(Order Order)
-        {
-            dataTransfer = new DataTransfer();
-            if (Order.NidOrder == Guid.Empty)
-            {
-                var tmpCarts = dataTransfer.GetAllCartByNidUser(Order.NidUser);
-                decimal total = 0;
-                foreach (var cart in tmpCarts)
-                {
-                    total += cart.Product.Price * cart.Quantity ?? 1;
-                }
-                Order.CreateDate = DateTime.Now;
-                Order.NidOrder = Guid.NewGuid();
-                Order.state = 0;
-                Order.TotalPrice = total;
-                if (dataTransfer.AddOrder(Order))
-                {
-                    foreach (var cart in tmpCarts)
-                    {
-                        cart.NidOrder = Order.NidOrder;
-                        dataTransfer.UpdateCart(cart);
-                    }
-                }
-                else
-                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
-                if(!dataTransfer.AddShip(new Ship() {  NidShip = Guid.NewGuid(), NidOrder = Order.NidOrder, CreateDate = DateTime.Now, Address = Order.Address, ShipPrice = 0, State = 0, ZipCode = Order.Zipcode}))
-                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
-
-                return Json(new JsonResults() { HasValue = true, Message = Order.NidOrder.ToString() });
-            }
-            else
-            {
-                if (dataTransfer.UpdateOrder(Order))
-                {
-                    var tmpShip = dataTransfer.GetShipByNidOrder(Order.NidOrder);
-                    if (tmpShip == null)
-                    {
-                        if (!dataTransfer.AddShip(new Ship() { NidShip = Guid.NewGuid(), NidOrder = Order.NidOrder, CreateDate = DateTime.Now, Address = Order.Address, ShipPrice = 0, State = 0, ZipCode = Order.Zipcode }))
-                            return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
-                    }
-                    return Json(new JsonResults() { HasValue = true, Message = Order.NidOrder.ToString() });
-                }
-                else
-                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
-            }
-        }
-        public ActionResult CheckoutDetail(Guid NidOrder)
-        {
-            dataTransfer = new DataTransfer();
-            var order = dataTransfer.GetOrderByNidOrder(NidOrder);
-            List<Cart> carts = dataTransfer.GetAllCartsByNidOrder(NidOrder);
-            CheckoutViewModel cvm = new CheckoutViewModel() {  Carts = carts, Order = order, User = order.User};
-            return View(cvm);
         }
         public ActionResult Pagination(int id,int currentpage,int target,int Nidcategory,string FilterType = "",decimal MinPrice = 0,decimal MaxPrice = 0,string NidBrands = "",string NidTypes = "")//done
         {
@@ -676,33 +264,455 @@ namespace AudioShopFrontend.Controllers
                 return Json(new JsonResults() { HasValue = false});
             }
         }
+        //user section
+        public ActionResult Register()//done
+        {
+            return View();
+        }
+        public ActionResult SubmitRegister(User User)//done
+        {
+            dataTransfer = new DataTransfer();
+            if (!dataTransfer.CheckUsername(User.Username))
+            {
+                User.CreateDate = DateTime.Now;
+                User.Enabled = true;
+                User.IsAdmin = false;
+                User.NidUser = Guid.NewGuid();
+                User.Password = DataTransfer.Encrypt(User.Password);
+                if (dataTransfer.AddUser(User))
+                    return RedirectToAction("Index");
+                else
+                {
+                    TempData["RegisterError"] = "error in database";
+                    return View("Register");
+                }
+            }
+            else
+            {
+                TempData["RegisterError"] = "username already exists";
+                return RedirectToAction("Register");
+            }
+
+        }
+        public ActionResult Login()//done
+        {
+            return View();
+        }
+        public ActionResult SubmitLogin(string Username, string Password, bool isPersistant)//done
+        {
+            dataTransfer = new DataTransfer();
+            var User = dataTransfer.GetUserByUsername(Username);
+            if (User != null)
+            {
+                if (DataTransfer.Encrypt(Password) == User.Password)
+                {
+                    if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+                    {
+                        Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddYears(-1);
+                    }
+                    FormsAuthenticationTicket Ticket = new FormsAuthenticationTicket(1, User.Username, DateTime.Now, DateTime.Now.AddMinutes(30), isPersistant, User.NidUser.ToString() + "," + User.FirstName + " " + User.LastName, FormsAuthentication.FormsCookiePath);
+                    string encTicket = FormsAuthentication.Encrypt(Ticket);
+                    Response.Cookies.Add(new HttpCookie("AudioShopLogin", encTicket));
+                    //cartcookie
+                    var cartandfav = dataTransfer.GetCartAndFavoriteCount(User.NidUser);
+                    if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
+                    {
+                        Response.Cookies["AudioShopCart"].Value = cartandfav.Item1.ToString();
+                    }
+                    else
+                    {
+                        HttpCookie newCookie = new HttpCookie("AudioShopCart", cartandfav.Item1.ToString());
+                        Response.Cookies.Add(newCookie);
+                    }
+                    //favcookie
+                    if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
+                    {
+                        Response.Cookies["AudioShopFavorites"].Value = cartandfav.Item2.ToString();
+                    }
+                    else
+                    {
+                        HttpCookie newCookie = new HttpCookie("AudioShopFavorites", cartandfav.Item2.ToString());
+                        Response.Cookies.Add(newCookie);
+                    }
+                    //expiries
+                    if (isPersistant)
+                    {
+                        Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddDays(7);
+                        Response.Cookies["AudioShopCart"].Expires = DateTime.Now.AddDays(7);
+                        Response.Cookies["AudioShopFavorites"].Expires = DateTime.Now.AddDays(7);
+                    }
+                    else
+                    {
+                        Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddHours(4);
+                        Response.Cookies["AudioShopCart"].Expires = DateTime.Now.AddHours(4);
+                        Response.Cookies["AudioShopFavorites"].Expires = DateTime.Now.AddHours(4);
+                    }
+                    //Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddHours(30);
+                    //Response.Cookies["AudioShopLogin"].HttpOnly = true;
+                    //Response.Cookies["AudioShopLogin"].Secure = true;
+                    return Json(new JsonResults() { HasValue = true });
+                }
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "رمز عبور اشتباه می باشد" });
+            }
+            else
+                return Json(new JsonResults() { HasValue = false, Message = "نام کاربری موجود نمی باشد" });
+        }
+        public ActionResult Logout()//done
+        {
+            Response.Cookies["AudioShopLogin"].Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies["AudioShopCart"].Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies["AudioShopFavorites"].Expires = DateTime.Now.AddYears(-1);
+            return RedirectToAction("Index");
+        }
+        public ActionResult MyFavorites()//done
+        {
+            List<Favorite> favs = new List<Favorite>();
+            dataTransfer = new DataTransfer();
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                favs = dataTransfer.GetAllFavoritesByNidUser(Guid.Parse(niduser));
+            }
+            return View(favs);
+        }
+        public ActionResult MyProfile()//done
+        {
+            ProfileViewModel pvm = new ProfileViewModel();
+            List<Order> Orders = new List<Order>();
+            Models.User User = new User();
+            List<Favorite> favs = new List<Favorite>();
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                dataTransfer = new DataTransfer();
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string NidUser = ticket.UserData.Split(',').First();
+                User = dataTransfer.GetUserByNidUser(Guid.Parse(NidUser));
+                Orders = dataTransfer.GetUsersOrder(Guid.Parse(NidUser));
+                favs = dataTransfer.GetAllFavoritesByNidUser(Guid.Parse(NidUser));
+            }
+            pvm.Orders = Orders;
+            pvm.UserInfo = User;
+            pvm.Favorites = favs;
+            return View(pvm);
+        }
+        public ActionResult ChangePassword(string CurrentPassword, string NewPassword)//done
+        {
+            string message = "";
+            bool IsUpdated = false;
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                dataTransfer = new DataTransfer();
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string NidUser = ticket.UserData.Split(',').First();
+                var CurrentUser = dataTransfer.GetUserByNidUser(Guid.Parse(NidUser));
+                if (CurrentUser != null)
+                {
+                    if (CurrentUser.Password == DataTransfer.Encrypt(CurrentPassword))
+                    {
+                        CurrentUser.Password = DataTransfer.Encrypt(NewPassword);
+                        if (dataTransfer.UpdateUser(CurrentUser))
+                        {
+                            message = "رمز عبور شما با موفقیت تغییر کرد";
+                            IsUpdated = true;
+                        }
+                        else
+                            message = "مشکل در سرور.لطفا مجددا امتحان نمایید";
+                    }
+                    else
+                        message = "لطفا رمز عبور فعلی خود را صحیح وارد نمایید";
+                }
+                else
+                    message = "نام کاربری یافت نشد";
+            }
+            else
+                message = "کاربر وارد نشده است";
+
+            return Json(new JsonResults() { HasValue = IsUpdated, Message = message });
+        }
+        public ActionResult ChangeAddress(string NewAddress)//done
+        {
+            string message = "";
+            bool IsUpdated = false;
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                dataTransfer = new DataTransfer();
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string NidUser = ticket.UserData.Split(',').First();
+                var CurrentUser = dataTransfer.GetUserByNidUser(Guid.Parse(NidUser));
+                if (CurrentUser != null)
+                {
+                    CurrentUser.Address = NewAddress;
+                    if (dataTransfer.UpdateUser(CurrentUser))
+                    {
+                        message = "آدرس شما با موفقیت ویرایش گردید";
+                        IsUpdated = true;
+                    }
+                }
+                else
+                    message = "نام کاربری یافت نشد";
+            }
+            else
+                message = "کاربر وارد نشده است";
+            return Json(new JsonResults() { HasValue = IsUpdated, Message = message });
+        }
+        public ActionResult SubmitAddReview(string CommentText, string NidUser)//done
+        {
+            Comment tmpcomment = new Comment() { CreateDate = DateTime.Now, NidComment = Guid.NewGuid(), State = 2 };
+            if (NidUser != "")
+            {
+                tmpcomment.NidUser = Guid.Parse(NidUser);
+                tmpcomment.CommentText = CommentText;
+                dataTransfer = new DataTransfer();
+                if (dataTransfer.AddComment(tmpcomment))
+                    return Json(new JsonResults() { HasValue = true, Message = "نظر شما با موفقیت ثبت شد" });
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "مشکل در سرور.لطفا مجدد امتحان کنید" });
+            }
+            else
+            {
+                return Json(new JsonResults() { HasValue = false, Message = "برای ثبت نظر می بایست ابتدا وارد شوید" });
+            }
+        }
+        public ActionResult UpdateUserAddress(Guid NidUser, string Address, string ZipCode, string Tel)
+        {
+            dataTransfer = new DataTransfer();
+            var user = dataTransfer.GetUserByNidUser(NidUser);
+            user.Address = Address;
+            user.ZipCode = decimal.Parse(ZipCode);
+            user.Tel = Tel;
+            if (dataTransfer.UpdateUser(user))
+                return Json(new JsonResults() { HasValue = true, Message = "اطلاعات کاربری با موفقیت ثبت گردید" });
+            else
+                return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور.لطفا مجددا امتحان کنید" });
+        }
         public ActionResult AddToNewsletter(string Mail)
         {
-            Setting setting = new Setting() {  NidSetting = Guid.NewGuid(), SettingAttribute = "NewsletterMail", SettingValue = Mail};
+            Setting setting = new Setting() { NidSetting = Guid.NewGuid(), SettingAttribute = "NewsletterMail", SettingValue = Mail };
             dataTransfer = new DataTransfer();
-            return Json(new JsonResults() {  HasValue = dataTransfer.AddSetting(setting)});
+            return Json(new JsonResults() { HasValue = dataTransfer.AddSetting(setting) });
         }
-        public ActionResult Payment(Guid NidOrder,decimal TotalPrice)
+        //shop section
+        public ActionResult MyCart()//done
+        {
+            List<Cart> carts = new List<Cart>();
+            dataTransfer = new DataTransfer();
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                carts = dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser));
+            }
+            return View(carts);
+        }
+        public ActionResult AddProductToCart(Guid NidProduct, int Quantity,int price)//done
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                dataTransfer = new DataTransfer();
+                int carts = dataTransfer.AddCart(new Cart() { CreateDate = DateTime.Now, NidCart = Guid.NewGuid(), NidProduct = NidProduct, NidUser = Guid.Parse(niduser), Quantity = Quantity });
+                if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
+                {
+                    Response.Cookies["AudioShopCart"].Value = carts.ToString();
+                }
+                else
+                {
+                    HttpCookie newCookie = new HttpCookie("AudioShopCart", carts.ToString());
+                    Response.Cookies.Add(newCookie);
+                }
+                return Json(new JsonResults() { HasValue = true, tmpNidCategory = carts, Html = RenderViewToString(this.ControllerContext, "_CartPopup", null), Message = @String.Format("{0:n0} ریال", price) });
+            }
+            return Json(new JsonResults() { HasValue = false });
+        }
+        public ActionResult RemoveProductFromCart(Guid NidProduct)//done
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                dataTransfer = new DataTransfer();
+                var tmpcart = dataTransfer.GetCartByNidUserAndProduct(Guid.Parse(niduser), NidProduct);
+                if (tmpcart != null)
+                {
+                    int carts = dataTransfer.RemoveCart(tmpcart);
+                    if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
+                    {
+                        Response.Cookies["AudioShopCart"].Value = carts.ToString();
+                    }
+                    else
+                    {
+                        HttpCookie newCookie = new HttpCookie("AudioShopCart", carts.ToString());
+                        Response.Cookies.Add(newCookie);
+                    }
+                    return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_CartPopup", null), tmpNidCategory = carts, Message = dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser)).ToString() });
+                }
+            }
+            return Json(new JsonResults() { HasValue = false });
+        }
+        public ActionResult CartQuantityChanged(Guid NidCart, int Quantity)//done
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+
+                dataTransfer = new DataTransfer();
+                decimal tmpresult = dataTransfer.UpdateCartQuantity(NidCart, Quantity);
+                if (tmpresult != 0)
+                    return Json(new JsonResults() { HasValue = true, Html = String.Format("{0:n0}", tmpresult), Message = String.Format("{0:n0}", dataTransfer.CartPriceAggregateByNidUser(Guid.Parse(niduser))) });
+                else
+                    return Json(new JsonResults() { HasValue = false });
+            }
+            else
+                return Json(new JsonResults() { HasValue = false });
+        }
+        public ActionResult AddProductToFavorites(Guid NidProduct)//done
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                dataTransfer = new DataTransfer();
+                int favs = dataTransfer.AddFavorite(new Favorite() { NidFav = Guid.NewGuid(), CreateDate = DateTime.Now, NidProduct = NidProduct, NidUser = Guid.Parse(niduser) });
+                if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
+                {
+                    Response.Cookies["AudioShopFavorites"].Value = favs.ToString();
+                }
+                else
+                {
+                    HttpCookie newCookie = new HttpCookie("AudioShopFavorites", favs.ToString());
+                    Response.Cookies.Add(newCookie);
+                }
+                return Json(new JsonResults() { HasValue = true, Html = favs.ToString() });
+            }
+            else
+                return Json(new JsonResults() { HasValue = false });
+        }
+        public ActionResult RemoveProductFromFav(Guid NidFav)//done
+        {
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                dataTransfer = new DataTransfer();
+                var tmpfav = dataTransfer.GetFavoriteById(NidFav);
+                if (tmpfav != null)
+                {
+                    int favs = dataTransfer.RemoveFavorite(tmpfav);
+                    if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
+                    {
+                        Response.Cookies["AudioShopFavorites"].Value = favs.ToString();
+                    }
+                    else
+                    {
+                        HttpCookie newCookie = new HttpCookie("AudioShopFavorites", favs.ToString());
+                        Response.Cookies.Add(newCookie);
+                    }
+                    return Json(new JsonResults() { HasValue = true, tmpNidCategory = favs });
+                }
+            }
+            return Json(new JsonResults() { HasValue = false });
+        }
+        public ActionResult Checkout()
+        {
+            CheckoutViewModel cvm = new CheckoutViewModel();
+            List<Cart> carts = new List<Cart>();
+            User user = null;
+            Order order = null;
+            dataTransfer = new DataTransfer();
+            if (Request.Cookies.AllKeys.Contains("AudioShopLogin"))
+            {
+                var ticket = FormsAuthentication.Decrypt(Request.Cookies["AudioShopLogin"].Value);
+                string niduser = ticket.UserData.Split(',').First();
+                carts = dataTransfer.GetAllCartByNidUser(Guid.Parse(niduser));
+                user = dataTransfer.GetUserByNidUser(Guid.Parse(niduser));
+                order = dataTransfer.GetUsersOrder(Guid.Parse(niduser)).Where(p => p.state != 100 && p.state != 101).FirstOrDefault();
+            }
+            cvm.User = user;
+            cvm.Carts = carts;
+            cvm.Order = order;
+            return View(cvm);
+        }
+        public ActionResult CheckoutSubmit(Order Order)
+        {
+            dataTransfer = new DataTransfer();
+            if (Order.NidOrder == Guid.Empty)
+            {
+                var tmpCarts = dataTransfer.GetAllCartByNidUser(Order.NidUser);
+                decimal total = 0;
+                foreach (var cart in tmpCarts)
+                {
+                    total += cart.Product.Price * cart.Quantity ?? 1;
+                }
+                Order.CreateDate = DateTime.Now;
+                Order.NidOrder = Guid.NewGuid();
+                Order.state = 0;
+                Order.TotalPrice = total;
+                if (dataTransfer.AddOrder(Order))
+                {
+                    foreach (var cart in tmpCarts)
+                    {
+                        cart.NidOrder = Order.NidOrder;
+                        dataTransfer.UpdateCart(cart);
+                    }
+                }
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+                if (!dataTransfer.AddShip(new Ship() { NidShip = Guid.NewGuid(), NidOrder = Order.NidOrder, CreateDate = DateTime.Now, Address = Order.Address, ShipPrice = 0, State = 0, ZipCode = Order.Zipcode }))
+                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+
+                return Json(new JsonResults() { HasValue = true, Message = Order.NidOrder.ToString() });
+            }
+            else
+            {
+                if (dataTransfer.UpdateOrder(Order))
+                {
+                    var tmpShip = dataTransfer.GetShipByNidOrder(Order.NidOrder);
+                    if (tmpShip == null)
+                    {
+                        if (!dataTransfer.AddShip(new Ship() { NidShip = Guid.NewGuid(), NidOrder = Order.NidOrder, CreateDate = DateTime.Now, Address = Order.Address, ShipPrice = 0, State = 0, ZipCode = Order.Zipcode }))
+                            return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+                    }
+                    return Json(new JsonResults() { HasValue = true, Message = Order.NidOrder.ToString() });
+                }
+                else
+                    return Json(new JsonResults() { HasValue = false, Message = "خطا در سرور لطفا مجددا امتحان کنید" });
+            }
+        }
+        public ActionResult CheckoutDetail(Guid NidOrder)
+        {
+            dataTransfer = new DataTransfer();
+            var order = dataTransfer.GetOrderByNidOrder(NidOrder);
+            List<Cart> carts = dataTransfer.GetAllCartsByNidOrder(NidOrder);
+            CheckoutViewModel cvm = new CheckoutViewModel() { Carts = carts, Order = order, User = order.User };
+            return View(cvm);
+        }
+        public ActionResult Payment(Guid NidOrder, decimal TotalPrice)
         {
             dataTransfer = new DataTransfer();
             var tmporder = dataTransfer.GetOrderByNidOrder(NidOrder);
-            if(tmporder != null)
+            if (tmporder != null)
             {
                 System.Net.ServicePointManager.Expect100Continue = false;
                 Zarinpal.PaymentGatewayImplementationServicePortTypeClient zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
+                //ZarinpalTest.PaymentGatewayImplementationServicePortTypeClient zp = new ZarinpalTest.PaymentGatewayImplementationServicePortTypeClient();//debug
                 string Authority;
-
-                int Status = zp.PaymentRequest(Merchant, int.Parse((tmporder.TotalPrice/10).ToString()), "خرید از سایت کاربیس",
-                    tmporder.Email, tmporder.Tel, "https://carbass.ir/Verify/" + NidOrder, out Authority);
+                int ProcessedPrice = decimal.ToInt32(tmporder.TotalPrice / 10);
+                int Status = zp.PaymentRequest(Merchant, ProcessedPrice, "خرید از سایت کاربیس",tmporder.Email, tmporder.Tel, "https://carbass.ir/Verify?NidOrder=" + NidOrder, out Authority);
+                //int Status = zp.PaymentRequest(Merchant, ProcessedPrice, "خرید از سایت کاربیس",tmporder.Email, tmporder.Tel, "http://localhost:2000/Verify?NidOrder=" + NidOrder, out Authority);//debug
 
                 if (Status == 100)
                 {
                     return Redirect("https://www.zarinpal.com/pg/StartPay/" + Authority);
+                    //return Redirect("https://sandbox.zarinpal.com/pg/StartPay/" + Authority);//debug
                 }
                 else
                 {
                     TempData["dargahRedirectError"] = "در انتقال به درگاه خطایی رخ داده است.لطفا مجدد امتحان کنید";
-                    return RedirectToAction("CheckoutDetail","Home");
+                    return RedirectToAction("CheckoutDetail", "Home");
                 }
             }
             else
@@ -720,10 +730,11 @@ namespace AudioShopFrontend.Controllers
             {
                 if (Request.QueryString["Status"].ToString().Equals("OK"))
                 {
-                    int Amount = int.Parse((tmpOrder.TotalPrice / 10).ToString());
+                    int Amount = decimal.ToInt32(tmpOrder.TotalPrice / 10);
                     long RefID;
                     System.Net.ServicePointManager.Expect100Continue = false;
                     Zarinpal.PaymentGatewayImplementationServicePortTypeClient zp = new Zarinpal.PaymentGatewayImplementationServicePortTypeClient();
+                    //ZarinpalTest.PaymentGatewayImplementationServicePortTypeClient zp = new ZarinpalTest.PaymentGatewayImplementationServicePortTypeClient();//debug
 
                     int Status = zp.PaymentVerification(Merchant, Request.QueryString["Authority"].ToString(), Amount, out RefID);
                     tmpOrder.state = Status;
@@ -733,7 +744,18 @@ namespace AudioShopFrontend.Controllers
                         foreach (var cart in carts)
                         {
                             cart.State = 1;
-                            dataTransfer.UpdateCart(cart);
+                            if(dataTransfer.UpdateCart(cart))
+                            {
+                                var cartandfav = dataTransfer.GetCartAndFavoriteCount(tmpOrder.NidUser);
+                                if (Request.Cookies.AllKeys.Contains("AudioShopCart"))
+                                {
+                                    Response.Cookies["AudioShopCart"].Value = cartandfav.Item1.ToString();
+                                }
+                                if (Request.Cookies.AllKeys.Contains("AudioShopFavorites"))
+                                {
+                                    Response.Cookies["AudioShopFavorites"].Value = cartandfav.Item2.ToString();
+                                }
+                            }
                         }
                     }
                 }
@@ -748,8 +770,9 @@ namespace AudioShopFrontend.Controllers
                 tmpOrder.state = -101;
                 dataTransfer.UpdateOrder(tmpOrder);
             }
-            return View(new CheckoutViewModel() {  Carts = carts, Order = tmpOrder});
+            return View(new CheckoutViewModel() { Carts = carts, Order = tmpOrder });
         }
+        //generals
         public static string RenderViewToString(ControllerContext context, string viewName, object model)//done
         {
             if (string.IsNullOrEmpty(viewName))

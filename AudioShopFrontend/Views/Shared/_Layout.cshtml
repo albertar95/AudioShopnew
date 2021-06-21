@@ -45,7 +45,6 @@
 
                                     <div class="header__top-content--left">
                                         <div class="contact_cms" style="display:flex;">
-                                            @*<a href="@Url.Action("Logout","Home")"><i class="icon-arrow-left-circle"></i></a>*@
                                             <span class="cms1 ForceRTL">به سایت carbass خوش آمدید</span>
                                             @if (userdata != "")
                                             {
@@ -467,7 +466,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <span class="modal__product-title" id="modal_name"></span>
-                                        <span class="modal__product-price m-tb-15" id="modal_price"></span>
+                                        <span class="modal__product-price m-tb-15 ForceRTL" id="modal_price"></span>
                                         <ul class="modal__product-info">
                                             @*<li>Size:<span> S</span></li>
                                                 <li>Quantity:<span>3</span></li>*@
@@ -678,7 +677,7 @@
                     url: '@Url.Action("AddProductToCart","Home")',
                     type: 'post',
                     datatype: 'json',
-                    data: { NidProduct: NidProd, Quantity: quantity },
+                    data: { NidProduct: NidProd, Quantity: quantity, price: Price },
                     success: function (result) {
                         if (result.HasValue) {
                             $("#CartCount").html(result.tmpNidCategory);
@@ -686,7 +685,7 @@
                             $("#cartpopup").html(result.Html);
                             $("#modal_img").attr("src", ImageUrl)
                             $("#modal_name").text(productName)
-                            $("#modal_price").text(Price)
+                            $("#modal_price").text(result.Message)
                             $("#modal_prodcount").text(result.tmpNidCategory)
                             $("#modalAddCart").modal('show')
                         } else {

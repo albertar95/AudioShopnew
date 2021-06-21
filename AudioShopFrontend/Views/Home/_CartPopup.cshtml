@@ -23,7 +23,7 @@
         </div>
         <div class="offcanvas-add-cart__detail" style="margin-right:15px;">
             <a href="single-1.html" class="offcanvas-add-cart__link">@cartItem.Product.ProductName</a>
-            <span class="offcanvas-add-cart__price">@cartItem.Product.Price</span>
+            <span class="offcanvas-add-cart__price">@String.Format("{0:n0} ریال", cartItem.Product.Price)</span>
         </div>
         <button class="offcanvas-add-cart__item-dismiss pos-absolute" onclick="ClearProductFromCart('@cartItem.NidProduct')">&times;</button>
     </li> <!-- Start Single Add Cart Item-->
@@ -50,13 +50,13 @@
                     <span class="offcanvas-add-cart__checkout-right-info">$0.00</span>*@
             </li> <!-- End Single Add Cart Checkout Info-->
             <!-- Start Single Add Cart Checkout Info-->
-            <li class="offcanvas-add-cart__checkout-list">
+            <li class="offcanvas-add-cart__checkout-list ForceRTL">
                 <span class="offcanvas-add-cart__checkout-left-info">مجموع</span>
-                <span class="offcanvas-add-cart__checkout-right-info" id="CartPopupPrice">@tmpTotal</span>
+                <span class="offcanvas-add-cart__checkout-right-info" id="CartPopupPrice">@String.Format("{0:n0} ریال", tmpTotal)</span>
             </li> <!-- End Single Add Cart Checkout Info-->
         </ul> <!-- End offcanvas Add Cart Checkout Info-->
 
         <div class="offcanvas-add-cart__btn-checkout">
-            <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--gray btn--large btn--uppercase btn--weight">تسویه حساب</a>
+            <a href="@Url.Action("MyCart","Home")" class="btn btn--block btn--box btn--blue btn--large btn--uppercase btn--weight">تسویه حساب</a>
         </div>
     </div> <!-- End Add Cart Checkout Box-->
