@@ -254,7 +254,6 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="banner__box">
-                            <a href="single-1.html" class="banner__link">
                                 @if (!Model.Settings.Where(p => p.SettingAttribute == "popularBanner").Any())
                                 {
                                     <a href="@Url.Action("Generals",new { Typo = 3})" class="banner__link">
@@ -267,7 +266,6 @@
                                         <img src="@Model.Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue" alt="" class="banner__img">
                                     </a>
                                 }
-                            </a>
                         </div>
                     </div>
                 </div>
