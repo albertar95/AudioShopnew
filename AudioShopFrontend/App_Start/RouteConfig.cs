@@ -18,6 +18,16 @@ namespace AudioShopFrontend
                 url: "{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Category",
+                url: "{action}/{Nid}/{Title}",
+                defaults: new { controller = "Home",action = "", Nid = "", Title = UrlParameter.Optional }
+            );
+            //routes.MapRoute(
+            //    name: "Product",
+            //    url: "{action}/{ProductNumber}/{Title}",
+            //    defaults: new { controller = "Home", action = "Product", ProductNumber = "", Title = UrlParameter.Optional }
+            //);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace AudioShopFrontend.Models
         public Nullable<System.DateTime> CreateDate { get; set; }
         public byte State { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual User User { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

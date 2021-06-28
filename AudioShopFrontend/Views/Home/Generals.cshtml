@@ -85,7 +85,7 @@
                         {
                                 <div class="product__box product__box--default product__box--border-hover text-center float-left float-4 ForceFloat">
                                     <div class="product__img-box">
-                                        <a href="@Url.Action("Product","Home",new { NidProduct = prod.NidProduct})" class="product__img--link">
+                                        <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prod.ProductNumber,prod.ProductName.Replace(' ','-'))" class="product__img--link">
                                             @if (prod.Pictures != null)
                                         {
                                                 <img class="product__img" src="@Url.Content(prod.Pictures.Split(',').FirstOrDefault())" width="540" height="540" alt="">
@@ -99,7 +99,7 @@
                                         @*<span class="product__tag product__tag--discount">-12%</span>*@
                                         <a onclick="AddToFav('@prod.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                     </div>
-                                    <a href="@Url.Action("Product","Home",new { NidProduct = prod.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
+                                    <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prod.ProductNumber,prod.ProductName.Replace(' ','-'))" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                         @prod.ProductName
                                     </a>
                                     <div class="product__price m-t-10" dir="rtl">
@@ -119,7 +119,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="product__img-box">
-                                                <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__img--link">
+                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prod2.ProductNumber,prod2.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (prod2.Pictures != null)
                                                 {
                                                         <img class="product__img" src="@Url.Content(prod2.Pictures.Split(',').FirstOrDefault())" width="540" height="540" alt="">
@@ -134,7 +134,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-5 pos-relative">
-                                            <a href="@Url.Action("Product","Home",new { NidProduct = prod2.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
+                                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prod2.ProductNumber,prod2.ProductName.Replace(' ','-'))" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                 @prod2.ProductName
                                             </a>
                                             <div class="border-right pos-absolute"></div>

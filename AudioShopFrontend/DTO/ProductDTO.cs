@@ -8,6 +8,7 @@ namespace AudioShopFrontend.DTO
     public class ProductDTO
     {
         public System.Guid NidProduct { get; set; }
+        public int ProductNumber { get; set; }
         public string ProductName { get; set; }
         public int NidCategory { get; set; }
         public System.Guid NidBrand { get; set; }

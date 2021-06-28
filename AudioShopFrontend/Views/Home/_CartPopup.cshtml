@@ -9,7 +9,7 @@
             {
     <li class="offcanvas-add-cart__list pos-relative ForceRTL">
         <div class="offcanvas-add-cart__img-box pos-relative">
-            <a href="@Url.Action("Product","Home",new { NidProduct = cartItem.NidProduct})" class="offcanvas-add-cart__img-link img-responsive">
+            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),cartItem.Product.ProductNumber,cartItem.Product.ProductName.Replace(' ','-'))" class="offcanvas-add-cart__img-link img-responsive">
                 @if (cartItem.Product.Pictures != null)
                         {
                         <img src="@cartItem.Product.Pictures.Split(',').First()" alt="" class="add-cart__img">
@@ -22,7 +22,7 @@
             <span class="offcanvas-add-cart__item-count pos-absolute">@cartItem.Quantity x</span>
         </div>
         <div class="offcanvas-add-cart__detail" style="margin-right:15px;">
-            <a href="@Url.Action("Product","Home",new { NidProduct = cartItem.NidProduct})" class="offcanvas-add-cart__link">@cartItem.Product.ProductName</a>
+            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),cartItem.Product.ProductNumber,cartItem.Product.ProductName.Replace(' ','-'))" class="offcanvas-add-cart__link">@cartItem.Product.ProductName</a>
             <span class="offcanvas-add-cart__price">@String.Format("{0:n0} ریال", cartItem.Product.Price)</span>
         </div>
         <button class="offcanvas-add-cart__item-dismiss pos-absolute" onclick="ClearProductFromCart('@cartItem.NidProduct')">&times;</button>

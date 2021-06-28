@@ -270,7 +270,7 @@
                                     <!-- Start Single Default Product -->
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
-                                                <a href="@Url.Action("Product","Home",new { NidProduct = sim.NidProduct})" class="product__img--link">
+                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),sim.ProductNumber,sim.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(sim.Pictures))
                                                     {
                                                         <img class="product__img" src="@sim.Pictures.Split(',').FirstOrDefault()" alt="">
@@ -285,7 +285,7 @@
                                                 @*<span class="product__tag product__tag--discount"></span>*@
                                                 <a onclick="AddToFav('@Model.Product.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = sim.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
+                                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),sim.ProductNumber,sim.ProductName.Replace(' ','-'))" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:right;">
                                                 @sim.ProductName
                                             </a>
                                             <div class="product__price m-t-10">

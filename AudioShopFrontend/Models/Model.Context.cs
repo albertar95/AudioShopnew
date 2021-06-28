@@ -31,10 +31,10 @@ namespace AudioShopFrontend.Models
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Ship> Ships { get; set; }
         public virtual DbSet<Favorite> Favorites { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }

@@ -31,11 +31,11 @@ namespace AudioShopFrontend.Controllers
             //blogs
             return View(ivm);
         }
-        public ActionResult Category(int Nidcategory)//done
+        public ActionResult Category(int Nid)
         {
             dataTransfer = new DataTransfer();
             ViewModels.CategoryViewModel cvm = new ViewModels.CategoryViewModel();
-            var tmpCategory = dataTransfer.GetCategoryByNidCategory(Nidcategory);
+            var tmpCategory = dataTransfer.GetCategoryByNidCategory(Nid);
             cvm.CategoryBrands = dataTransfer.GetCategory_BrandByNidcategory(tmpCategory.NidCategory);
             cvm.CategoryTypes = dataTransfer.GetCategory_TypeByNidcategory(tmpCategory.NidCategory);
             cvm.Products = dataTransfer.GetProductsByNidcategory(tmpCategory.NidCategory);
@@ -45,13 +45,13 @@ namespace AudioShopFrontend.Controllers
             cvm.Category = tmpCategory;
             return View(cvm);
         }
-        public ActionResult Generals(int Typo)//done
+        public ActionResult Generals(int Nid)
         {
             List<ProductDTO> Products = new List<ProductDTO>();
             dataTransfer = new DataTransfer();
-            TempData["GeneralPageName"] = Typo.ToString();
+            TempData["GeneralPageName"] = Nid.ToString();
             var Settings = dataTransfer.GetAllSettings();
-            switch (Typo)
+            switch (Nid)
             {
                 case 1:
                     Products = dataTransfer.GetLatestProducts();
@@ -69,12 +69,12 @@ namespace AudioShopFrontend.Controllers
             }
             return View(Products);
         }
-        public ActionResult Product(Guid NidProduct)//done
+        public ActionResult Product(int Nid)
         {
             dataTransfer = new DataTransfer();
             ProductPageViewModel ppvm = new ProductPageViewModel();
-            ppvm.Product = dataTransfer.GetProductByID(NidProduct);
-            ppvm.Similars = dataTransfer.GetSimilarProducts(NidProduct);
+            ppvm.Product = dataTransfer.GetProductByNumber(Nid);
+            ppvm.Similars = dataTransfer.GetSimilarProductsByNumber(Nid);
             return View(ppvm);
         }
         public ActionResult AboutUs()//done

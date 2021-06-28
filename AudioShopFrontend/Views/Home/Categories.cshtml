@@ -33,16 +33,16 @@
                         <div class="col-12">
                             <div class="section-content section-content--border d-flex ForceRTL align-items-center justify-content-between">
                                 <h5 class="section-content__title">@cat.CategoryName</h5>
-                                <a href="@Url.Action("Category",new { Nidcategory = cat.NidCategory})">نمایش محصولات این دسته بندی<i class="icon-chevron-left"></i></a>
+                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Category","Home"),cat.NidCategory,cat.CategoryName.Replace(' ','-'))">نمایش محصولات این دسته بندی<i class="icon-chevron-left"></i></a>
                             </div>
                             <div class="swiper-outside-arrow-fix pos-relative">
                                 <div class="product-default-slider-4grid overflow-hidden  m-t-50">
                                     <div class="swiper-wrapper">
-                                        @foreach (var prods in cat.Products.OrderByDescending(p => p.CreateDate).Take(4).Select(q => new { q.Pictures,q.NidProduct,q.ProductName,q.Price}))
+                                        @foreach (var prods in cat.Products.OrderByDescending(p => p.CreateDate).Take(4).Select(q => new { q.Pictures,q.NidProduct,q.ProductName,q.Price,q.ProductNumber}))
                                         {
                                                 <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                                     <div class="product__img-box">
-                                                        <a href="@Url.Action("Product",new { NidProduct = prods.NidProduct})" class="product__img--link">
+                                                        <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prods.ProductNumber,prods.ProductName.Replace(' ','-'))" class="product__img--link">
                                                             @if (!string.IsNullOrEmpty(prods.Pictures))
                                                             {
                                                                 <img class="product__img" src="@prods.Pictures.Split(',').FirstOrDefault()" width="540" height="540" alt="">
@@ -57,7 +57,7 @@
                                                         @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                         <a onclick="AddToFav('@prods.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                                     </div>
-                                                    <a href="@Url.Action("Product",new { NidProduct = prods.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
+                                                    <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prods.ProductNumber,prods.ProductName.Replace(' ','-'))" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                         @prods.ProductName
                                                     </a>
                                                     <div class="product__price m-t-10" dir="rtl" style="text-align:center;">

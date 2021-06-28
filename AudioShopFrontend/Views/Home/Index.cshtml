@@ -31,7 +31,7 @@
                             <div class="title title--large title--thin" style="color:white;">بلندگو</div>
                             <div class="title title--large title--regular" style="color:white;">کاروزریا مدل 6970</div>
                             @*<div class="title title--description">Exclusive Offer <span class="title--blue">-20% Off</span> This Week</div>*@
-                            <a href="https://carbass.ir/Product?NidProduct=da6e671b-8195-4495-b138-ca5c976bb119" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">خرید محصول</a>
+                            <a href="https://carbass.ir/Product/107/بلندگو-Carozeria-مدل-CRX-6970" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">خرید محصول</a>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                             <div class="title title--large title--thin" style="color:white;">آمپلی فایر</div>
                             <div class="title title--large title--regular" style="color:white;">MB Acoustics</div>
                             <div class="title title--description" style="color:white;">مدل 6900</div>
-                            <a href="https://carbass.ir/Product?NidProduct=13265363-412f-478c-bd3b-2ba0ad436ce2" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">خرید محصول</a>
+                            <a href="https://carbass.ir/Product/133/آمپلی-فایر-MB-Acoustics-مدل-MBA-6900" class="btn btn--box btn--large btn--blue btn--uppercase btn--weight">خرید محصول</a>
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                     <div class="col-12">
                         <div class="section-content section-content--border d-flex ForceRTL align-items-center justify-content-between">
                             <h5 class="section-content__title">جدید ترین محصولات</h5>
-                            <a href="@Url.Action("Generals",new { Typo = 1})">نمایش محصولات جدید<i class="icon-chevron-left"></i></a>
+                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"1",$"جدید ترین محصولات".Replace(' ','-'))">نمایش محصولات جدید<i class="icon-chevron-left"></i></a>
                         </div>
                         <div class="swiper-outside-arrow-fix pos-relative">
                             <div class="product-default-slider-4grid overflow-hidden  m-t-50">
@@ -139,7 +139,7 @@
                                     {
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
-                                                <a href="@Url.Action("Product",new { NidProduct = lates.NidProduct})" class="product__img--link">
+                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),lates.ProductNumber,lates.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(lates.Pictures))
                                                     {
                                                         <img class="product__img" src="@lates.Pictures.Split(',').FirstOrDefault()" alt="">
@@ -154,7 +154,7 @@
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a href="#" onclick="AddToFav('@lates.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = lates.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
+                                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),lates.ProductNumber,lates.ProductName.Replace(' ','-'))" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                 @lates.ProductName
                                             </a>
                                             <div class="product__price m-t-10" dir="rtl" style="text-align:center;">
@@ -183,13 +183,13 @@
                         <div class="banner__box">
                             @if (!Model.Settings.Where(p => p.SettingAttribute == "specialBanner").Any())
                             {
-                                <a href="@Url.Action("Generals",new { Typo = 2})" class="banner__link">
+                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"2",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
                                     <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-1.jpg")" alt="" class="banner__img">
                                 </a>
                             }
                             else
                             {
-                                <a href="@Url.Action("Generals",new { Typo = 2})" class="banner__link">
+                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"2",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
                                     <img src="@Model.Settings.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue" alt="" class="banner__img">
                                 </a>
                             }
@@ -203,7 +203,7 @@
                     <div class="col-12">
                         <div class="section-content section-content--border d-flex ForceRTL align-items-center justify-content-between">
                             <h5 class="section-content__title">محصولات ویژه</h5>
-                            <a href="@Url.Action("Generals",new { Typo = 2})">نمایش محصولات ویژه<i class="icon-chevron-left"></i></a>
+                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"2",$"محصولات ویژه".Replace(' ','-'))">نمایش محصولات ویژه<i class="icon-chevron-left"></i></a>
                         </div>
                         <div class="swiper-outside-arrow-fix pos-relative">
                             <div class="product-default-slider-4grid overflow-hidden  m-t-50">
@@ -212,7 +212,7 @@
                                     {
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
-                                                <a href="@Url.Action("Product",new { NidProduct = specials.NidProduct})" class="product__img--link">
+                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),specials.ProductNumber,specials.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(specials.Pictures))
                                                     {
                                                         <img class="product__img" src="@specials.Pictures.Split(',').FirstOrDefault()" alt="">
@@ -227,7 +227,7 @@
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@specials.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = specials.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
+                                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),specials.ProductNumber,specials.ProductName.Replace(' ','-'))" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                 @specials.ProductName
                                             </a>
                                             <div class="product__price m-t-10" dir="rtl" style="text-align:center;">
@@ -256,13 +256,13 @@
                         <div class="banner__box">
                                 @if (!Model.Settings.Where(p => p.SettingAttribute == "popularBanner").Any())
                                 {
-                                    <a href="@Url.Action("Generals",new { Typo = 3})" class="banner__link">
+                                    <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"3",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
                                         <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-2.jpg")" alt="" class="banner__img">
                                     </a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("Generals",new { Typo = 3})" class="banner__link">
+                                    <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"3",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
                                         <img src="@Model.Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue" alt="" class="banner__img">
                                     </a>
                                 }
@@ -276,7 +276,7 @@
                     <div class="col-12">
                         <div class="section-content section-content--border d-flex ForceRTL align-items-center justify-content-between">
                             <h5 class="section-content__title">محصولات پرفروش</h5>
-                            <a href="@Url.Action("Generals",new { Typo = 3})">نمایش محصولات پرفروش<i class="icon-chevron-left"></i></a>
+                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"3",$"محصولات ویژه".Replace(' ','-'))">نمایش محصولات پرفروش<i class="icon-chevron-left"></i></a>
                         </div>
                         <div class="swiper-outside-arrow-fix pos-relative">
                             <div class="product-default-slider-4grid overflow-hidden  m-t-50">
@@ -285,7 +285,7 @@
                                     {
                                         <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                             <div class="product__img-box">
-                                                <a href="@Url.Action("Product",new { NidProduct = popular.NidProduct})" class="product__img--link">
+                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),popular.ProductNumber,popular.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(popular.Pictures))
                                                     {
                                                         <img class="product__img" src="@popular.Pictures.Split(',').FirstOrDefault()" alt="">
@@ -300,7 +300,7 @@
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@popular.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
-                                            <a href="@Url.Action("Product",new { NidProduct = popular.NidProduct})" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
+                                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),popular.ProductNumber,popular.ProductName.Replace(' ','-'))" class="product__link product__link--underline product__link--weight-light m-t-15" style="direction:rtl;text-align:center;">
                                                 @popular.ProductName
                                             </a>
                                             <div class="product__price m-t-10" dir="rtl" style="text-align:center;">
@@ -331,7 +331,7 @@
                 <ul class="menu-content">
                     @foreach (var cat in Model.Categories)
                     {
-                        <li class="menu-item" style="border-bottom:solid 1px #47494a;"><a href="@Url.Action("Category",new { Nidcategory = cat.NidCategory})">@cat.CategoryName</a></li>
+                        <li class="menu-item" style="border-bottom:solid 1px #47494a;"><a href="@string.Format("{0}/{1}/{2}",Url.Action("Category","Home"),cat.NidCategory,cat.CategoryName.Replace(' ','-'))">@cat.CategoryName</a></li>
                     }
                 </ul>
             </div>

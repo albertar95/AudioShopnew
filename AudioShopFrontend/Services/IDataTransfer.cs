@@ -23,6 +23,9 @@ namespace AudioShopFrontend.Services
         Product GetProductByID(Guid NidProduct);
         ProductDTO GetProductDtoByID(Guid NidProduct);
         List<ProductDTO> GetSimilarProducts(Guid NidProduct);
+        Product GetProductByNumber(int Number);
+        ProductDTO GetProductDtoByNumber(int Number);
+        List<ProductDTO> GetSimilarProductsByNumber(int Number);
         //User
         User GetUserByUsername(string Username);
         User GetUserByNidUser(Guid NidUser);

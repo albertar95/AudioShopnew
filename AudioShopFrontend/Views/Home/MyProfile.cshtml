@@ -134,7 +134,7 @@
                                                         <td>
                                                             @if (fav.Product.Pictures != null)
                                                             {
-                                                                <a href="@Url.Action("Product","Home",new { NidProduct = fav.NidProduct})"><img class="img-fluid" src="@fav.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),fav.Product.ProductNumber,fav.Product.ProductName.Replace(' ','-'))"><img class="img-fluid" src="@fav.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
                                                             }
                                                         </td>
                                                         <td>@fav.Product.ProductName</td>
