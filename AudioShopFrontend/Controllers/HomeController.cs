@@ -31,7 +31,7 @@ namespace AudioShopFrontend.Controllers
             //blogs
             return View(ivm);
         }
-        public ActionResult Category(int Nid)
+        public ActionResult Category(int Nid, string Title = "")
         {
             dataTransfer = new DataTransfer();
             ViewModels.CategoryViewModel cvm = new ViewModels.CategoryViewModel();
@@ -43,9 +43,10 @@ namespace AudioShopFrontend.Controllers
             cvm.MinPrice = minmax.Item1;
             cvm.MaxPrice = minmax.Item2;
             cvm.Category = tmpCategory;
+            ViewBag.Desc = tmpCategory.Description;
             return View(cvm);
         }
-        public ActionResult Generals(int Nid)
+        public ActionResult Generals(int Nid, string Title = "")
         {
             List<ProductDTO> Products = new List<ProductDTO>();
             dataTransfer = new DataTransfer();
@@ -67,14 +68,17 @@ namespace AudioShopFrontend.Controllers
                 default:
                     break;
             }
+            ViewBag.Title = Title;
             return View(Products);
         }
-        public ActionResult Product(int Nid)
+        public ActionResult Product(int Nid,string Title = "")
         {
             dataTransfer = new DataTransfer();
             ProductPageViewModel ppvm = new ProductPageViewModel();
             ppvm.Product = dataTransfer.GetProductByNumber(Nid);
             ppvm.Similars = dataTransfer.GetSimilarProductsByNumber(Nid);
+            ViewBag.Title = Title;
+            ViewBag.Desc = ppvm.Product.DetailDescription;
             return View(ppvm);
         }
         public ActionResult AboutUs()//done
