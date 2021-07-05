@@ -558,6 +558,21 @@ dl, ol, ul {
     padding: 18px 40px;
   }
 }
+.myTriangleRight {
+  width: 0; 
+  height: 0; 
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-left: 60px solid #0063d1;
+}
+.myTriangleLeft {
+    width: 0; 
+    height: 0; 
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;  
+    border-right: 60px solid #0063d1;
+
+}
 .btn--medium {
   padding: 13px 40px;
 }
