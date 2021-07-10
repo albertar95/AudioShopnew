@@ -134,7 +134,8 @@
                                                         <td>
                                                             @if (fav.Product.Pictures != null)
                                                             {
-                                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),fav.Product.ProductNumber,fav.Product.ProductName.Replace(' ','-'))"><img class="img-fluid" src="@fav.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                                                <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),fav.Product.ProductNumber,fav.Product.ProductName.Replace(' ','-'))">
+                                                            <img class="img-fluid" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(fav.Product.Pictures,1,2)" alt=""></a>
                                                             }
                                                         </td>
                                                         <td>@fav.Product.ProductName</td>

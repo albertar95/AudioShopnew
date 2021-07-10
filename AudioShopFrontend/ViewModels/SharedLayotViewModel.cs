@@ -92,6 +92,79 @@ namespace AudioShopFrontend.ViewModels
                 return false;
             }
         }
+        public static string GetImageUrl(string pictureUrl,int type,int size)
+        {
+            try
+            {
+                if(type == 1)
+                {
+                    switch (size)
+                    {
+                        case 1:
+                            return string.Format("{0}://admin.{1}:{2}/Uploads/Product/Big/{3}"//600x600
+                             , HttpContext.Current.Request.Url.Scheme
+                             , HttpContext.Current.Request.Url.Host
+                             , HttpContext.Current.Request.Url.Port
+                             , pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Replace(pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Split('.').LastOrDefault(), "webp"));
+                        case 2:
+                            return string.Format("{0}://admin.{1}:{2}/Uploads/Product/Normal/{3}"//255x165
+                            , HttpContext.Current.Request.Url.Scheme
+                            , HttpContext.Current.Request.Url.Host
+                            , HttpContext.Current.Request.Url.Port
+                            , pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Replace(pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Split('.').LastOrDefault(), "webp"));
+
+                        case 3:
+                            return string.Format("{0}://admin.{1}:{2}/Uploads/Product/Medium/{3}"//540x540
+                            , HttpContext.Current.Request.Url.Scheme
+                            , HttpContext.Current.Request.Url.Host
+                            , HttpContext.Current.Request.Url.Port
+                            , pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Replace(pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Split('.').LastOrDefault(), "webp"));
+                        case 4:
+                            return string.Format("{0}://admin.{1}:{2}/Uploads/Product/Small/{3}"//70x70
+                            , HttpContext.Current.Request.Url.Scheme
+                            , HttpContext.Current.Request.Url.Host
+                            , HttpContext.Current.Request.Url.Port
+                            , pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Replace(pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Split('.').LastOrDefault(), "webp"));
+                        default:
+                            return pictureUrl.Split(',').FirstOrDefault();
+                    }
+                }else if(type == 2)
+                {
+                    switch (size)
+                    {
+                        case 1:
+                            return string.Format("{0}://admin.{1}:{2}/Uploads/Banner/Big/{3}"//870x175
+                             , HttpContext.Current.Request.Url.Scheme
+                             , HttpContext.Current.Request.Url.Host
+                             , HttpContext.Current.Request.Url.Port
+                             , pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Replace(pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Split('.').LastOrDefault(), "webp"));
+                        case 2:
+                            return string.Format("{0}://admin.{1}:{2}/Uploads/Banner/Normal/{3}"//720x200
+                            , HttpContext.Current.Request.Url.Scheme
+                            , HttpContext.Current.Request.Url.Host
+                            , HttpContext.Current.Request.Url.Port
+                            , pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Replace(pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Split('.').LastOrDefault(), "webp"));
+                        case 3:
+                            return string.Format("{0}://admin.{1}:{2}/Uploads/Banner/Sidbar/{3}"//270x345
+                            , HttpContext.Current.Request.Url.Scheme
+                            , HttpContext.Current.Request.Url.Host
+                            , HttpContext.Current.Request.Url.Port
+                            , pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Replace(pictureUrl.Split(',').FirstOrDefault().Split('/').LastOrDefault().Split('.').LastOrDefault(), "webp"));
+                        default:
+                            return pictureUrl.Split(',').FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            catch (Exception)
+            {
+                return "";
+            }
+        }
+
 
     }
 

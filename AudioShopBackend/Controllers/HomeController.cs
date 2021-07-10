@@ -11,10 +11,10 @@ using System.Web.Security;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-
+using Imazen.WebP;
 namespace AudioShopBackend.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         DbTransfer dbTransfer = null;
@@ -38,7 +38,9 @@ namespace AudioShopBackend.Controllers
             {
                 FormsAuthenticationTicket Ticket = new FormsAuthenticationTicket(1, result.Item2.Username, DateTime.Now, DateTime.Now.AddMinutes(30), IsChecked, result.Item2.NidUser.ToString(),FormsAuthentication.FormsCookiePath);
                 string encTicket = FormsAuthentication.Encrypt(Ticket);
-                Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encTicket);
+                cookie.Expires = DateTime.Now.AddHours(8);
+                Response.Cookies.Add(cookie);
                 return Json(new JsonResults() { HasValue = true});
             }
             else
@@ -604,25 +606,144 @@ namespace AudioShopBackend.Controllers
 
             destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-            using (var graphics = Graphics.FromImage(destImage))
+            using (var graphics = System.Drawing.Graphics.FromImage(destImage))
             {
                 graphics.CompositingMode = CompositingMode.SourceCopy;
-                graphics.CompositingQuality = CompositingQuality.HighQuality;
-                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.Default;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Default;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.Default;
+                graphics.PixelOffsetMode = PixelOffsetMode.Default;
 
-                using (var wrapMode = new ImageAttributes())
+                using (var wrapMode = new System.Drawing.Imaging.ImageAttributes())
                 {
-                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                    wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, System.Drawing.GraphicsUnit.Pixel, wrapMode);
                 }
             }
 
             return destImage;
         }
+        [HttpPost]
+        public ActionResult UploadProductFiles()
+        {
+            List<string> Uploaded = new List<string>();
+            string err = "";
+            if (Request.Files.Count != 0)
+            {
 
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    var fileName = "Image_" + DateTime.Now.ToShortDateString().Replace('/', '_') + "_" + DateTime.Now.ToString("HH:mm:ss").Replace(':', '_') + "_" + Path.GetFileName(file.FileName.Replace(' ', '_'));
+                    var path = Path.Combine(Server.MapPath("~/Uploads/"), fileName);
+                    //Image img = Image.FromStream(file.InputStream, true, true);
+                    //img.Save(path);
+                    file.SaveAs(path);
+                    Uploaded.Add($"{HttpContext.Request.Url.Scheme + "://" + HttpContext.Request.Url.Host + ":" + HttpContext.Request.Url.Port}/Uploads/" + fileName);
+                    //thumbnailing
+                        System.Drawing.Image image = System.Drawing.Image.FromFile(path);
+                        Bitmap tmpResized = ResizeImage(image, 600, 600);
+                        string newpath = Path.Combine(Server.MapPath("~/Uploads/Product/Big/"), fileName.Replace(fileName.Split('.').Last(), "webp"));
+                        using (tmpResized)
+                        {
+                            using (var saveImageStream = System.IO.File.Open(newpath, FileMode.Create))
+                            {
+                                var encoder = new SimpleEncoder();
+                                encoder.Encode(tmpResized, saveImageStream, 80);
+                            }
+                        }
+                        tmpResized = ResizeImage(image, 540, 540);
+                        newpath = Path.Combine(Server.MapPath("~/Uploads/Product/Medium/"), fileName.Replace(fileName.Split('.').Last(), "webp"));
+                        using (tmpResized)
+                        {
+                            using (var saveImageStream = System.IO.File.Open(newpath, FileMode.Create))
+                            {
+                                var encoder = new SimpleEncoder();
+                                encoder.Encode(tmpResized, saveImageStream, 80);
+                            }
+                        }
+                        tmpResized = ResizeImage(image, 255, 165);
+                        newpath = Path.Combine(Server.MapPath("~/Uploads/Product/Normal/"), fileName.Replace(fileName.Split('.').Last(), "webp"));
+                        using (tmpResized)
+                        {
+                            using (var saveImageStream = System.IO.File.Open(newpath, FileMode.Create))
+                            {
+                                var encoder = new SimpleEncoder();
+                                encoder.Encode(tmpResized, saveImageStream, 80);
+                            }
+                        }
+                        tmpResized = ResizeImage(image, 70, 70);
+                        newpath = Path.Combine(Server.MapPath("~/Uploads/Product/Small/"), fileName.Replace(fileName.Split('.').Last(), "webp"));
+                        using (tmpResized)
+                        {
+                            using (var saveImageStream = System.IO.File.Open(newpath, FileMode.Create))
+                            {
+                                var encoder = new SimpleEncoder();
+                                encoder.Encode(tmpResized, saveImageStream, 80);
+                            }
+                        }
+                }
+                return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_UploadedImages", Uploaded), Message = string.Join(",", Uploaded) });
+            }
+            else
+                return Json(new JsonResults() { HasValue = false, Message = err });
 
+        }
+        [HttpPost]
+        public ActionResult UploadBannerFiles()
+        {
+            List<string> Uploaded = new List<string>();
+            if (Request.Files.Count != 0)
+            {
+
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    var fileName = "Image_" + DateTime.Now.ToShortDateString().Replace('/', '_') + "_" + DateTime.Now.ToShortTimeString().Replace(':', '_') + "_" + Path.GetFileName(file.FileName.Replace(' ', '_'));
+                    var path = Path.Combine(Server.MapPath("~/Uploads/"), fileName);
+                    //Image img = Image.FromStream(file.InputStream, true, true);
+                    //img.Save(path);
+                    file.SaveAs(path);
+                    Uploaded.Add($"{HttpContext.Request.Url.Scheme + "://" + HttpContext.Request.Url.Host + ":" + HttpContext.Request.Url.Port}/Uploads/" + fileName);
+                    //thumbnailing
+                    System.Drawing.Image image = System.Drawing.Image.FromFile(path);
+                    Bitmap tmpResized = ResizeImage(image, 720, 200);
+                    string newpath = Path.Combine(Server.MapPath("~/Uploads/Banner/Normal/"), fileName.Replace(fileName.Split('.').Last(), "webp"));
+                    using (tmpResized)
+                    {
+                        using (var saveImageStream = System.IO.File.Open(newpath, FileMode.Create))
+                        {
+                            var encoder = new SimpleEncoder();
+                            encoder.Encode(tmpResized, saveImageStream, 80);
+                        }
+                    }
+                    tmpResized = ResizeImage(image, 270, 345);
+                    newpath = Path.Combine(Server.MapPath("~/Uploads/Banner/Sidbar/"), fileName.Replace(fileName.Split('.').Last(), "webp"));
+                    using (tmpResized)
+                    {
+                        using (var saveImageStream = System.IO.File.Open(newpath, FileMode.Create))
+                        {
+                            var encoder = new SimpleEncoder();
+                            encoder.Encode(tmpResized, saveImageStream, 80);
+                        }
+                    }
+                    tmpResized = ResizeImage(image, 870, 175);
+                    newpath = Path.Combine(Server.MapPath("~/Uploads/Banner/Big/"), fileName.Replace(fileName.Split('.').Last(), "webp"));
+                    using (tmpResized)
+                    {
+                        using (var saveImageStream = System.IO.File.Open(newpath, FileMode.Create))
+                        {
+                            var encoder = new SimpleEncoder();
+                            encoder.Encode(tmpResized, saveImageStream, 80);
+                        }
+                    }
+                }
+                return Json(new JsonResults() { HasValue = true, Html = RenderViewToString(this.ControllerContext, "_UploadedImages", Uploaded), Message = string.Join(",", Uploaded) });
+            }
+            else
+                return Json(new JsonResults() { HasValue = false });
+
+        }
         [HttpPost]
         public ActionResult UploadFiles()
         {

@@ -105,6 +105,7 @@
                                 <div class="nk-int-st">
                                     <input type="file" class="form-control" id="UploadHeaderPic" multiple="multiple" />
                                     <p>نکته : سایز تصویر اول می بایست 870 در 200 باشد و تصویر دوم 270 در 345</p>
+                                    <p>قبل از اپلود فایل محصول،نام فایل را به نوع و مدل محصول تغییر دهید</p>
                                 </div>
                             </div>
                         </div>
@@ -475,7 +476,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("UploadFiles","Home")',
+                    url: '@Url.Action("UploadBannerFiles", "Home")',
                     data: formData,
                     dataType: 'json',
                     contentType: false,

@@ -190,6 +190,10 @@
                                     <div class="nk-int-st">
                                         <input type="file" class="form-control" id="UploadHeaderPic" multiple="multiple" />
                                     </div>
+                                    <div class="form-group">
+                                        <p>اندازه تصاویر 600 در 600 باشد</p>
+                                        <p>قبل از اپلود فایل محصول،نام فایل را به نوع و مدل محصول تغییر دهید</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -295,7 +299,7 @@
                 }
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("UploadFiles","Home")',
+                    url: '@Url.Action("UploadProductFiles", "Home")',
                     data: formData,
                     dataType: 'json',
                     contentType: false,

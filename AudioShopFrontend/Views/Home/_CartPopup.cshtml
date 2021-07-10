@@ -12,7 +12,7 @@
             <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),cartItem.Product.ProductNumber,cartItem.Product.ProductName.Replace(' ','-'))" class="offcanvas-add-cart__img-link img-responsive">
                 @if (cartItem.Product.Pictures != null)
                         {
-                        <img src="@cartItem.Product.Pictures.Split(',').First()" alt="" class="add-cart__img">
+                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(cartItem.Product.Pictures,1,4)" alt="" class="add-cart__img">
                         }
                         else
                         {

@@ -142,7 +142,7 @@
                                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),lates.ProductNumber,lates.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(lates.Pictures))
                                                     {
-                                                        <img class="product__img" src="@lates.Pictures.Split(',').FirstOrDefault()" alt="">
+                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(lates.Pictures,1,3)" alt="">
                                                     }
                                                     else
                                                     {
@@ -150,7 +150,7 @@
                                                     }
                                                 </a>
 
-                                                <a data-toggle="modal" onclick="AddToCart('@lates.ProductName', '@lates.Price', '@lates.Pictures', '@lates.NidProduct',1)" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
+                                                <a data-toggle="modal" onclick="AddToCart('@lates.ProductName', '@lates.Price', '@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(lates.Pictures,1,3)', '@lates.NidProduct',1)" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a href="#" onclick="AddToFav('@lates.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
@@ -184,13 +184,13 @@
                             @if (!Model.Settings.Where(p => p.SettingAttribute == "specialBanner").Any())
                             {
                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"2",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
-                                    <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-1.jpg")" alt="" class="banner__img">
+                                    <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-1.jpg")" alt="" class="banner__img" />
                                 </a>
                             }
                             else
                             {
                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"2",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
-                                    <img src="@Model.Settings.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue" alt="" class="banner__img">
+                                    <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(Model.Settings.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue,2,1)" alt="" class="banner__img" />
                                 </a>
                             }
                         </div>
@@ -215,7 +215,7 @@
                                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),specials.ProductNumber,specials.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(specials.Pictures))
                                                     {
-                                                        <img class="product__img" src="@specials.Pictures.Split(',').FirstOrDefault()" alt="">
+                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(specials.Pictures,1,3)" alt="">
                                                     }
                                                     else
                                                     {
@@ -223,7 +223,7 @@
                                                     }
                                                 </a>
 
-                                                <a onclick="AddToCart('@specials.ProductName', '@specials.Price', '@specials.Pictures', '@specials.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
+                                                <a onclick="AddToCart('@specials.ProductName', '@specials.Price', '@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(specials.Pictures,1,3)', '@specials.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@specials.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>
@@ -263,7 +263,7 @@
                                 else
                                 {
                                     <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"3",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
-                                        <img src="@Model.Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue" alt="" class="banner__img">
+                                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(Model.Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue,2,1)" alt="" class="banner__img">
                                     </a>
                                 }
                         </div>
@@ -288,7 +288,7 @@
                                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),popular.ProductNumber,popular.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(popular.Pictures))
                                                     {
-                                                        <img class="product__img" src="@popular.Pictures.Split(',').FirstOrDefault()" alt="">
+                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(popular.Pictures,1,3)" alt="">
                                                     }
                                                     else
                                                     {
@@ -296,7 +296,7 @@
                                                     }
                                                 </a>
 
-                                                <a onclick="AddToCart('@popular.ProductName', '@popular.Price', '@popular.Pictures', '@popular.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
+                                                <a onclick="AddToCart('@popular.ProductName', '@popular.Price', '@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(popular.Pictures,1,3)', '@popular.NidProduct',1)" data-toggle="modal" class="btn btn--box btn--small btn--gray btn--uppercase btn--weight btn--hover-zoom product__upper-btn">اضافه کردن به لیست</a>
                                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
                                                 <a onclick="AddToFav('@popular.NidProduct')" class="product__wishlist-icon"><i class="icon-heart"></i></a>
                                             </div>

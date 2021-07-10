@@ -45,7 +45,8 @@
                                     <td class="product-thumbnail">
                                         @if (!string.IsNullOrEmpty(prods.Product.Pictures))
                                         {
-                                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prods.Product.ProductNumber,prods.Product.ProductName.Replace(' ','-'))"><img class="img-fluid" src="@prods.Product.Pictures.Split(',').FirstOrDefault()" alt=""></a>
+                                            <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prods.Product.ProductNumber,prods.Product.ProductName.Replace(' ','-'))">
+                                        <img class="img-fluid" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prods.Product.Pictures,1,2)" alt=""></a>
                                         }
                                     </td>
                                     <td class="product-name"><a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prods.Product.ProductNumber,prods.Product.ProductName.Replace(' ','-'))">@prods.Product.ProductName</a></td>
