@@ -8,7 +8,7 @@
 <div class="hero hero-slider hero--1">
     <div class="swiper-wrapper">
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background: url(../../Content/assets/img/slider/b1.jpg);background-size:contain;background-size:100% 100%;">
+        <div class="hero-img hero-img--1 swiper-slide" style="background: url(../../Content/assets/img/slider/b1.webp);background-size:contain;background-size:100% 100%;">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
@@ -23,7 +23,7 @@
             </div>
         </div> <!-- End Hero Image -->
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b2.jpg);background-size:contain;background-size:100% 100%;">
+        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b2.webp);background-size:contain;background-size:100% 100%;">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
@@ -38,7 +38,7 @@
             </div>
         </div> <!-- End Hero Image -->
         <!-- Start Hero Image -->
-        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b3.jpg);background-size:contain;background-size:100% 100%;">
+        <div class="hero-img hero-img--1 swiper-slide" style="background-image: url(../../Content/assets/img/slider/b3.webp);background-size:contain;background-size:100% 100%;">
             <div class="hero__content">
                 <div class="container">
                     <div class="row">
@@ -142,7 +142,7 @@
                                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),lates.ProductNumber,lates.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(lates.Pictures))
                                                     {
-                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(lates.Pictures,1,3)" alt="">
+                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(lates.Pictures,1,3)" alt="@lates.ProductName" title="@string.Format("Image_{0}",lates.ProductName)">
                                                     }
                                                     else
                                                     {
@@ -190,7 +190,7 @@
                             else
                             {
                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"2",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
-                                    <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(Model.Settings.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue,2,1)" alt="" class="banner__img" />
+                                    <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(Model.Settings.Where(p => p.SettingAttribute == "specialBanner").FirstOrDefault().SettingValue,2,1)" alt="banner" class="banner__img" />
                                 </a>
                             }
                         </div>
@@ -215,7 +215,7 @@
                                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),specials.ProductNumber,specials.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(specials.Pictures))
                                                     {
-                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(specials.Pictures,1,3)" alt="">
+                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(specials.Pictures,1,3)" alt="@specials.ProductName" title="@string.Format("Image_{0}",specials.ProductName)">
                                                     }
                                                     else
                                                     {
@@ -257,13 +257,13 @@
                                 @if (!Model.Settings.Where(p => p.SettingAttribute == "popularBanner").Any())
                                 {
                                     <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"3",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
-                                        <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-2.jpg")" alt="" class="banner__img">
+                                        <img src="@Url.Content("~/Content/assets/img/banner/banner-home-4-img-2.jpg")" alt="banner" class="banner__img">
                                     </a>
                                 }
                                 else
                                 {
                                     <a href="@string.Format("{0}/{1}/{2}",Url.Action("Generals","Home"),"3",$"محصولات ویژه".Replace(' ','-'))" class="banner__link">
-                                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(Model.Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue,2,1)" alt="" class="banner__img">
+                                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(Model.Settings.Where(p => p.SettingAttribute == "popularBanner").FirstOrDefault().SettingValue,2,1)" alt="banner" class="banner__img">
                                     </a>
                                 }
                         </div>
@@ -288,7 +288,7 @@
                                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),popular.ProductNumber,popular.ProductName.Replace(' ','-'))" class="product__img--link">
                                                     @if (!string.IsNullOrEmpty(popular.Pictures))
                                                     {
-                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(popular.Pictures,1,3)" alt="">
+                                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(popular.Pictures,1,3)" alt="@popular.ProductName" title="@string.Format("Image_{0}",popular.ProductName)">
                                                     }
                                                     else
                                                     {

@@ -10,7 +10,7 @@
                         <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prod.ProductNumber,prod.ProductName.Replace(' ','-'))" class="product__img--link">
                             @if (prod.Pictures != null)
                             {
-                                <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod.Pictures,1,3)" alt="">
+                                <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod.Pictures,1,3)" alt="@prod.ProductName" title="@string.Format("Image_{0}",prod.ProductName)">
                             }
                             else
                             {
@@ -44,7 +44,7 @@
                                 <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prod2.ProductNumber,prod2.ProductName.Replace(' ','-'))" class="product__img--link">
                                     @if (prod2.Pictures != null)
                                     {
-                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod2.Pictures,1,3)" alt="">
+                                        <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod2.Pictures,1,3)" alt="@prod2.ProductName" title="@string.Format("Image_{0}",prod2.ProductName)">
                                     }
                                     else
                                     {

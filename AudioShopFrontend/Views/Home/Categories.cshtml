@@ -20,7 +20,7 @@
                                     }
                                     else
                                     {
-                                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(cat.Pictures,2,1)" alt="" class="banner__img">
+                                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(cat.Pictures,2,1)" alt="@cat.CategoryName" title="@cat.keywords" class="banner__img">
                                     }
                                 </a>
                             </div>
@@ -38,14 +38,14 @@
                             <div class="swiper-outside-arrow-fix pos-relative">
                                 <div class="product-default-slider-4grid overflow-hidden  m-t-50">
                                     <div class="swiper-wrapper">
-                                        @foreach (var prods in cat.Products.OrderByDescending(p => p.CreateDate).Take(4).Select(q => new { q.Pictures,q.NidProduct,q.ProductName,q.Price,q.ProductNumber}))
+                                        @foreach (var prods in cat.Products.OrderByDescending(p => p.CreateDate).Take(4).Select(q => new { q.Pictures,q.NidProduct,q.ProductName,q.Price,q.ProductNumber,q.Keywords}))
                                         {
                                                 <div class="product__box product__box--default product__box--border-hover swiper-slide text-center">
                                                     <div class="product__img-box">
                                                         <a href="@string.Format("{0}/{1}/{2}",Url.Action("Product","Home"),prods.ProductNumber,prods.ProductName.Replace(' ','-'))" class="product__img--link">
                                                             @if (!string.IsNullOrEmpty(prods.Pictures))
                                                             {
-                                                                <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prods.Pictures,1,3)" alt="">
+                                                                <img class="product__img" src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prods.Pictures,1,3)" alt="@prods.ProductName" title="@prods.Keywords">
                                                             }
                                                             else
                                                             {

@@ -14,7 +14,7 @@
                             }
                             else
                             {
-                                <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod2.Pictures,1,3)" alt="" class="product__img">
+                                <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod2.Pictures,1,3)" alt="@prod2.ProductName" title="@string.Format("Image_{0}",prod2.ProductName)" class="product__img">
                             }
                         </a>
 
@@ -48,7 +48,7 @@
                                     }
                                     else
                                     {
-                                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod1.Pictures,1,3)" alt="" class="product__img">
+                                        <img src="@AudioShopFrontend.ViewModels.SharedLayotViewModel.GetImageUrl(prod1.Pictures,1,3)" alt="@prod1.ProductName" title="@string.Format("Image_{0}",prod1.ProductName)" class="product__img">
                                     }
                                 </a>
                                 @*<span class="product__tag product__tag--discount">-12%</span>*@
