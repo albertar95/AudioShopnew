@@ -17,7 +17,7 @@ namespace AudioShopFrontend.Controllers
         DataTransfer dataTransfer = null;
         const string Merchant = "42022b3d-9a49-4bd8-9c2c-73ce0a5303f9";
         //demostration section
-        [OutputCache(Duration = 2600000)]
+        //[OutputCache(Duration = 2600000)]
         public ActionResult Index()//done
         {
             IndexViewModel ivm = new IndexViewModel();
@@ -31,7 +31,7 @@ namespace AudioShopFrontend.Controllers
             //blogs
             return View(ivm);
         }
-        [OutputCache(Duration = 85000,VaryByParam ="Nid")]
+        //[OutputCache(Duration = 85000,VaryByParam ="Nid")]
         public ActionResult Category(int Nid, string Title = "")
         {
             dataTransfer = new DataTransfer();
@@ -48,7 +48,7 @@ namespace AudioShopFrontend.Controllers
             ViewBag.Desc = tmpCategory.Description;
             return View(cvm);
         }
-        [OutputCache(Duration = 85000, VaryByParam = "Nid")]
+        //[OutputCache(Duration = 85000, VaryByParam = "Nid")]
         public ActionResult Generals(int Nid, string Title = "")
         {
             List<ProductDTO> Products = new List<ProductDTO>();
@@ -74,7 +74,7 @@ namespace AudioShopFrontend.Controllers
             ViewBag.Title = Title;
             return View(Products);
         }
-        [OutputCache(Duration = 85000, VaryByParam = "Nid")]
+        //[OutputCache(Duration = 85000, VaryByParam = "Nid")]
         public ActionResult Product(int Nid,string Title = "")
         {
             dataTransfer = new DataTransfer();
@@ -85,17 +85,17 @@ namespace AudioShopFrontend.Controllers
             ViewBag.Desc = ppvm.Product.DetailDescription;
             return View(ppvm);
         }
-        [OutputCache(Duration = 2600000)]
+        //[OutputCache(Duration = 2600000)]
         public ActionResult AboutUs()//done
         {
             return View();
         }
-        [OutputCache(Duration = 2600000)]
+        //[OutputCache(Duration = 2600000)]
         public ActionResult Blog()
         {
             return View();
         }
-        [OutputCache(Duration = 2600000)]
+        //[OutputCache(Duration = 2600000)]
         public ActionResult Categories()//done
         {
             dataTransfer = new DataTransfer();
@@ -276,7 +276,7 @@ namespace AudioShopFrontend.Controllers
             }
         }
         //user section
-        [OutputCache(Duration = 7800000)]
+        //[OutputCache(Duration = 7800000)]
         public ActionResult Register()//done
         {
             return View();
@@ -306,7 +306,7 @@ namespace AudioShopFrontend.Controllers
             }
 
         }
-        [OutputCache(Duration = 7800000)]
+        //[OutputCache(Duration = 7800000)]
         public ActionResult Login()//done
         {
             return View();
