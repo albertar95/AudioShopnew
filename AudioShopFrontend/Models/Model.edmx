@@ -92,7 +92,6 @@
             <PropertyRef Name="NidProduct" />
           </Key>
           <Property Name="NidProduct" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ProductNumber" Type="int" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="NidCategory" Type="int" Nullable="false" />
           <Property Name="NidBrand" Type="uniqueidentifier" Nullable="false" />
@@ -107,6 +106,7 @@
           <Property Name="Priority" Type="tinyint" />
           <Property Name="Details" Type="nvarchar(max)" />
           <Property Name="DetailDescription" Type="nvarchar(max)" />
+          <Property Name="ProductNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Settings">
           <Key>

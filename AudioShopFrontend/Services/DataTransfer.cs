@@ -496,6 +496,14 @@ namespace AudioShopFrontend.Services
             else
                 return false;
         }
+        public bool UpdateShip(Ship ship)
+        {
+            db.Entry(ship).State = System.Data.Entity.EntityState.Modified;
+            if (db.SaveChanges() == 1)
+                return true;
+            else
+                return false;
+        }
 
         public Ship GetShipByNidOrder(Guid NidOrder)
         {

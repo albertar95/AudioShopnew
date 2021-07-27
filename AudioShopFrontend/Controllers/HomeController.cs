@@ -714,8 +714,8 @@ namespace AudioShopFrontend.Controllers
                 //ZarinpalTest.PaymentGatewayImplementationServicePortTypeClient zp = new ZarinpalTest.PaymentGatewayImplementationServicePortTypeClient();//debug
                 string Authority;
                 int ProcessedPrice = decimal.ToInt32(tmporder.TotalPrice / 10);
-                int Status = zp.PaymentRequest(Merchant, ProcessedPrice, "خرید از سایت کاربیس",tmporder.Email, tmporder.Tel, "https://carbass.ir/Verify?NidOrder=" + NidOrder, out Authority);
-                //int Status = zp.PaymentRequest(Merchant, ProcessedPrice, "خرید از سایت کاربیس",tmporder.Email, tmporder.Tel, "http://localhost:2000/Verify?NidOrder=" + NidOrder, out Authority);//debug
+                int Status = zp.PaymentRequest(Merchant, ProcessedPrice, "خرید از سایت کاربیس", tmporder.Email, tmporder.Tel, "https://carbass.ir/Verify?NidOrder=" + NidOrder, out Authority);
+                //int Status = zp.PaymentRequest(Merchant, ProcessedPrice, "خرید از سایت کاربیس", tmporder.Email, tmporder.Tel, "http://localhost:2000/Verify?NidOrder=" + NidOrder, out Authority);//debug
 
                 if (Status == 100)
                 {
@@ -770,17 +770,22 @@ namespace AudioShopFrontend.Controllers
                                 }
                             }
                         }
+                        var tmpship = dataTransfer.GetShipByNidOrder(tmpOrder.NidOrder);
+                        tmpship.State = 1;//paid
+                        dataTransfer.UpdateShip(tmpship);
                     }
                 }
                 else
                 {
                     tmpOrder.state = -100;
+                    //dataTransfer.AddUnsuccessfullOrder(new UnsuccessfullOrder() {  NidUnsuccessfullOrder = Guid.NewGuid(), Address = tmpOrder.Address, CityId = tmpOrder.CityId, CreateDate = tmpOrder.CreateDate, Description = tmpOrder.Description, Email = tmpOrder.Email, Firstname = tmpOrder.Firstname, Lastname = tmpOrder.Lastname, NidOrder = tmpOrder.NidOrder, NidUser = tmpOrder.NidUser, RefId = tmpOrder.RefId, state = tmpOrder.state, StateId = tmpOrder.StateId, Tel = tmpOrder.Tel, TotalPrice = tmpOrder.TotalPrice, Zipcode = tmpOrder.Zipcode});
                     dataTransfer.UpdateOrder(tmpOrder);
                 }
             }
             else
             {
                 tmpOrder.state = -101;
+                //dataTransfer.AddUnsuccessfullOrder(new UnsuccessfullOrder() { NidUnsuccessfullOrder = Guid.NewGuid(), Address = tmpOrder.Address, CityId = tmpOrder.CityId, CreateDate = tmpOrder.CreateDate, Description = tmpOrder.Description, Email = tmpOrder.Email, Firstname = tmpOrder.Firstname, Lastname = tmpOrder.Lastname, NidOrder = tmpOrder.NidOrder, NidUser = tmpOrder.NidUser, RefId = tmpOrder.RefId, state = tmpOrder.state, StateId = tmpOrder.StateId, Tel = tmpOrder.Tel, TotalPrice = tmpOrder.TotalPrice, Zipcode = tmpOrder.Zipcode });
                 dataTransfer.UpdateOrder(tmpOrder);
             }
             return View(new CheckoutViewModel() { Carts = carts, Order = tmpOrder });

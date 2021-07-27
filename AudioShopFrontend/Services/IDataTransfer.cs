@@ -67,6 +67,7 @@ namespace AudioShopFrontend.Services
         bool AddSetting(Setting setting);
         //ships
         bool AddShip(Ship ship);
+        bool UpdateShip(Ship ship);
         Ship GetShipByNidOrder(Guid NidOrder);
     }
 }
